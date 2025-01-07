@@ -16,8 +16,8 @@ export enum JenisKelamin {
   PEREMPUAN,
 }
 export enum StatusPasien {
-  MENIKAH,
-  LAJANG,
+  MENIKAH = "Menikah",
+  LAJANG = "Lajang",
 }
 export enum GolonganObat {
   BEBAS,

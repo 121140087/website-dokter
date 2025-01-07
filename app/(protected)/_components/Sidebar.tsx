@@ -15,13 +15,22 @@ const Sidebar = () => {
         >
           Pasien
         </Link>
-        <Link href="#" className="w-full p-4 border-b-2 border-slate-100">
+        <Link
+          href="/dashboard/obat"
+          className="w-full p-4 border-b-2 border-slate-100"
+        >
           Obat
         </Link>
-        <Link href="#" className="w-full p-4 border-b-2 border-slate-100">
+        <Link
+          href="/dashboard/pesan"
+          className="w-full p-4 border-b-2 border-slate-100"
+        >
           Pesan
         </Link>
-        <Link href="#" className="w-full p-4 border-b-2 border-slate-100">
+        <Link
+          href="/dashboard/jadwal"
+          className="w-full p-4 border-b-2 border-slate-100"
+        >
           Jadwal
         </Link>
       </div>

@@ -48,7 +48,6 @@ export const pasienAntrianColumns: ColumnDef<AntrianTableDef>[] = [
     cell: ({ column }) => {
       return (
         <div className="flex flex-col gap-y-2">
-          <Button>Edit</Button>
           <Button variant="destructive">Delete</Button>
         </div>
       );

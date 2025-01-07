@@ -1,10 +1,11 @@
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { antrians } from "@/data/antrian";
 import { AntrianTableDef } from "../_antrianTable/columns";
 import { DataTable } from "../../_components/DataTable";
 import { pasienAntrianColumns } from "./columns";
 import PasienChart from "../_chart/pasienChart";
 import AntrianChart from "./_antrianChart/AntrianChart";
+import Link from "next/link";
 async function getDataAntrian(): Promise<AntrianTableDef[]> {
   return antrians;
 }
@@ -22,6 +23,11 @@ const PasienPage = async () => {
         <div className="p-4 w-full rounded shadow-md">
           <AntrianChart />
         </div>
+      </div>
+      <div className="rounded shadow-md w-full p-4 flex justify-end">
+        <Link href={"/dashboard/pasien/create"} className={buttonVariants()}>
+          Tambahkan antrian
+        </Link>
       </div>
       <DataTable
         columns={pasienAntrianColumns}
