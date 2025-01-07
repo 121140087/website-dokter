@@ -1,6 +1,6 @@
 "use server";
 import { signIn } from "@/auth";
-import { loginSchema } from "@/lib/definitions";
+import { loginSchema } from "@/lib/definitions/definitions";
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
 import { z } from "zod";

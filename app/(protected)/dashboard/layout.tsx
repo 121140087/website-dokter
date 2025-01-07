@@ -1,11 +1,15 @@
 import { ReactNode } from "react";
 import Sidebar from "../_components/Sidebar";
+import DashboardNavbar from "../_components/DashboardNavbar";
 
 const DashboardLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div>
+    <div className="flex">
       <Sidebar />
-      {children}
+      <div className="flex flex-col ml-[300px] w-full">
+        <DashboardNavbar />
+        {children}
+      </div>
     </div>
   );
 };

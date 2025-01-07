@@ -20,7 +20,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { loginSchema } from "@/lib/definitions";
+import { loginSchema } from "@/lib/definitions/definitions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthError } from "next-auth";
 import Link from "next/link";
