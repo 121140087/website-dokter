@@ -17,7 +17,7 @@ import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 
 const DashboardNavbar = () => {
   return (
-    <div className="  h-[72px] border-b-2 flex justify-between items-center px-4">
+    <div className=" sticky top-0 bg-white z-30 h-[72px] border-b-2 flex justify-between items-center px-4">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

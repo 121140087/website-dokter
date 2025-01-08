@@ -48,6 +48,8 @@ model User {
   password  String
   nama String
   nik String? @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
   pasien Pasien? @relation(fields: [nik],references: [nik],onDelete: Cascade)
   accounts      Account[]
   sessions      Session[]
@@ -63,7 +65,8 @@ model Pasien {
   noHp String?
   jenisKelamin JenisKelamin?
   status StatusPasien?
-
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
   User User?
 }
 
@@ -74,6 +77,8 @@ model Admin {
   nama String
   dokterId  String @map("dokter_id")
   Dokter  Dokter @relation(fields: [dokterId], references: [id],onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
 model Dokter {
   id  String @id @default(cuid())
@@ -81,10 +86,32 @@ model Dokter {
   nomorStr String @unique
   alamat String
   statusDokter StatusDokter
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
   @@map("dokters")
   Admin Admin[]
+  
 }
-
+model Obat {
+  id String @id @default(cuid())
+  nama String
+  stok Int
+  harga Int
+  golongan GolonganObat
+  deskripsi String
+  aturanPakai String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+enum GolonganObat {
+  BEBAS
+  BEBAS_TERBATAS
+  KERAS
+  NARKOTIKA
+  FITOMARKA
+  JAMU
+  HERBAL
+}
 enum GolonganDarah {
   A
   B

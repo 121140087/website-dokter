@@ -6,7 +6,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex flex-col ml-[300px] w-full">
+      <div className="flex flex-col w-full">
         <DashboardNavbar />
         {children}
       </div>

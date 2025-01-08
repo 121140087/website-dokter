@@ -142,7 +142,7 @@ const CreatePasien = ({ params }: { params: { pasienId: string } }) => {
                     <FormItem>
                       <FormLabel>Jenis Kelamin</FormLabel>
                       <FormControl>
-                        <Select>
+                        <Select {...field}>
                           <SelectTrigger>
                             <SelectValue placeholder="Jenis Kelamin" />
                           </SelectTrigger>
@@ -169,7 +169,7 @@ const CreatePasien = ({ params }: { params: { pasienId: string } }) => {
                     <FormItem>
                       <FormLabel>Golongan Darah</FormLabel>
                       <FormControl>
-                        <Select>
+                        <Select {...field}>
                           <SelectTrigger>
                             <SelectValue placeholder="Golongan Darah" />
                           </SelectTrigger>
@@ -194,7 +194,7 @@ const CreatePasien = ({ params }: { params: { pasienId: string } }) => {
                     <FormItem>
                       <FormLabel>Status</FormLabel>
                       <FormControl>
-                        <Select>
+                        <Select {...field}>
                           <SelectTrigger>
                             <SelectValue placeholder="Status" />
                           </SelectTrigger>
