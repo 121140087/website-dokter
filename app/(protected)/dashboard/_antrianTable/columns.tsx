@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Antrian } from "@/lib/definitions/definitions";
+import { Antrian } from "@/lib/definitions/schemas";
 import { StatusAntrian } from "@/lib/definitions/enum";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";

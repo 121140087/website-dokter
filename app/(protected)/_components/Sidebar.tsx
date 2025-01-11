@@ -36,6 +36,12 @@ const Sidebar = () => {
         >
           Jadwal
         </Link>
+        <Link
+          href="/dashboard/settings"
+          className="w-full p-4 border-b-2 border-slate-100"
+        >
+          Settings
+        </Link>
       </div>
     </div>
   );

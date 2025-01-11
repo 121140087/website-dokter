@@ -1,6 +1,12 @@
+"use client";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
+import { auth } from "@/auth";
+import { Role } from "@prisma/client";
+import { useEffect, useState } from "react";
+import { User } from "next-auth";
+import DesktopNavbarAction from "./DesktopNavbarAction";
 
 const DesktopNavbar = () => {
   return (
@@ -8,17 +14,7 @@ const DesktopNavbar = () => {
       <Link href="/">Home</Link>
       <Link href="#">Service</Link>
       <Link href="#">About</Link>
-      <div className="flex gap-x-4 items-center ml-8">
-        <Link href="/login" className={buttonVariants()}>
-          Masuk
-        </Link>
-        <Link
-          href="/register"
-          className={buttonVariants({ variant: "outline" })}
-        >
-          Daftar
-        </Link>
-      </div>
+      <DesktopNavbarAction />
     </div>
   );
 };

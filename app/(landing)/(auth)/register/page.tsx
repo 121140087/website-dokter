@@ -19,42 +19,45 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { registerSchema } from "@/lib/definitions/definitions";
+import { registerSchema } from "@/lib/definitions/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useActionState, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<String | undefined>();
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
       password: "",
       nama: "",
+      nik: "",
     },
   });
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     setError(undefined);
     setIsLoading(true);
     try {
-      await register(values);
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(`${error.message}`);
-      } else {
-        setError(`${error}`);
+      const result = await register(values);
+      setError(result?.message);
+      if (!result?.message) {
+        router.push("/pasien/create");
       }
+    } catch (error) {
+      setError("Terjadi Kesalahan");
     }
     setIsLoading(false);
-    redirect("/user/create");
   };
   return (
     <div className="h-full w-full flex justify-center">
-      <Card className="w-[400px] mt-48">
+      <Card className="w-[400px] mt-20">
         <CardHeader>
           <CardTitle className="text-center text-2xl">Daftar</CardTitle>
 
@@ -80,6 +83,26 @@ const RegisterPage = () => {
                         />
                       </FormControl>
                       <FormDescription>Contoh John</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
+              <FormField
+                control={form.control}
+                name="nik"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel>NIK</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="NIK"
+                          {...field}
+                          disabled={isLoading}
+                        />
+                      </FormControl>
+                      <FormDescription>Contoh 351xxxxxxxx</FormDescription>
                       <FormMessage />
                     </FormItem>
                   );

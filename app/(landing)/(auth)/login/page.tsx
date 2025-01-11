@@ -20,7 +20,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { loginSchema } from "@/lib/definitions/definitions";
+import { loginSchema } from "@/lib/definitions/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthError } from "next-auth";
 import Link from "next/link";
@@ -29,6 +29,7 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -36,18 +37,22 @@ const LoginPage = () => {
       password: "",
     },
   });
+
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     setIsLoading(true);
+
     try {
-      await login(values);
+      const result = await login(values);
+      setError(result?.message);
     } catch (error) {
       console.log(error);
+      setError("Terjadi Kesalahan");
     }
     setIsLoading(false);
   };
   return (
     <div className="h-full w-full flex justify-center">
-      <Card className="w-[400px] mt-48">
+      <Card className="w-[400px] mt-20">
         <CardHeader>
           <CardTitle className="text-center text-2xl">Masuk</CardTitle>
 
@@ -101,12 +106,17 @@ const LoginPage = () => {
                   );
                 }}
               />
+              <p className=" text-destructive">{error}</p>
               <Button className="w-full" disabled={isLoading}>
                 Masuk
               </Button>
 
               <Link href="/register">
-                <Button className="w-full mt-4" variant={"outline"}>
+                <Button
+                  className="w-full mt-4"
+                  variant={"outline"}
+                  disabled={isLoading}
+                >
                   Belum punya akun? Daftar
                 </Button>
               </Link>

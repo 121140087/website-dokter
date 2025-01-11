@@ -1,8 +1,10 @@
 import { ReactNode } from "react";
 import Sidebar from "../_components/Sidebar";
 import DashboardNavbar from "../_components/DashboardNavbar";
+import { auth } from "@/auth";
 
-const DashboardLayout = ({ children }: { children: ReactNode }) => {
+const DashboardLayout = async ({ children }: { children: ReactNode }) => {
+  const session = await auth();
   return (
     <div className="flex">
       <Sidebar />
