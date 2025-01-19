@@ -3,6 +3,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { useEffect, useState } from "react";
 import { getJadwal } from "./_actions/getJadwal";
+import { format } from "date-fns";
 interface JadwalContent {
   start: string;
   end: string;
@@ -15,12 +16,8 @@ const JadwalPage = () => {
     const response = await getJadwal();
     const mapped = response.map((e) => {
       return {
-        start: `${e.tanggal.getFullYear()}-0${
-          e.tanggal.getMonth() + 1
-        }-0${e.tanggal.getDate()}`,
-        end: `${e.tanggal.getFullYear()}-0${
-          e.tanggal.getMonth() + 1
-        }-0${e.tanggal.getDate()}`,
+        start: format(e.tanggal, "yyyy-MM-dd"),
+        end: format(e.tanggal, "yyyy-MM-dd"),
         overlap: false,
         display: "background",
       };
