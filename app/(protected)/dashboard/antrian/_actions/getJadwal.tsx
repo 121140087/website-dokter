@@ -8,13 +8,16 @@ export const getJadwalThisMonth = async () => {
     const response = await prisma.jadwal.findMany({
       where: {
         tanggal: {
-          lte: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
-          gte: new Date(
+          gte: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
+          lte: new Date(
             currentDate.getFullYear(),
-            currentDate.getMonth() + 1,
-            0
+            currentDate.getMonth(),
+            currentDate.getDate()
           ),
         },
+      },
+      orderBy: {
+        tanggal: "asc",
       },
     });
     return response;
