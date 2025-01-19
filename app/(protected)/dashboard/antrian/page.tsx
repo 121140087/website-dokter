@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Antrian } from "@prisma/client";
 import { getAntrians } from "./_actions/getAntrians";
+import CurrentAntrian from "./_components/CurrentAntrian";
 const PasienPage = () => {
   const [antrians, setAntrians] = useState<Antrian[]>([]);
   const updateAntrians = async () => {
@@ -22,11 +23,7 @@ const PasienPage = () => {
   return (
     <div className="p-4 flex flex-col gap-y-4">
       <div className="flex gap-x-4 items-center h-72">
-        <div className="rounded shadow-md min-w-72 h-full p-4 flex flex-col justify-between items-center">
-          <h3 className="text-lg">No Antrian</h3>
-          <h2 className="text-6xl font-bold">12</h2>
-          <Button className="w-full">Selanjutnya</Button>
-        </div>
+        <CurrentAntrian />
         <div className="p-4 w-full rounded shadow-md">
           <AntrianChart />
         </div>
