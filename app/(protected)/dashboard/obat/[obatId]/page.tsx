@@ -24,10 +24,13 @@ import { z } from "zod";
 import { createObat } from "../_actions/createObat";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { getObat } from "../_actions/getObat";
+import { useEffect, useState } from "react";
+import { updateObat } from "../_actions/updateObat";
 
-const CreateObatPage = () => {
+const EditObat = ({ params }: { params: Promise<{ obatId: string }> }) => {
   const router = useRouter();
-
+  const [isLoading, setIsLoading] = useState(true);
   const obatFormSchema = z.object({
     nama: z.string().min(1),
     stok: z.coerce.number(),
@@ -39,8 +42,26 @@ const CreateObatPage = () => {
   const form = useForm<z.infer<typeof obatFormSchema>>({
     resolver: zodResolver(obatFormSchema),
   });
+  const updateValue = async () => {
+    const obatId = (await params).obatId;
+    const response = await getObat(obatId);
+    if (response) {
+      form.setValue("nama", response.nama);
+      form.setValue("stok", response.stok);
+      form.setValue("harga", response.harga);
+      form.setValue("golongan", response.golongan);
+      form.setValue("deskripsi", response.deskripsi);
+      form.setValue("aturanPakai", response.aturanPakai);
+    } else {
+      toast("obat tidak ditemukan");
+      router.push("/dashboard/obat");
+    }
+    setIsLoading(false);
+  };
   async function onSubmit(values: z.infer<typeof obatFormSchema>) {
-    await createObat({
+    const obatId = (await params).obatId;
+    await updateObat({
+      id: obatId,
       nama: values.nama,
       aturanPakai: values.aturanPakai,
       deskripsi: values.deskripsi,
@@ -48,9 +69,12 @@ const CreateObatPage = () => {
       harga: values.harga,
       stok: values.stok,
     });
-    toast("Berhasil Menambahkan obat");
+    toast("Berhasil Mengubah obat");
     router.push("/dashboard/obat");
   }
+  useEffect(() => {
+    updateValue();
+  }, []);
   return (
     <div className="p-4">
       <div className="rounded shadow p-4">
@@ -86,6 +110,7 @@ const CreateObatPage = () => {
                         <Select
                           value={field.value}
                           onValueChange={field.onChange}
+                          disabled={isLoading}
                         >
                           <SelectTrigger>
                             <SelectValue placeholder="Golongan" {...field} />
@@ -128,7 +153,12 @@ const CreateObatPage = () => {
                     <FormItem>
                       <FormLabel>Stok</FormLabel>
                       <FormControl>
-                        <Input type="number" placeholder="stok" {...field} />
+                        <Input
+                          disabled={isLoading}
+                          type="number"
+                          placeholder="stok"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -143,7 +173,12 @@ const CreateObatPage = () => {
                     <FormItem>
                       <FormLabel>Harga</FormLabel>
                       <FormControl>
-                        <Input type="number" placeholder="harga" {...field} />
+                        <Input
+                          disabled={isLoading}
+                          type="number"
+                          placeholder="harga"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -160,6 +195,7 @@ const CreateObatPage = () => {
                       <FormControl>
                         <Textarea
                           rows={10}
+                          disabled={isLoading}
                           className="resize-none"
                           {...field}
                         />
@@ -179,6 +215,7 @@ const CreateObatPage = () => {
                       <FormControl>
                         <Textarea
                           rows={10}
+                          disabled={isLoading}
                           className="resize-none"
                           {...field}
                         />
@@ -189,7 +226,9 @@ const CreateObatPage = () => {
                 }}
               />
             </div>
-            <Button className="w-fit">Tambahkan</Button>
+            <Button disabled={isLoading} className="w-fit">
+              Update
+            </Button>
           </form>
         </Form>
       </div>
@@ -197,4 +236,4 @@ const CreateObatPage = () => {
   );
 };
 
-export default CreateObatPage;
+export default EditObat;

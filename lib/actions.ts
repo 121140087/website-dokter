@@ -55,6 +55,7 @@ export async function saveChat({
         lastMessage: text,
         lastChatRole: chatRole,
         updatedAt: new Date(),
+        unreadMessage: userId ? 0 : chatRoom ? chatRoom.unreadMessage + 1 : 1,
       },
       where: {
         id: userId ?? user.id,

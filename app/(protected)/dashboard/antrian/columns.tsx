@@ -1,13 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Antrian } from "@/lib/definitions/schemas";
 import { StatusAntrian } from "@/lib/definitions/enum";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { AntrianTableDef } from "../_antrianTable/columns";
-export const pasienAntrianColumns: ColumnDef<AntrianTableDef>[] = [
+import { Antrian } from "@prisma/client";
+import AntrianAksi from "./_components/AntrianAksi";
+export const pasienAntrianColumns: ColumnDef<Antrian>[] = [
   {
-    accessorKey: "no",
+    accessorKey: "noAntrian",
     header: ({ column }) => {
       return (
         <Button
@@ -39,18 +40,14 @@ export const pasienAntrianColumns: ColumnDef<AntrianTableDef>[] = [
     header: "Keluhan",
   },
   {
-    accessorKey: "status",
+    accessorKey: "statusAntrian",
     header: "Status",
   },
   {
-    id: "aksi",
+    accessorKey: "id",
     header: "Aksi",
-    cell: ({ column }) => {
-      return (
-        <div className="flex flex-col gap-y-2">
-          <Button variant="destructive">Delete</Button>
-        </div>
-      );
+    cell: ({ row }) => {
+      return <AntrianAksi id={row.getValue("id")} />;
     },
   },
 ];

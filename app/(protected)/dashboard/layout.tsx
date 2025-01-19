@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import Sidebar from "../_components/Sidebar";
-import DashboardNavbar from "../_components/DashboardNavbar";
+import Sidebar from "./_components/Sidebar";
+import DashboardNavbar from "./_components/DashboardNavbar";
 import { auth } from "@/auth";
 
 const DashboardLayout = async ({ children }: { children: ReactNode }) => {

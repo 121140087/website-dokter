@@ -1,7 +1,23 @@
-import { Button } from "@/components/ui/button";
+"use client";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Obat } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { ArrowUpDown } from "lucide-react";
+import Link from "next/link";
+import { deleteObat } from "./_actions/deleteObat";
+import { toast } from "sonner";
+import ObatTableAction from "./_components/ObatTableAction";
 
 export const obatColumns: ColumnDef<Obat>[] = [
   {
@@ -61,15 +77,10 @@ export const obatColumns: ColumnDef<Obat>[] = [
     },
   },
   {
-    id: "action",
+    accessorKey: "id",
     header: "Aksi",
-    cell: ({ column }) => {
-      return (
-        <div className="flex gap-x-2">
-          <Button>Edit</Button>
-          <Button variant={"destructive"}>Delete</Button>
-        </div>
-      );
+    cell: ({ row }) => {
+      return <ObatTableAction id={row.getValue("id")} />;
     },
   },
 ];

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { antrianColumns, AntrianTableDef } from "./_antrianTable/columns";
 import { antrians } from "@/data/antrian";
-import { DataTable } from "../_components/DataTable";
+import { DataTable } from "./_components/DataTable";
 import { obatColumns, ObatTableDef } from "./_obatTable/columns";
 import { obats } from "@/data/obats";
 import { ListMinus, Pill, User } from "lucide-react";

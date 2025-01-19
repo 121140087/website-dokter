@@ -5,11 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Send } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { getChatRooms } from "./actions/getChatList";
+import { getChatRooms } from "./_actions/getChatList";
 import { Chat, ChatRole, ChatRoom } from "@prisma/client";
 import moment from "moment";
-import { getChats } from "./actions/getChats";
+import { getChats } from "./_actions/getChats";
 import { saveChat } from "@/lib/actions";
+import { cn } from "@/lib/utils";
 const PesanPage = () => {
   const [chatRooms, setChatRooms] = useState<ChatRoom[] | undefined>();
   const [chats, setChats] = useState<Chat[] | undefined>();
@@ -74,9 +75,12 @@ const PesanPage = () => {
               return (
                 <div
                   key={c.id}
-                  className="rounded shadow w-fit h-fit p-2 flex flex-col max-w-[650px]"
+                  className={cn(
+                    "rounded shadow w-fit h-fit p-2 flex flex-col max-w-[650px]",
+                    c.role === ChatRole.dokter && "ml-auto"
+                  )}
                 >
-                  <p>{c.message}</p>
+                  <p className="whitespace-pre-line ">{c.message}</p>
                   <p className="text-sm text-slate-500 text-end">
                     {moment(c.createdAt).fromNow()}
                   </p>
@@ -91,6 +95,7 @@ const PesanPage = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onSubmit={sendChat}
+            className="resize-none"
           />
           <Button onClick={sendChat}>
             <Send />

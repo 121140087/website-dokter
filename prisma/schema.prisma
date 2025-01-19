@@ -66,6 +66,8 @@ model Pasien {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @default(now())
   User          User?
+
+  Antrian Antrian[]
 }
 
 model Dokter {
@@ -96,6 +98,7 @@ model ChatRoom {
   lastChatRole ChatRole?
   nama String
   chats Chat[]
+  unreadMessage Int @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
@@ -107,6 +110,38 @@ model Chat{
   ChatRoom ChatRoom @relation(fields: [userId], references: [id],onDelete: Cascade)
   createdAt DateTime @default(now()) 
   updatedAt DateTime @default(now())
+}
+model Jadwal {
+  id String @id @default(cuid())
+  jumlahAntrian Int
+  tanggal DateTime
+  statusKlinik StatusKlinik
+  keteranganTutup String?
+  Antrian Antrian[]
+}
+model Antrian {
+  id String @id @default(cuid())
+  noAntrian Int
+  pasienNIK String
+  jadwalId String
+  keluhan String
+  nama String
+  statusAntrian StatusAntrian @default(MENUNGGU)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  jadwal Jadwal @relation(fields: [jadwalId],references: [id],onDelete: Cascade)
+  pasien Pasien @relation(fields: [pasienNIK],references: [nik],onDelete: Cascade)
+}
+enum StatusAntrian {
+  MENUNGGU
+  TIDAK_HADIR
+  BATAL
+  SEDANG_DIPERIKSA
+  SELESAI_DIPERIKSA
+}
+enum StatusKlinik {
+  TUTUP
+  BUKA
 }
 enum ChatRole {
   user
