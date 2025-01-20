@@ -147,6 +147,7 @@ export default function Home() {
           <div className=" w-full mx-auto md:mx-0 max-w-[400px] md:max-w-max aspect-square rounded-lg bg-gray-400 mt-8 md:mt-0" />
         </div>
       </div>
+
       <div className="flex flex-col items-center">
         <h1 className="font-bold text-4xl mb-8 text-center">
           Kesehatan Anda, Segera dan Mudah
@@ -158,7 +159,16 @@ export default function Home() {
           repudiandae porro vel doloremque!
         </p>
         <Button size={"lg"}>Konsultasi Sekarang</Button>
+        <iframe
+          className="w-full mt-12 rounded-xl shadow"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31777.436927829334!2d105.30455994183347!3d-5.389575242472901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e40dc99e12771b7%3A0xca8e1bccee0c223a!2sPerumahan%20Sabah%20Balau%20Residence!5e0!3m2!1sid!2sid!4v1737348687802!5m2!1sid!2sid"
+          width="600"
+          height="450"
+          allowFullScreen={false}
+          loading="lazy"
+        ></iframe>
       </div>
+
       <div className="flex p-4 justify-between mt-36">
         <p>&copy; Copyright 2025</p>
         <div className="flex gap-x-4">

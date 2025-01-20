@@ -1,36 +1,50 @@
 import { Feather } from "lucide-react";
 import Link from "next/link";
 import SidebarItem from "./SidebarItem";
+import { Role } from "@prisma/client";
 
-const Sidebar = () => {
+const Sidebar = ({ role }: { role: Role }) => {
   const sidebarItems = [
     {
       name: "Dashboard",
       link: "/dashboard",
+      role: [Role.DOKTER, Role.RESEPSIONIS],
     },
     {
       name: "Antrian",
       link: "/dashboard/antrian",
+      role: [Role.RESEPSIONIS],
+    },
+    {
+      name: "Pemeriksaan",
+      link: "/dashboard/pemeriksaan",
+      role: [Role.DOKTER],
     },
     {
       name: "Pasien",
       link: "/dashboard/pasien",
+      role: [Role.RESEPSIONIS, Role.DOKTER],
     },
+
     {
       name: "Obat",
       link: "/dashboard/obat",
+      role: [Role.RESEPSIONIS],
     },
     {
       name: "Pesan",
       link: "/dashboard/pesan",
+      role: [Role.DOKTER],
     },
     {
       name: "Jadwal",
       link: "/dashboard/jadwal",
+      role: [Role.RESEPSIONIS, Role.DOKTER],
     },
     {
       name: "Settings",
       link: "/dashboard/settings",
+      role: [Role.RESEPSIONIS, Role.DOKTER],
     },
   ];
   return (
