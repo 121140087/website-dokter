@@ -18,7 +18,7 @@ const Sidebar = ({ role }: { role: Role }) => {
     {
       name: "Pemeriksaan",
       link: "/dashboard/pemeriksaan",
-      role: [Role.DOKTER],
+      role: [Role.DOKTER, Role.RESEPSIONIS],
     },
     {
       name: "Pasien",
