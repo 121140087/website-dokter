@@ -1,9 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { use, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { getPasien } from "../../_actions/getPasien";
 import { updatePasien } from "@/actions/updatePasien";
 import {
   GolonganDarah,
@@ -39,25 +38,27 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Textarea } from "@/components/ui/textarea";
-import { createAntrian } from "../../_actions/createAntrian";
 import { useRouter } from "next/navigation";
-import { antrianFormSchema } from "@/lib/definitions/schemas";
+import { createPasien } from "../../_actions/createPasien";
+import { getPasienByNIK } from "../../_actions/getPasienByNIK";
 
-const PasienForm = ({ date }: { date: Date }) => {
-  const [pasien, setPasien] = useState<Pasien | undefined>();
+const PasienForm = () => {
+  const userFormSchema = z.object({
+    nama: z.string().min(1),
+    nik: z.string().min(16).max(16),
+    status: z.string().min(1),
+    GolonganDarah: z.string().min(1),
+    JenisKelamin: z.string().min(1),
+    tanggalLahir: z.date(),
+    alamat: z.string().min(1),
+    noHp: z.string().min(1),
+  });
   const [isNIKChecked, setIsNIKChecked] = useState(false);
   const [tanggalLahir, setTanggalLahir] = useState<Date | undefined>(
     new Date()
   );
-  const form = useForm<z.infer<typeof antrianFormSchema>>({
-    resolver: zodResolver(antrianFormSchema),
-    defaultValues: {
-      alamat: "",
-      keluhan: "",
-      nama: "",
-      nik: "",
-      noHp: "",
-    },
+  const form = useForm<z.infer<typeof userFormSchema>>({
+    resolver: zodResolver(userFormSchema),
   });
   const router = useRouter();
   const updateCurrentPasien = async () => {
@@ -70,38 +71,26 @@ const PasienForm = ({ date }: { date: Date }) => {
     }
     form.clearErrors();
 
-    const response = await getPasien(form.getValues("nik"));
+    const response = await getPasienByNIK(form.getValues("nik"));
 
     if (response) {
-      setPasien(response);
-      response.nama && form.setValue("nama", response.nama);
-      response.golonganDarah &&
-        form.setValue("GolonganDarah", response.golonganDarah);
-      response.jenisKelamin &&
-        form.setValue("JenisKelamin", response.jenisKelamin);
-      response.noHp && form.setValue("noHp", response.noHp);
-      response.status && form.setValue("status", response.status);
-      response.tanggalLahir &&
-        form.setValue("tanggalLahir", response.tanggalLahir);
-      response.tanggalLahir && setTanggalLahir(response.tanggalLahir);
-
-      response.alamat && form.setValue("alamat", response.alamat);
-      toast("Data ditemukan");
+      toast("NIK sudah terdaftar");
+      setIsNIKChecked(false);
     } else {
-      toast("Data tidak ditemukan");
+      toast("NIK belum terdaftar");
+      setIsNIKChecked(true);
     }
-    setIsNIKChecked(true);
   };
-  async function onSubmit(values: z.infer<typeof antrianFormSchema>) {
+  async function onSubmit(values: z.infer<typeof userFormSchema>) {
     if (!tanggalLahir) {
       form.setError("tanggalLahir", {
         message: "Tanggal lahir tidak boleh kosong",
       });
       return;
     }
-    toast("Menambahkan ke antrian");
+    toast("Menambahkan Pasien");
     try {
-      await updatePasien({
+      await createPasien({
         nik: values.nik,
         nama: values.nama,
         golonganDarah: GolonganDarah[values.GolonganDarah],
@@ -111,16 +100,10 @@ const PasienForm = ({ date }: { date: Date }) => {
         status: StatusPasien[values.status],
         tanggalLahir: tanggalLahir,
       } as Pasien);
-      await createAntrian({
-        keluhan: values.keluhan,
-        tanggal: date,
-        nik: pasien?.nik!,
-        nama: pasien?.nama!,
-      });
-      toast("Berhasil menambahkan antrian");
-      router.push("/dashboard/antrian");
+      toast("Berhasil menambahkan Pasien");
+      router.push("/dashboard/pasien");
     } catch (error) {
-      toast("Gagal menambahkan antrian");
+      toast("Gagal menambahkan Pasien");
     }
   }
   return (
@@ -353,27 +336,7 @@ const PasienForm = ({ date }: { date: Date }) => {
               }}
             />
           </div>
-          <FormField
-            control={form.control}
-            name="keluhan"
-            render={({ field }) => {
-              return (
-                <FormItem>
-                  <FormLabel>Keluhan</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      disabled={!isNIKChecked}
-                      rows={10}
-                      {...field}
-                      className="resize-none"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              );
-            }}
-          />
-          <Button className="w-fit">Menambahkan ke antrian</Button>
+          <Button className="w-fit">Menambahkan Pasien</Button>
         </form>
       </Form>
     </div>

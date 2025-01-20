@@ -1,10 +1,7 @@
 "use client";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { antrians } from "@/data/antrian";
-import { AntrianTableDef } from "../_antrianTable/columns";
+import { buttonVariants } from "@/components/ui/button";
 import { DataTable } from "../_components/DataTable";
 import { pasienAntrianColumns } from "./columns";
-import PasienChart from "../_chart/pasienChart";
 import AntrianChart from "./_antrianChart/AntrianChart";
 import Link from "next/link";
 import { useEffect, useState } from "react";

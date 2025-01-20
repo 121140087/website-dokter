@@ -13,6 +13,10 @@ const Sidebar = () => {
       link: "/dashboard/antrian",
     },
     {
+      name: "Pasien",
+      link: "/dashboard/pasien",
+    },
+    {
       name: "Obat",
       link: "/dashboard/obat",
     },

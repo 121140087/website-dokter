@@ -26,3 +26,24 @@ export const createPasienSchema = z.object({
   jenisKelamin: z.string().min(1),
   status: z.string().min(1),
 });
+export const antrianFormSchema = z.object({
+  nama: z.string().min(1),
+  nik: z.string().min(16).max(16),
+  status: z.string().min(1),
+  GolonganDarah: z.string().min(1),
+  JenisKelamin: z.string().min(1),
+  tanggalLahir: z.date(),
+  alamat: z.string().min(1),
+  noHp: z.string().min(1),
+  keluhan: z.string().min(1),
+});
+export const pasienFormSchema = z.object({
+  nama: z.string().min(1),
+  nik: z.string().min(16).max(16),
+  status: z.string().min(1),
+  GolonganDarah: z.string().min(1),
+  JenisKelamin: z.string().min(1),
+  tanggalLahir: z.date(),
+  alamat: z.string().min(1),
+  noHp: z.string().min(1),
+});

@@ -24,65 +24,90 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { GolonganDarah, JenisKelamin, StatusPasien } from "@prisma/client";
+import {
+  GolonganDarah,
+  JenisKelamin,
+  Pasien,
+  StatusPasien,
+} from "@prisma/client";
 import { format } from "date-fns";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { getPasienByNIK } from "../_actions/getPasienByNIK";
+import { pasienFormSchema } from "@/lib/definitions/schemas";
+import { toast } from "sonner";
+import { CalendarIcon } from "lucide-react";
+import { updatePasien } from "@/actions/updatePasien";
+import { useRouter } from "next/navigation";
 
-const getUser = async function () {
-  return {
-    nama: "Paduka",
-    email: "paduka@gmail.com",
-    nik: "1234567890123456",
-    status: StatusPasien.LAJANG,
-    GolonganDarah: GolonganDarah.AB,
-    JenisKelamin: JenisKelamin.LAKILAKI,
-    tanggalLahir: new Date("2003-08-09"),
-    alamat: "Desa Kutorejo Kecamatan Kertosono",
-    noHp: "085841142602",
+const PasienDetail = ({ params }: { params: Promise<{ nik: string }> }) => {
+  const [pasien, setPasien] = useState<Pasien | null>();
+  const [tanggalLahir, setTanggalLahir] = useState<Date | undefined>(
+    new Date()
+  );
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof pasienFormSchema>>({
+    resolver: zodResolver(pasienFormSchema),
+    defaultValues: {
+      alamat: "",
+      nama: "",
+      nik: "",
+      noHp: "",
+    },
+  });
+  async function onSubmit(values: z.infer<typeof pasienFormSchema>) {
+    toast("Mengupdate data pasien");
+    try {
+      await updatePasien({
+        nik: values.nik,
+        nama: values.nama,
+        golonganDarah: GolonganDarah[values.GolonganDarah],
+        alamat: values.alamat,
+        jenisKelamin: JenisKelamin[values.JenisKelamin],
+        noHp: values.noHp,
+        status: StatusPasien[values.status],
+        tanggalLahir: tanggalLahir,
+      } as Pasien);
+      router.push("/dashboard/pasien");
+    } catch {
+      toast("Gagal Mengupdate data pasien");
+    }
+  }
+
+  const updateCurrentPasien = async () => {
+    toast("Mendapatkan data pasien");
+    const parms = await params;
+
+    const response = await getPasienByNIK(parms.nik);
+
+    if (response) {
+      setPasien(response);
+      response.nik && form.setValue("nik", response.nik);
+      response.nama && form.setValue("nama", response.nama);
+      response.golonganDarah &&
+        form.setValue("GolonganDarah", response.golonganDarah);
+      response.jenisKelamin &&
+        form.setValue("JenisKelamin", response.jenisKelamin);
+      response.noHp && form.setValue("noHp", response.noHp);
+      response.status && form.setValue("status", response.status);
+      response.tanggalLahir &&
+        form.setValue("tanggalLahir", response.tanggalLahir);
+      response.tanggalLahir && setTanggalLahir(response.tanggalLahir);
+      response.alamat && form.setValue("alamat", response.alamat);
+      setPasien(response);
+      toast("Data ditemukan");
+    } else {
+      toast("Data tidak ditemukan");
+      router.push("/dashboard/pasien");
+    }
   };
-};
-
-const PasienDetail = ({ params }: { params: { pasienId: string } }) => {
-  const userFormSchema = z.object({
-    nama: z.string().min(1),
-    email: z.string().email(),
-    nik: z.string().min(16).max(16),
-    status: z.string().min(1),
-    GolonganDarah: z.string().min(1),
-    JenisKelamin: z.string().min(1),
-    tanggalLahir: z.date(),
-    alamat: z.string().min(1),
-    noHp: z.string().min(1),
-  });
-  const [user, setUser] = useState({});
-  const [date, setDate] = useState<Date>();
-  const form = useForm<z.infer<typeof userFormSchema>>({
-    resolver: zodResolver(userFormSchema),
-    defaultValues: user,
-  });
-  function onSubmit(values: z.infer<typeof userFormSchema>) {
-    console.log(values);
-  }
-  async function getUserData() {
-    const userData = await getUser();
-    setUser(userData);
-  }
-  useEffect(() => {}, []);
+  useEffect(() => {
+    updateCurrentPasien();
+  }, []);
   return (
     <div className="p-4 flex gap-x-4">
-      <div className="p-4 rounded shadow-md w-fit h-fit">
-        <Image
-          src={"/images/elon.jpg"}
-          alt="avatar"
-          width={"100"}
-          height={"100"}
-          className="w-[200px] aspect-square object-cover rounded"
-        />
-        <Button className="w-full mt-4">Ubah Gambar</Button>
-      </div>
       <div className="w-full p-4 rounded shadow-md ">
         <h1 className="font-bold text-2xl">Data Pasien</h1>
 
@@ -100,7 +125,11 @@ const PasienDetail = ({ params }: { params: { pasienId: string } }) => {
                     <FormItem>
                       <FormLabel>Nama</FormLabel>
                       <FormControl>
-                        <Input placeholder="Nama" {...field} />
+                        <Input
+                          placeholder="Nama"
+                          disabled={!pasien}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -115,7 +144,7 @@ const PasienDetail = ({ params }: { params: { pasienId: string } }) => {
                     <FormItem>
                       <FormLabel>NIK</FormLabel>
                       <FormControl>
-                        <Input placeholder="NIK" {...field} />
+                        <Input placeholder="NIK" disabled {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -130,7 +159,11 @@ const PasienDetail = ({ params }: { params: { pasienId: string } }) => {
                     <FormItem>
                       <FormLabel>Alamat</FormLabel>
                       <FormControl>
-                        <Input placeholder="Alamat" {...field} />
+                        <Input
+                          placeholder="Alamat"
+                          disabled={!pasien}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -145,7 +178,11 @@ const PasienDetail = ({ params }: { params: { pasienId: string } }) => {
                     <FormItem>
                       <FormLabel>No Hp</FormLabel>
                       <FormControl>
-                        <Input placeholder="no hp" {...field} />
+                        <Input
+                          placeholder="no hp"
+                          disabled={!pasien}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -160,7 +197,11 @@ const PasienDetail = ({ params }: { params: { pasienId: string } }) => {
                     <FormItem>
                       <FormLabel>Jenis Kelamin</FormLabel>
                       <FormControl>
-                        <Select>
+                        <Select
+                          disabled={!pasien}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Jenis Kelamin" />
                           </SelectTrigger>
@@ -187,7 +228,11 @@ const PasienDetail = ({ params }: { params: { pasienId: string } }) => {
                     <FormItem>
                       <FormLabel>Golongan Darah</FormLabel>
                       <FormControl>
-                        <Select>
+                        <Select
+                          disabled={!pasien}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Golongan Darah" />
                           </SelectTrigger>
@@ -212,7 +257,11 @@ const PasienDetail = ({ params }: { params: { pasienId: string } }) => {
                     <FormItem>
                       <FormLabel>Status</FormLabel>
                       <FormControl>
-                        <Select>
+                        <Select
+                          disabled={!pasien}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Status" />
                           </SelectTrigger>
@@ -242,14 +291,16 @@ const PasienDetail = ({ params }: { params: { pasienId: string } }) => {
                         <Popover>
                           <PopoverTrigger asChild>
                             <Button
+                              disabled={!pasien}
                               variant={"outline"}
                               className={cn(
                                 "w-full justify-start text-left font-normal",
-                                !date && "text-muted-foreground"
+                                !tanggalLahir && "text-muted-foreground"
                               )}
                             >
-                              {date ? (
-                                format(date, "PPP")
+                              <CalendarIcon className="mr-2 h-4 w-4" />
+                              {tanggalLahir ? (
+                                format(tanggalLahir, "PPP")
                               ) : (
                                 <span>Pick a date</span>
                               )}
@@ -258,9 +309,16 @@ const PasienDetail = ({ params }: { params: { pasienId: string } }) => {
                           <PopoverContent className="w-auto p-0">
                             <Calendar
                               mode="single"
-                              selected={date}
-                              onSelect={setDate}
+                              selected={tanggalLahir}
+                              onSelect={(val) => {
+                                field.onChange(val);
+                                setTanggalLahir(val);
+                              }}
                               initialFocus
+                              captionLayout="dropdown"
+                              defaultMonth={new Date()}
+                              fromMonth={new Date(1930, 1)}
+                              toMonth={new Date()}
                             />
                           </PopoverContent>
                         </Popover>
