@@ -48,7 +48,7 @@ const RegisterPage = () => {
       const result = await register(values);
       setError(result?.message);
       if (!result?.message) {
-        router.push("/pasien/create");
+        router.push("/login");
       }
     } catch (error) {
       setError("Terjadi Kesalahan");

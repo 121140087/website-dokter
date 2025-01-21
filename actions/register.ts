@@ -5,7 +5,8 @@ import { prisma } from "@/prisma";
 import { z } from "zod";
 import { hashSync } from "bcryptjs";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { login } from "./login";
+import { generateVerificationToken } from "./generateVerificationToken";
+import { sendVerificationEmail } from "./sendVerificationEmail";
 
 export async function register(form: z.infer<typeof registerSchema>) {
   const { email, nama, nik, password } = form;
@@ -54,10 +55,8 @@ export async function register(form: z.infer<typeof registerSchema>) {
     await prisma.user.create({
       data: payload,
     });
-    await login({
-      email: email,
-      password,
-    });
+    const verificationToken = await generateVerificationToken(payload.email);
+    await sendVerificationEmail(payload.email, verificationToken.token);
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);

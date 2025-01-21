@@ -42,6 +42,7 @@ model User {
   nik       String?   @unique
   password  String
   nama      String
+  emailVerified DateTime? 
   createdAt DateTime  @default(now())
   dokterId  String?   @map("dokter_id")
   role      Role      @default(PASIEN)
@@ -52,6 +53,15 @@ model User {
   pasien    Pasien?   @relation(fields: [nik], references: [nik], onDelete: Cascade)
 
   @@map("users")
+}
+model VerificationToken {
+  id String @id @default(cuid())
+  email String
+  token      String
+  expires    DateTime
+ 
+  @@unique([email, token])
+  @@map("verification_tokens")
 }
 
 model Pasien {
