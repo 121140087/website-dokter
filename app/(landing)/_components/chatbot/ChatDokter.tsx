@@ -5,37 +5,36 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useChat } from "ai/react";
 import { MessageCircle, Send, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ChatRole } from "@prisma/client";
+import { Chat, ChatRole } from "@prisma/client";
 import MessageItem from "./MessageItem";
+import { getChats } from "./_actions/getChats";
+import { saveChat } from "@/lib/actions";
 
-const ChatBot = () => {
-  const [isKonsultasi, setIsKonsultasi] = useState(false);
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    isLoading,
-    setMessages,
-    setInput,
-  } = useChat({
-    initialMessages: [
-      {
-        id: "192n39n12n378",
-        role: "assistant",
-        content:
-          "Halo saya adalah Asisten AI Dr. Irawan, Apakah ada yang bisa saya bantu?",
-        createdAt: new Date(),
-      },
-    ],
-  });
-
-  const updateMessage = async () => {};
+const ChatDokter = () => {
+  const [messages, setMessages] = useState<Chat[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [input, setInput] = useState("");
+  const updateMessage = async () => {
+    const response = await getChats();
+    setMessages(response);
+  };
   useEffect(() => {
     updateMessage();
   }, []);
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (input.length <= 0) {
+      return;
+    }
+    await saveChat({
+      chatRole: ChatRole.user,
+      text: input,
+    });
+    setInput("");
+    await updateMessage();
+  };
   const messageScrollRef = useRef(null);
   useEffect(() => {
     if (messageScrollRef.current) {
@@ -57,8 +56,8 @@ const ChatBot = () => {
             <Input
               placeholder="Kirim pesan"
               value={input}
-              onChange={handleInputChange}
-              disabled={isLoading}
+              onChange={(e) => setInput(e.currentTarget.value)}
+              disabled={loading}
             />
             <Button>
               <Send />
@@ -70,4 +69,4 @@ const ChatBot = () => {
   );
 };
 
-export default ChatBot;
+export default ChatDokter;

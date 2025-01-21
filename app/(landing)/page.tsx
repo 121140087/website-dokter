@@ -24,10 +24,10 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { format } from "date-fns";
-import ChatBot from "./_components/ChatBot";
+import ChatBot from "./_components/chatbot/ChatBot";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import ChatBox from "./_components/ChatBox";
+import ChatBox from "./_components/chatbot/ChatBox";
 
 export default function Home() {
   return (

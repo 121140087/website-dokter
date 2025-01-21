@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
-import { Message } from "ai";
+import { Chat } from "@prisma/client";
 import { format } from "date-fns";
 import Markdown from "react-markdown";
 
-const MessageItem = ({ m }: { m: Message }) => {
+const MessageItem = ({ m }: { m: Chat }) => {
   return (
     <div key={m.id}>
       <div
@@ -12,7 +12,7 @@ const MessageItem = ({ m }: { m: Message }) => {
           m.role === "user" && "ml-auto text-end"
         )}
       >
-        <Markdown children={m.content} />
+        <Markdown children={m.message} />
         <p
           className={cn(
             "text-end text-sm text-slate-600",

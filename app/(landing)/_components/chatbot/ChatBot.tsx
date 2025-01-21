@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChatRole } from "@prisma/client";
 import MessageItem from "./MessageItem";
+import ChatBotMessageItem from "./ChatbotMessageItem";
 
 const ChatBot = () => {
   const [isKonsultasi, setIsKonsultasi] = useState(false);
@@ -47,7 +48,7 @@ const ChatBot = () => {
     <div className="h-full flex flex-col justify-between">
       <ScrollArea className="p-4 h-full">
         {messages.map((m) => (
-          <MessageItem key={m.id} m={m} />
+          <ChatBotMessageItem key={m.id} m={m} />
         ))}
         <div ref={messageScrollRef} />
       </ScrollArea>

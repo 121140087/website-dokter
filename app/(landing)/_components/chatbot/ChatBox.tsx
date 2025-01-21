@@ -3,6 +3,7 @@ import { MessageCircle, X } from "lucide-react";
 import { useState } from "react";
 import ChatList from "./ChatList";
 import ChatBot from "./ChatBot";
+import ChatDokter from "./ChatDokter";
 enum ChatPage {
   CHATLIST,
   AI,
@@ -37,7 +38,7 @@ const ChatBox = () => {
           <X className="cursor-pointer" onClick={toggleChat} />
         </div>
         <div className="h-full overflow-hidden">
-          <ChatBot />
+          <ChatDokter />
         </div>
       </div>
     </>
