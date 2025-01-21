@@ -3,12 +3,12 @@ import { Message } from "ai";
 import { format } from "date-fns";
 import Markdown from "react-markdown";
 
-const ChatbotItem = ({ m }: { m: Message }) => {
+const MessageItem = ({ m }: { m: Message }) => {
   return (
     <div key={m.id}>
       <div
         className={cn(
-          "rounded shadow max-w-[250px] mb-2 p-2 w-fit flex flex-col",
+          "rounded shadow max-w-[250px] mb-2 p-2 w-fit flex flex-col h-fit",
           m.role === "user" && "ml-auto text-end"
         )}
       >
@@ -26,4 +26,4 @@ const ChatbotItem = ({ m }: { m: Message }) => {
   );
 };
 
-export default ChatbotItem;
+export default MessageItem;

@@ -18,12 +18,12 @@ export async function POST(req: Request) {
       "Jika seseorang menanyakan tentang lokasi. berilah lokasi google map berikut https://maps.app.goo.gl/GkJEgUxTb31AzPFPA",
     messages,
     async onFinish({ text }) {
-      await saveChat({
-        text: (messages as Message[])[(messages as Message[]).length - 1]
-          .content,
-        chatRole: ChatRole.user,
-      });
-      await saveChat({ text, chatRole: ChatRole.assistant });
+      // await saveChat({
+      //   text: (messages as Message[])[(messages as Message[]).length - 1]
+      //     .content,
+      //   chatRole: ChatRole.user,
+      // });
+      // await saveChat({ text, chatRole: ChatRole.assistant });
     },
   });
 

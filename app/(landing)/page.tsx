@@ -27,11 +27,12 @@ import { format } from "date-fns";
 import ChatBot from "./_components/ChatBot";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import ChatBox from "./_components/ChatBox";
 
 export default function Home() {
   return (
     <div className="px-8  lg:px-36 xl:px-52 2xl:px-72 flex flex-col gap-y-12">
-      <ChatBot />
+      <ChatBox />
       <div className="grid grid-cols-1  xl:grid-cols-2 w-full  xl:h-[600px]">
         <div className="flex flex-col gap-y-8 justify-center items-center xl:items-start">
           <h1 className="text-center xl:text-start text-6xl font-bold">
