@@ -39,3 +39,8 @@ export enum ROLE {
   RESEPSIONIS,
   PASIEN,
 }
+export enum ChatPage {
+  CHATLIST,
+  AI,
+  DOKTER,
+}
