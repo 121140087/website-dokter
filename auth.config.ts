@@ -1,6 +1,7 @@
 import { Role } from "@prisma/client";
 import type { NextAuthConfig } from "next-auth";
 import { PrismaClient } from "@prisma/client/edge";
+import { getUserByEmail } from "./lib/actions";
 
 export const authConfig = {
   pages: {
@@ -16,7 +17,7 @@ export const authConfig = {
       const isOnProtectedRoutes = nextUrl.pathname.startsWith(protectedRoutes);
       const isOnAdminRoutes = adminRoutes.includes(nextUrl.pathname);
       const isOnAuthenticationRoutes = authenticationRoutes.includes(
-        nextUrl.pathname  
+        nextUrl.pathname
       );
       const isPasien = auth?.user?.role === Role.PASIEN;
       if (isOnProtectedRoutes && !isLoggedIn) {

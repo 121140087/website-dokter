@@ -24,12 +24,15 @@ import { loginSchema } from "@/lib/definitions/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthError } from "next-auth";
 import Link from "next/link";
-import { useActionState, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useActionState, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | undefined>();
+  const searchParams = useSearchParams();
+  const [message, setMessage] = useState<string | null>();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -37,13 +40,21 @@ const LoginPage = () => {
       password: "",
     },
   });
-
+  useEffect(() => {
+    setMessage(searchParams.get("message"));
+  }, []);
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+    setMessage(null);
+    setError(undefined);
     setIsLoading(true);
 
     try {
       const result = await login(values);
-      setError(result?.message);
+      setError(result?.error);
+      setMessage(result?.message);
+      if (!result) {
+        window.location.replace("/");
+      }
     } catch (error) {
       console.log(error);
       setError("Terjadi Kesalahan");
@@ -106,7 +117,16 @@ const LoginPage = () => {
                   );
                 }}
               />
-              <p className=" text-destructive">{error}</p>
+              {error && (
+                <div className="p-2 w-full rounded bg-destructive-foreground">
+                  <p className=" text-destructive text-center">{error}</p>
+                </div>
+              )}
+              {message && (
+                <div className="p-2 w-full rounded bg-green-100">
+                  <p className=" text-green-700 text-center">{message}</p>
+                </div>
+              )}
               <Button className="w-full" disabled={isLoading}>
                 Masuk
               </Button>

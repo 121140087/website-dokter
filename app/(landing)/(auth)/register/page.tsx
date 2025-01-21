@@ -23,7 +23,7 @@ import { registerSchema } from "@/lib/definitions/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { useActionState, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -31,6 +31,7 @@ const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<String | undefined>();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -48,7 +49,12 @@ const RegisterPage = () => {
       const result = await register(values);
       setError(result?.message);
       if (!result?.message) {
-        router.push("/login");
+        const params = new URLSearchParams(searchParams.toString());
+        params.set(
+          "message",
+          "Email verifikasi telah dikirim ke " + form.getValues("email")
+        );
+        router.push("/login" + "?" + params);
       }
     } catch (error) {
       setError("Terjadi Kesalahan");
