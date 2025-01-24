@@ -2,17 +2,22 @@
 import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
 import { useEffect, useState } from "react";
-import { auth } from "@/auth";
 import { User } from "next-auth";
 import { Role } from "@prisma/client";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { logout } from "@/actions/logout";
+import { toast } from "sonner";
 
 const DesktopNavbarAction = () => {
   const [user, setUser] = useState<User | undefined>();
   const getUser = async () => {
     const user = await getCurrentUser();
     setUser(user);
+  };
+  const signOut = async () => {
+    await logout();
+    toast("Berhasil Logout");
+    window.location.reload();
   };
   useEffect(() => {
     getUser();
@@ -21,9 +26,7 @@ const DesktopNavbarAction = () => {
     <div>
       {user ? (
         <div className="flex gap-x-4 items-center ml-8">
-          <Button onClick={logout} className={buttonVariants()}>
-            Logout
-          </Button>
+          <Button onClick={signOut}>Logout</Button>
           {user.role !== Role.PASIEN && (
             <Link
               href="/dashboard"
