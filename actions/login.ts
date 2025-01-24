@@ -37,7 +37,7 @@ export async function login(form: z.infer<typeof loginSchema>) {
         message: "Silahkan cek email anda untuk memverfikasi akun",
       };
     }
-    await signIn("credentials", { email, password });
+    await signIn("credentials", { email, password, redirect: false });
   } catch (error) {
     if (error instanceof AuthError) {
       console.log(error.message);
