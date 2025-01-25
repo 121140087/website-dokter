@@ -11,7 +11,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 const CreatePasien = () => {
   const [date, setDate] = useState<Date | undefined>();
   const onDateClick = (date: Date) => {
-    setDate(new Date(date.getFullYear(), date.getMonth(), date.getDay()));
+    console.log(date.getDate());
+    setDate(new Date(date.getFullYear(), date.getMonth(), date.getDate()));
   };
   if (!date) {
     return (

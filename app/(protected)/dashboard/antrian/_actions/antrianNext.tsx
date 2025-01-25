@@ -4,6 +4,8 @@ import { prisma } from "@/prisma";
 import { Antrian, StatusAntrian } from "@prisma/client";
 
 export const antrianNext = async (currentAntrian: Antrian | null) => {
+  const currentDate = new Date();
+
   if (currentAntrian) {
     const response = await prisma.antrian.findUnique({
       where: {
@@ -17,18 +19,25 @@ export const antrianNext = async (currentAntrian: Antrian | null) => {
       };
     }
   }
-
-  const result = await prisma.antrian.findFirst({
+  const res = await prisma.jadwal.findFirst({
     where: {
-      createdAt: {
-        gte: new Date(),
+      tanggal: {
+        gte: new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          currentDate.getDate()
+        ),
       },
-      statusAntrian: StatusAntrian.MENUNGGU,
     },
-    orderBy: {
-      noAntrian: "asc",
+    include: {
+      Antrian: {
+        where: {
+          statusAntrian: StatusAntrian.MENUNGGU,
+        },
+      },
     },
   });
+  const result = res?.Antrian[0];
   if (result) {
     await prisma.antrian.update({
       where: {

@@ -37,7 +37,7 @@ const AntrianChart = () => {
     ) {
       jadwals.push({
         data:
-          result.find((data) => data.tanggal.getDay() === i)?.jumlahAntrian ??
+          result.find((data) => data.tanggal.getDate() === i)?._count.Antrian ??
           0,
         day: i,
       });

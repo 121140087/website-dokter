@@ -4,6 +4,7 @@ import { prisma } from "@/prisma";
 
 export const getJadwalThisMonth = async () => {
   const currentDate = new Date();
+  const refDate = new Date(currentDate.getFullYear() - 4);
   try {
     const response = await prisma.jadwal.findMany({
       where: {
@@ -12,12 +13,19 @@ export const getJadwalThisMonth = async () => {
           lte: new Date(
             currentDate.getFullYear(),
             currentDate.getMonth(),
-            currentDate.getDate()
+            refDate.getDate()
           ),
         },
       },
       orderBy: {
         tanggal: "asc",
+      },
+      include: {
+        _count: {
+          select: {
+            Antrian: true,
+          },
+        },
       },
     });
     return response;
