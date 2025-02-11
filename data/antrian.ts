@@ -1,4 +1,4 @@
-import { AntrianTableDef } from "@/app/(protected)/dashboard/_antrianTable/columns";
+import { AntrianTableDef } from "@/app/(protected)/dashboard/_components/_table/_antrianTable/columns";
 import { StatusAntrian } from "@/lib/definitions/enum";
 
 export const antrians: AntrianTableDef[] = [

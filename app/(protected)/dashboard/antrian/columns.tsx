@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { StatusAntrian } from "@/lib/definitions/enum";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import { AntrianTableDef } from "../_antrianTable/columns";
+import { AntrianTableDef } from "../_components/_table/_antrianTable/columns";
 import { Antrian } from "@prisma/client";
 import AntrianAksi from "./_components/AntrianAksi";
 export const pasienAntrianColumns: ColumnDef<Antrian>[] = [

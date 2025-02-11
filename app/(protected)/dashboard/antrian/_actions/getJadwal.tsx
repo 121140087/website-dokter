@@ -1,10 +1,10 @@
 "use server";
 
 import { prisma } from "@/prisma";
+import { getDaysInMonth } from "date-fns";
 
 export const getJadwalThisMonth = async () => {
   const currentDate = new Date();
-  const refDate = new Date(currentDate.getFullYear() - 4);
   try {
     const response = await prisma.jadwal.findMany({
       where: {
@@ -13,7 +13,7 @@ export const getJadwalThisMonth = async () => {
           lte: new Date(
             currentDate.getFullYear(),
             currentDate.getMonth(),
-            refDate.getDate()
+            getDaysInMonth(currentDate)
           ),
         },
       },

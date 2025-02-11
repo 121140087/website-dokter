@@ -1,4 +1,4 @@
-import { ObatTableDef } from "@/app/(protected)/dashboard/_obatTable/columns";
+import { ObatTableDef } from "@/app/(protected)/dashboard/_components/_table/_obatTable/columns";
 
 export const obats: ObatTableDef[] = [
   {

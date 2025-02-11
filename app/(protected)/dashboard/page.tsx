@@ -1,13 +1,19 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { antrianColumns, AntrianTableDef } from "./_antrianTable/columns";
+import {
+  antrianColumns,
+  AntrianTableDef,
+} from "./_components/_table/_antrianTable/columns";
 import { antrians } from "@/data/antrian";
 import { DataTable } from "./_components/DataTable";
-import { obatColumns, ObatTableDef } from "./_obatTable/columns";
+import {
+  obatColumns,
+  ObatTableDef,
+} from "./_components/_table/_obatTable/columns";
 import { obats } from "@/data/obats";
 import { ListMinus, Pill, User } from "lucide-react";
-import PasienChart from "./_chart/pasienChart";
+import PasienChart from "./_components/_chart/pasienChart";
 async function getDataAntrian(): Promise<AntrianTableDef[]> {
   return antrians;
 }
