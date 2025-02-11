@@ -13,7 +13,7 @@ import {
 } from "./_components/_table/_obatTable/columns";
 import { obats } from "@/data/obats";
 import { ListMinus, Pill, User } from "lucide-react";
-import PasienChart from "./_components/_chart/pasienChart";
+import PasienChart from "./_chart/pasienChart";
 async function getDataAntrian(): Promise<AntrianTableDef[]> {
   return antrians;
 }
