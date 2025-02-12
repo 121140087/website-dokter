@@ -37,15 +37,17 @@ import { z } from "zod";
 import { pasienFormSchema } from "@/lib/definitions/schemas";
 import { toast } from "sonner";
 import { CalendarIcon } from "lucide-react";
-import { updatePasien } from "@/actions/updatePasien";
 import { useRouter } from "next/navigation";
-import { getPasienByNIK } from "../../pasien/_actions/getPasienByNIK";
+import { getPasienByNIK } from "../../../../../actions/getPasienByNIK";
+import { getCurrentAntrian } from "@/actions/getCurrentAntrian";
+import Link from "next/link";
 
-const PasienDetail = ({ nik }: { nik: string }) => {
+const PasienDetail = () => {
   const [pasien, setPasien] = useState<Pasien | null>();
   const [tanggalLahir, setTanggalLahir] = useState<Date | undefined>(
     new Date()
   );
+
   const router = useRouter();
 
   const form = useForm<z.infer<typeof pasienFormSchema>>({
@@ -61,8 +63,12 @@ const PasienDetail = ({ nik }: { nik: string }) => {
 
   const updateCurrentPasien = async () => {
     toast("Mendapatkan data pasien");
-
-    const response = await getPasienByNIK(nik);
+    const currentAntrian = await getCurrentAntrian();
+    if (!currentAntrian) {
+      toast("Tidak ada pasien untuk diperiksa");
+      return;
+    }
+    const response = await getPasienByNIK(currentAntrian!.pasienNIK);
 
     if (response) {
       setPasien(response);
@@ -106,11 +112,7 @@ const PasienDetail = ({ nik }: { nik: string }) => {
                     <FormItem>
                       <FormLabel>Nama</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Nama"
-                          disabled={!pasien}
-                          {...field}
-                        />
+                        <Input placeholder="Nama" disabled {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -140,11 +142,7 @@ const PasienDetail = ({ nik }: { nik: string }) => {
                     <FormItem>
                       <FormLabel>Alamat</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Alamat"
-                          disabled={!pasien}
-                          {...field}
-                        />
+                        <Input placeholder="Alamat" disabled {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -159,11 +157,7 @@ const PasienDetail = ({ nik }: { nik: string }) => {
                     <FormItem>
                       <FormLabel>No Hp</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="no hp"
-                          disabled={!pasien}
-                          {...field}
-                        />
+                        <Input placeholder="no hp" disabled {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -179,7 +173,7 @@ const PasienDetail = ({ nik }: { nik: string }) => {
                       <FormLabel>Jenis Kelamin</FormLabel>
                       <FormControl>
                         <Select
-                          disabled={!pasien}
+                          disabled
                           value={field.value}
                           onValueChange={field.onChange}
                         >
@@ -210,7 +204,7 @@ const PasienDetail = ({ nik }: { nik: string }) => {
                       <FormLabel>Golongan Darah</FormLabel>
                       <FormControl>
                         <Select
-                          disabled={!pasien}
+                          disabled
                           value={field.value}
                           onValueChange={field.onChange}
                         >
@@ -239,7 +233,7 @@ const PasienDetail = ({ nik }: { nik: string }) => {
                       <FormLabel>Status</FormLabel>
                       <FormControl>
                         <Select
-                          disabled={!pasien}
+                          disabled
                           value={field.value}
                           onValueChange={field.onChange}
                         >
@@ -272,7 +266,7 @@ const PasienDetail = ({ nik }: { nik: string }) => {
                         <Popover>
                           <PopoverTrigger asChild>
                             <Button
-                              disabled={!pasien}
+                              disabled
                               variant={"outline"}
                               className={cn(
                                 "w-full justify-start text-left font-normal",
@@ -311,7 +305,7 @@ const PasienDetail = ({ nik }: { nik: string }) => {
               />
             </div>
             <Button className="w-fit" disabled={!pasien}>
-              Periksa
+              <Link href={"/dashboard/pemeriksaan/create"}>Periksa</Link>
             </Button>
           </form>
         </Form>

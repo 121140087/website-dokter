@@ -5,7 +5,7 @@ import { pemeriksaanColumn } from "./columns";
 const PemeriksaanPage = () => {
   return (
     <div className="p-4 flex flex-col gap-y-8">
-      <PasienForm nik="" />
+      <PasienForm />
       <DataTable
         columns={pemeriksaanColumn}
         data={[]}

@@ -40,7 +40,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { createPasien } from "../../_actions/createPasien";
-import { getPasienByNIK } from "../../_actions/getPasienByNIK";
+import { getPasienByNIK } from "../../../../../../actions/getPasienByNIK";
 
 const PasienForm = () => {
   const userFormSchema = z.object({

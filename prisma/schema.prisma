@@ -78,6 +78,8 @@ model Pasien {
   User          User?
 
   Antrian Antrian[]
+
+  Pemeriksaan Pemeriksaan[]
 }
 
 model Dokter {
@@ -89,6 +91,8 @@ model Dokter {
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @default(now())
   User         User[]
+
+  Pemeriksaan Pemeriksaan[]
 }
 
 model Obat {
@@ -101,6 +105,8 @@ model Obat {
   aturanPakai String
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @default(now())
+
+  ResepObat ResepObat[]
 }
 model ChatRoom {
   id String @id
@@ -141,6 +147,38 @@ model Antrian {
   updatedAt DateTime @default(now())
   jadwal Jadwal @relation(fields: [jadwalId],references: [id],onDelete: Cascade)
   pasien Pasien @relation(fields: [pasienNIK],references: [nik],onDelete: Cascade)
+}
+model Pemeriksaan {
+  id String @id @default(cuid())
+  dokterId String
+  dokter Dokter @relation(fields: [dokterId],references: [id],onDelete: Cascade)
+  pasienNik String
+  pasien Pasien @relation(fields: [pasienNik],references: [nik],onDelete: Cascade)
+  diagnosis String
+  detakJantung Int
+  gulaDarah Int
+  trombosit Int
+  tekananDarahTDS Int
+  tekananDarahTTD Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+model Resep {
+  id String @id @default(cuid())
+  pemeriksaanId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  totalHarga Int
+  dibayar Boolean @default(false)
+  ResepObat ResepObat[]
+}
+model ResepObat {
+  id String @id @default(cuid())
+  obatId String
+  obat Obat @relation(fields: [obatId],references: [id],onDelete: Cascade)
+  resepId String
+  resep Resep @relation(fields: [resepId],references: [id],onDelete: Cascade)
+  jumlah Int
 }
 enum StatusAntrian {
   MENUNGGU

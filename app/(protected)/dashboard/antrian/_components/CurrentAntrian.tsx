@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { getCurrentAntrian } from "../_actions/getCurrentAntrian";
+import { getCurrentAntrian } from "../../../../../actions/getCurrentAntrian";
 import { Antrian } from "@prisma/client";
 import { antrianNext } from "../_actions/antrianNext";
 import { toast } from "sonner";

@@ -47,3 +47,11 @@ export const pasienFormSchema = z.object({
   alamat: z.string().min(1),
   noHp: z.string().min(1),
 });
+export const pemeriksaanFormSchema = z.object({
+  diagnosis: z.string().min(1),
+  detakJantung: z.number(),
+  gulaDarah: z.number(),
+  trombosit: z.number(),
+  tekananDarahTDS: z.number(),
+  tekananDarahTTD: z.number(),
+});

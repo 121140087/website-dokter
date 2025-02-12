@@ -6,8 +6,8 @@ import AntrianChart from "./_antrianChart/AntrianChart";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Antrian } from "@prisma/client";
-import { getAntrians } from "./_actions/getAntrians";
 import CurrentAntrian from "./_components/CurrentAntrian";
+import { getAntrians } from "./_actions/getAntrians";
 const PasienPage = () => {
   const [antrians, setAntrians] = useState<Antrian[]>([]);
   const updateAntrians = async () => {

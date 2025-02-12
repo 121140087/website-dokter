@@ -34,7 +34,7 @@ import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { getPasienByNIK } from "../_actions/getPasienByNIK";
+import { getPasienByNIK } from "../../../../../actions/getPasienByNIK";
 import { pasienFormSchema } from "@/lib/definitions/schemas";
 import { toast } from "sonner";
 import { CalendarIcon } from "lucide-react";
