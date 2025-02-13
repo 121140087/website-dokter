@@ -39,7 +39,7 @@ export async function saveChat({
       await prisma.chatRoom.create({
         data: {
           id: userId ?? user.id!,
-          nama: user.nama,
+          nama: user.name!,
         },
       });
     }

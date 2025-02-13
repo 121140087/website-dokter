@@ -49,9 +49,9 @@ export const pasienFormSchema = z.object({
 });
 export const pemeriksaanFormSchema = z.object({
   diagnosis: z.string().min(1),
-  detakJantung: z.number(),
-  gulaDarah: z.number(),
-  trombosit: z.number(),
-  tekananDarahTDS: z.number(),
-  tekananDarahTTD: z.number(),
+  detakJantung: z.coerce.number(),
+  gulaDarah: z.coerce.number(),
+  trombosit: z.coerce.number(),
+  tekananDarahTDS: z.coerce.number(),
+  tekananDarahTTD: z.coerce.number(),
 });
