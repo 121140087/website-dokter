@@ -5,7 +5,6 @@ import { pemeriksaanFormSchema } from "@/lib/definitions/schemas";
 import { prisma } from "@/prisma";
 import { Obat } from "@prisma/client";
 import { z } from "zod";
-import { createResep } from "./createResep";
 
 interface CreatePemeriksaanProps {
   pemeriksaan: z.infer<typeof pemeriksaanFormSchema>;
@@ -20,7 +19,24 @@ export const createPemeriksaan = async ({
   const session = await auth();
   const user = session?.user;
   if (user) {
-    console.log(pemeriksaan);
+    var totalHarga = 0;
+    const postedResep: { jumlah: number; obatId: string }[] = [];
+    resep.forEach(async (r) => {
+      totalHarga += r.jumlah * r.obat.harga;
+      postedResep.push({
+        jumlah: r.jumlah,
+        obatId: r.obat.id,
+      });
+      await prisma.obat.update({
+        where: {
+          id: r.obat.id,
+        },
+        data: {
+          stok: r.obat.stok - r.jumlah,
+        },
+      });
+    });
+    console.log(totalHarga);
     const response = await prisma.pemeriksaan.create({
       data: {
         detakJantung: pemeriksaan.detakJantung,
@@ -30,15 +46,20 @@ export const createPemeriksaan = async ({
         tekananDarahTTD: pemeriksaan.tekananDarahTTD,
         trombosit: pemeriksaan.trombosit,
         pasienNik: pasienNIK,
-        dokterId: user.id!,
+        totalHarga,
+        resepObat: {
+          createMany: {
+            data: postedResep,
+          },
+        },
+        dokterId: user.dokterId!,
       },
     });
-    console.log(response);
-    if (response) {
-      await createResep({
-        pemeriksaanId: response.id,
-        resep,
-      });
-    }
+    // if (response) {
+    //   await createResep({
+    //     pemeriksaanId: response.id,
+    //     resep,
+    //   });
+    // }
   }
 };

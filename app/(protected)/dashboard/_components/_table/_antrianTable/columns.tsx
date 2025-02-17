@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Antrian } from "@/lib/definitions/schemas";
 import { StatusAntrian } from "@/lib/definitions/enum";
+import { Antrian } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 export type AntrianTableDef = {
@@ -10,7 +10,7 @@ export type AntrianTableDef = {
   keluhan: string;
   status: StatusAntrian;
 };
-export const antrianColumns: ColumnDef<AntrianTableDef>[] = [
+export const antrianColumns: ColumnDef<Antrian>[] = [
   {
     accessorKey: "no",
     header: ({ column }) => {

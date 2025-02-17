@@ -5,7 +5,6 @@ import { Antrian, StatusAntrian } from "@prisma/client";
 
 export const antrianNext = async (currentAntrian: Antrian | null) => {
   const currentDate = new Date();
-
   if (currentAntrian) {
     const response = await prisma.antrian.findUnique({
       where: {
@@ -23,6 +22,11 @@ export const antrianNext = async (currentAntrian: Antrian | null) => {
     where: {
       tanggal: {
         gte: new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          currentDate.getDate()
+        ),
+        lte: new Date(
           currentDate.getFullYear(),
           currentDate.getMonth(),
           currentDate.getDate()

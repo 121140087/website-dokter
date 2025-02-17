@@ -305,7 +305,9 @@ const PasienDetail = () => {
               />
             </div>
             <Button className="w-fit" disabled={!pasien}>
-              <Link href={"/dashboard/pemeriksaan/create"}>Periksa</Link>
+              <Link href={"/dashboard/pemeriksaan/create/" + pasien?.nik}>
+                Periksa
+              </Link>
             </Button>
           </form>
         </Form>

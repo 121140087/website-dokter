@@ -3,7 +3,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Send } from "lucide-react";
+import { File, Send } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { getChatRooms } from "./_actions/getChatList";
 import { Chat, ChatRole, ChatRoom } from "@prisma/client";
@@ -11,6 +11,9 @@ import moment from "moment";
 import { getChats } from "./_actions/getChats";
 import { saveChat } from "@/lib/actions";
 import { cn } from "@/lib/utils";
+import Linkify from "linkify-react";
+
+import LastPemeriksaan from "./_components/LastPemeriksaan";
 const PesanPage = () => {
   const [chatRooms, setChatRooms] = useState<ChatRoom[] | undefined>();
   const [chats, setChats] = useState<Chat[] | undefined>();
@@ -80,7 +83,7 @@ const PesanPage = () => {
                     c.role === ChatRole.dokter && "ml-auto"
                   )}
                 >
-                  <p className="whitespace-pre-line ">{c.message}</p>
+                  <Linkify>{c.message}</Linkify>
                   <p className="text-sm text-slate-500 text-end">
                     {moment(c.createdAt).fromNow()}
                   </p>
@@ -96,8 +99,15 @@ const PesanPage = () => {
             onChange={(e) => setInput(e.target.value)}
             onSubmit={sendChat}
             className="resize-none"
+            disabled={!selectedUserId}
           />
-          <Button onClick={sendChat}>
+          <LastPemeriksaan
+            userId={selectedUserId}
+            onPemeriksaanSended={() => {
+              updateChat({ userId: selectedUserId });
+            }}
+          />
+          <Button onClick={sendChat} disabled={!selectedUserId}>
             <Send />
           </Button>
         </div>

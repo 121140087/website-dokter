@@ -16,6 +16,7 @@ const CurrentAntrian = () => {
   };
   const next = async () => {
     setLoading(true);
+    console.log("called");
     const response = await antrianNext(currentAntrian);
     if (response.message) {
       toast(response.message);

@@ -21,8 +21,9 @@ import { usePathname } from "next/navigation";
 import DashboardBreadcrumb from "./DashboardBreadcrumb";
 
 const DashboardNavbar = () => {
-  const onLogout = () => {
-    logout();
+  const onLogout = async () => {
+    await logout();
+    window.location.replace("/");
   };
   return (
     <div className=" sticky top-0 bg-white z-30 h-[72px] border-b-2 flex justify-between items-center px-4">

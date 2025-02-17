@@ -8,6 +8,8 @@ declare module "next-auth" {
   interface User {
     role: Role;
     nik: string;
+    dokterId: string?;
+    nama: string;
   }
 }
 declare module "next-auth/jwt" {
@@ -15,5 +17,7 @@ declare module "next-auth/jwt" {
     sub: string;
     role: Role;
     nik: string;
+    dokterId: string?;
+    nama: string;
   }
 }

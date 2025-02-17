@@ -1,9 +1,22 @@
 "use client";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import { useEffect, useState } from "react";
+import interactionPlugin from "@fullcalendar/interaction";
+
+import { SetStateAction, useEffect, useState } from "react";
 import { getJadwal } from "./_actions/getJadwal";
 import { format } from "date-fns";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { closeDate } from "./_actions/closeDate";
+import { toast } from "sonner";
+import { StatusKlinik } from "@prisma/client";
 interface JadwalContent {
   start: string;
   end: string;
@@ -12,18 +25,35 @@ interface JadwalContent {
 }
 const JadwalPage = () => {
   const [jadwal, setJadwal] = useState<JadwalContent[]>([]);
+  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const updateJadwal = async () => {
     const response = await getJadwal();
-    const mapped = response.map((e) => {
-      return {
-        start: format(e.tanggal, "yyyy-MM-dd"),
-        end: format(e.tanggal, "yyyy-MM-dd"),
-        overlap: false,
-        display: "background",
-      };
+    const mapped: SetStateAction<JadwalContent[]> = [];
+    response.forEach((e) => {
+      if (e.statusKlinik != StatusKlinik.BUKA) {
+        mapped.push({
+          start: format(e.tanggal, "yyyy-MM-dd"),
+          end: format(e.tanggal, "yyyy-MM-dd"),
+          overlap: false,
+          display: "background",
+        });
+      }
     });
     setJadwal(mapped);
-    console.log(mapped);
+  };
+  const openDialog = () => {
+    setIsDialogOpen(true);
+  };
+  const setClosedDate = async () => {
+    if (selectedDate) {
+      toast("Update kalender");
+      console.log(selectedDate);
+      await closeDate(selectedDate);
+      toast("Berhasil mengupdate kalender");
+      setIsDialogOpen(false);
+      window.location.reload();
+    }
   };
   useEffect(() => {
     updateJadwal();
@@ -31,10 +61,29 @@ const JadwalPage = () => {
   return (
     <div className="p-4">
       <FullCalendar
-        plugins={[dayGridPlugin]}
+        plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         events={jadwal}
+        dateClick={(info) => {
+          setSelectedDate(info.date);
+          console.log(info);
+          console.log(selectedDate);
+          openDialog();
+        }}
       />
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              Apakah anda yakin tutup atau buka di tanggal{" "}
+              {selectedDate && format(selectedDate, "yyyy-MM-dd")} ?
+            </DialogTitle>
+          </DialogHeader>
+          <DialogFooter>
+            <Button onClick={setClosedDate}>Konfirmasi</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

@@ -1,46 +1,69 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { StatusAntrian } from "@/lib/definitions/enum";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import { Antrian } from "@prisma/client";
+import { Pemeriksaan } from "@prisma/client";
 import PemeriksaanTableAction from "./_components/PemeriksaanTableActions";
-export const pemeriksaanColumn: ColumnDef<Antrian>[] = [
+import { format } from "date-fns";
+export const pemeriksaanColumn: ColumnDef<Pemeriksaan>[] = [
   {
-    accessorKey: "noAntrian",
+    accessorKey: "createdAt",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          No
+          Tanggal dibuat
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
+    cell: ({ row }) => {
+      return <p>{format(row.getValue("createdAt"), "dd MMM yyyy")}</p>;
+    },
   },
   {
-    accessorKey: "nama",
+    accessorKey: "pasienNik",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Nama
+          NIK
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "keluhan",
-    header: "Keluhan",
+    accessorKey: "diagnosis",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Diagnosis
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
-    accessorKey: "statusAntrian",
-    header: "Status",
+    accessorKey: "totalHarga",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Total Harga
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "id",

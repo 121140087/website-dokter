@@ -36,6 +36,7 @@ export async function saveChat({
       },
     });
     if (!chatRoom) {
+      console.log(user);
       await prisma.chatRoom.create({
         data: {
           id: userId ?? user.id!,

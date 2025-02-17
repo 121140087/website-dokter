@@ -27,11 +27,13 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   title: string;
+  searchKey?: string;
 }
 export function DataTable<TData, TValue>({
   columns,
   data,
   title,
+  searchKey = "nama",
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -50,14 +52,14 @@ export function DataTable<TData, TValue>({
     },
   });
   return (
-    <div className="rounded-md border p-4">
+    <div className="rounded-md border p-4 w-full">
       <h2 className="font-bold text-2xl">{title}</h2>
       <div className="flex items-center py-4">
         <Input
           placeholder="Search"
-          value={(table.getColumn("nama")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("nama")?.setFilterValue(event.target.value)
+            table.getColumn(searchKey)?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

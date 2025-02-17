@@ -130,6 +130,7 @@ model Chat{
 model Jadwal {
   id String @id @default(cuid())
   jumlahAntrian Int
+  jumlahAntrianMaksimal Int @default(12)
   tanggal DateTime
   statusKlinik StatusKlinik
   keteranganTutup String?
@@ -162,23 +163,23 @@ model Pemeriksaan {
   tekananDarahTTD Int
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-}
-model Resep {
-  id String @id @default(cuid())
-  pemeriksaanId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  totalHarga Int
+  resepObat ResepObat[]
   dibayar Boolean @default(false)
-  ResepObat ResepObat[]
+  totalHarga Int @default(0)
+
 }
 model ResepObat {
   id String @id @default(cuid())
   obatId String
+  pemeriksaanId String @unique
+  pemeriksaan Pemeriksaan @relation(fields: [pemeriksaanId],references: [id],onDelete: Cascade)
   obat Obat @relation(fields: [obatId],references: [id],onDelete: Cascade)
-  resepId String
-  resep Resep @relation(fields: [resepId],references: [id],onDelete: Cascade)
   jumlah Int
+}
+model Config {
+  id String @id @default(cuid())
+  key String
+  value String
 }
 enum StatusAntrian {
   MENUNGGU

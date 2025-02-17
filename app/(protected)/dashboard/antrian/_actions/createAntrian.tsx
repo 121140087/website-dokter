@@ -25,6 +25,9 @@ export const createAntrian = async ({
   if (!jadwal) {
     jadwal = await createJadwal(tanggal);
   }
+  if (jadwal.jumlahAntrian >= 12) {
+    return;
+  }
   await prisma.antrian.create({
     data: {
       keluhan: keluhan,

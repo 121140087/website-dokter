@@ -1,2 +1,0 @@
--- AddForeignKey
-ALTER TABLE "users" ADD CONSTRAINT "users_nik_fkey" FOREIGN KEY ("nik") REFERENCES "Pasien"("nik") ON DELETE CASCADE ON UPDATE CASCADE;

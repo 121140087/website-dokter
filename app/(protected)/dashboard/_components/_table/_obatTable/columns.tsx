@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Obat } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
@@ -10,7 +11,7 @@ export type ObatTableDef = {
   stok: string;
 };
 
-export const obatColumns: ColumnDef<ObatTableDef>[] = [
+export const obatColumns: ColumnDef<Obat>[] = [
   {
     accessorKey: "nama",
     header: "Nama",

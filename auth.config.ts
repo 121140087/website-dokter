@@ -42,6 +42,7 @@ export const authConfig = {
         token.role = user.role;
         token.name = user.nama;
         token.nik = user.nik;
+        token.dokterId = user.dokterId;
       }
       return token;
     },
@@ -50,6 +51,7 @@ export const authConfig = {
       session.user.role = token.role;
       session.user.name = token.name;
       session.user.nik = token.nik;
+      session.user.dokterId = token.dokterId;
       return session;
     },
   },

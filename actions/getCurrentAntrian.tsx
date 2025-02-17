@@ -14,6 +14,11 @@ export const getCurrentAntrian = async () => {
           currentDate.getMonth(),
           currentDate.getDate()
         ),
+        lte: new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          currentDate.getDate() + 1
+        ),
       },
       statusAntrian: StatusAntrian.SEDANG_DIPERIKSA,
     },
