@@ -23,7 +23,6 @@ const PemeriksaanDetailPage = ({
     const par = await params;
     const pem = await getPemeriksaanById(par.id);
     setPemeriksaan(pem);
-    x;
   };
   useEffect(() => {
     updatePemeriksaan();
