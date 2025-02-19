@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import Midtrans from "midtrans-client";
 import { NextResponse } from "next/server";
 
@@ -10,6 +11,7 @@ let snap = new Midtrans.Snap({
 export async function POST(req: Request) {
   const { pemeriksaanId, price } = await req.json();
   console.log("harga", price);
+  const uuid = randomUUID();
   console.log("pemeriksaan Id", pemeriksaanId);
   let parameter = {
     item_details: {
@@ -18,19 +20,25 @@ export async function POST(req: Request) {
       quantity: 1,
     },
     transaction_details: {
-      order_id: pemeriksaanId,
+      order_id: uuid,
       gross_amount: price,
     },
     customer_detail: {
       first_name: "",
       last_name: "",
     },
+    callbacks: {
+      finish:
+        process.env.NEXT_PUBLIC_DOMAIN +
+        "/pemeriksaan/" +
+        pemeriksaanId +
+        "/confirmation",
+    },
   };
 
   try {
     // Get token to midtrans via snap
     const token = await snap.createTransactionToken(parameter);
-    console.log(token);
 
     // return token
     return NextResponse.json({ token });

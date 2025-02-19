@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Website Dokter",
-  description: "Website Dokter",
+  title: "Praktik dokter umum Hema Malini",
+  description: "Praktik dokter umum Hema Malini",
 };
 
 export default function RootLayout({

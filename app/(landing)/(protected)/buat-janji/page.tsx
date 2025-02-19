@@ -115,7 +115,9 @@ const BuatJanjiPage = () => {
               setKeluhan(e.currentTarget.value);
             }}
           />
-          <Button onClick={buatJanjiHandler}>Buat Janji</Button>
+          <Button onClick={buatJanjiHandler} className="mt-6 w-full">
+            Buat Janji
+          </Button>
         </TabsContent>
       </Tabs>
     </div>

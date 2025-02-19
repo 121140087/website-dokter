@@ -11,9 +11,7 @@ import DesktopNavbarAction from "./DesktopNavbarAction";
 const DesktopNavbar = () => {
   return (
     <div className="hidden lg:flex gap-x-8 items-center">
-      <Link href="/">Home</Link>
-      <Link href="#">Service</Link>
-      <Link href="#">About</Link>
+      <Link href="/">Beranda</Link>
       <DesktopNavbarAction />
     </div>
   );

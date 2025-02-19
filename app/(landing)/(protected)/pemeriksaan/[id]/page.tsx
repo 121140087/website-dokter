@@ -2,7 +2,7 @@
 import { getPemeriksaanById } from "@/app/(protected)/dashboard/pemeriksaan/_actions/getPemeriksaanById";
 import PesanPage from "@/app/(protected)/dashboard/pesan/page";
 import { Button } from "@/components/ui/button";
-import { Pemeriksaan } from "@prisma/client";
+import { Obat, Pasien, Pemeriksaan, ResepObat } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -12,11 +12,18 @@ const PemeriksaanDetailPage = ({
 }: {
   params: Promise<{ id: string }>;
 }) => {
-  const [pemeriksaan, setPemeriksaan] = useState<Pemeriksaan | null>();
+  const [pemeriksaan, setPemeriksaan] = useState<
+    | ({
+        pasien: Pasien;
+        resepObat: (ResepObat & { obat: Obat | undefined })[];
+      } & Pemeriksaan)
+    | null
+  >();
   const updatePemeriksaan = async () => {
     const par = await params;
     const pem = await getPemeriksaanById(par.id);
     setPemeriksaan(pem);
+    x;
   };
   useEffect(() => {
     updatePemeriksaan();
@@ -24,13 +31,18 @@ const PemeriksaanDetailPage = ({
   if (!pemeriksaan) {
     return <div className="text-center mx-auto font-bold text-xl">Loading</div>;
   }
-  if (true) {
+  if (pemeriksaan.dibayar) {
     return (
       <div>
-        <div className=" p-4 rounded border max-w-[500px] mx-auto mt-32 flex flex-col">
+        <div className=" p-4 rounded border max-w-[500px] mx-auto mt-32 flex flex-col break-words">
           <p className="font-bold text-xl text-center">Hasil Pemeriksaan</p>
 
-          <div className="grid grid-cols-2 divide-x-2 divide-y-2 gap-4">
+          <div className="grid grid-cols-2 divide-x-2 divide-y-2 gap-4 ">
+            <p>Id Pemeriksaan</p>
+            <p>{pemeriksaan.id} </p>
+            <p>NIK Pasien</p>
+            <p>{pemeriksaan.pasienNik} </p>
+
             <p>Detak Jantung</p>
             <p>{pemeriksaan.detakJantung} bpm</p>
             <p>Gula Darah</p>
@@ -47,6 +59,25 @@ const PemeriksaanDetailPage = ({
         </div>
         <div className="p-4 rounded border max-w-[500px] mx-auto mt-8 flex flex-col">
           <p className="font-bold text-xl text-center">Resep</p>
+          <div className="flex flex-col gap-y-2">
+            <div className="grid grid-cols-3 font-bold text-center">
+              <p>Nama Obat</p>
+              <p>Jumlah</p>
+              <p>Harga</p>
+            </div>
+            {pemeriksaan.resepObat.map((r) => {
+              return (
+                <div className="grid grid-cols-3">
+                  <p>{r.obat?.nama}</p>
+                  <p>{r.jumlah}</p>
+                  <p>Rp. {r.jumlah * (r.obat?.harga ?? 0)}</p>
+                </div>
+              );
+            })}
+          </div>
+          <p className="font-bold mt-8">
+            *Tunjukkan pada kasir untuk mengambil obat
+          </p>
         </div>
       </div>
     );

@@ -9,7 +9,7 @@ import { ChatPage } from "@/lib/definitions/enum";
 const getTitle = (chatPage: ChatPage) => {
   switch (chatPage) {
     case ChatPage.DOKTER:
-      return "Dokter Irawan";
+      return "Dokter Hema Malini";
     case ChatPage.AI:
       return "Asisten AI";
     default:

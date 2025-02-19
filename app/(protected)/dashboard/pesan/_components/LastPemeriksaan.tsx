@@ -54,9 +54,6 @@ const LastPemeriksaan = ({
   useEffect(() => {
     updatePemeriksaan();
   }, [userId]);
-  if (!pemeriksaan) {
-    return <div></div>;
-  }
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -85,7 +82,7 @@ const LastPemeriksaan = ({
             )}
           </div>
         ) : (
-          <div>
+          <div className="flex flex-col items-center">
             <p>Belum ada pemeriksaan</p>
             {user && (
               <Link
@@ -98,9 +95,11 @@ const LastPemeriksaan = ({
           </div>
         )}
         <DialogFooter>
-          <DialogClose asChild>
-            <Button onClick={sendPemeriksaan}>Kirim Hasil Pemeriksaan</Button>
-          </DialogClose>
+          {pemeriksaan && (
+            <DialogClose asChild>
+              <Button onClick={sendPemeriksaan}>Kirim Hasil Pemeriksaan</Button>
+            </DialogClose>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

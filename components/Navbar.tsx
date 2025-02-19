@@ -34,7 +34,7 @@ const Navbar = () => {
       )}
     >
       <Link className="text-xl font-bold " href="/">
-        Klinik Dokter
+        Dokter Hema Malini
       </Link>
       <DesktopNavbar />
       {isShowMenu && <MobileNavbar />}

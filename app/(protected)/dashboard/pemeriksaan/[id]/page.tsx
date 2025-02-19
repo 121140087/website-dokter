@@ -76,7 +76,6 @@ const PemeriksaanDetailPage = ({
       const id = (await params).id;
 
       toast("Berhasil menyimpan data pemeriksaan");
-      // window.location.replace('/dashboard/pemeriksaan');
       redirect("/dashboard/pemeriksaan");
     } catch (error) {
       toast("Gagal menyimpan data pemeriksaan");

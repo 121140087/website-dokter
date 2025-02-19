@@ -12,7 +12,10 @@ const MessageItem = ({ m }: { m: Chat }) => {
           m.role === "user" && "ml-auto text-end"
         )}
       >
-        <Markdown children={m.message} />
+        <Markdown
+          children={m.message}
+          className={"max-w-[250px] break-words"}
+        />
         <p
           className={cn(
             "text-end text-sm text-slate-600",

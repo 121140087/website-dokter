@@ -36,15 +36,21 @@ export default function Home() {
       <div className="grid grid-cols-1  xl:grid-cols-2 w-full  xl:h-[600px]">
         <div className="flex flex-col gap-y-8 justify-center items-center xl:items-start">
           <h1 className="text-center xl:text-start text-6xl font-bold">
-            The only all in one Tool you need for your Clinic
+            Klinik Praktek Umum dr. Hema Milini
           </h1>
+          <h3 className="font-bold text-2xl">
+            Pelayanan Kesehatan yang Ramah & Profesional
+          </h3>
           <p className="text-center xl:text-start text-slate-800 text-lg xl:max-w-[600px]">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod quo
-            dolorem nesciunt temporibus in nemo quasi soluta repellat, esse
-            amet?
+            Selamat datang di praktik umum dr. Hema Milini, tempat di mana
+            kesehatan Anda adalah prioritas utama kami. Kami menyediakan layanan
+            medis yang profesional, ramah, dan terpercaya untuk membantu Anda
+            dan keluarga mendapatkan perawatan kesehatan terbaik.
           </p>
 
-          <Button className="w-44 h-14 text-lg">Buat Janji</Button>
+          <Button className="w-44 h-14 text-lg">
+            <Link href={"/buat-janji"}>Buat Janji</Link>
+          </Button>
           <div className="rounded-lg bg-white shadow-md p-4 hidden md:flex gap-x-8 w-fit">
             <div className="flex gap-x-2 items-center">
               <Star />
@@ -84,13 +90,15 @@ export default function Home() {
       <div className="flex flex-col gap-y-12">
         <div>
           <h1 className="font-bold text-4xl mb-8 text-center">
-            Kesehatan Anda, Segera dan Mudah
+            Mengapa Memilih Kami?
           </h1>
           <p className="text-center text-lg mt-4 mb-8">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus
-            repellendus beatae, quisquam ipsa corporis debitis deleniti quia
-            reiciendis ut pariatur, aspernatur eligendi ad dolorem facere illo
-            repudiandae porro vel doloremque!
+            Kami berkomitmen untuk memberikan pelayanan kesehatan yang terbaik
+            bagi Anda dan keluarga. Dengan tenaga medis yang profesional,
+            fasilitas yang nyaman, serta pelayanan yang cepat dan ramah, kami
+            memastikan setiap pasien mendapatkan perawatan yang optimal. Berikut
+            adalah beberapa alasan mengapa klinik dr. Hema Milini menjadi
+            pilihan yang tepat untuk kebutuhan kesehatan Anda:
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 md:h-[400px] w-full">
@@ -101,13 +109,13 @@ export default function Home() {
               <h3 className="text-lg">Pemeriksaan Lengkap, Hasil Akurat</h3>
             </div>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem
-              officiis, aliquid inventore ipsam odit omnis nemo fugiat nesciunt
-              debitis error doloribus veritatis ratione ipsa minima dolorum
-              exercitationem minus possimus beatae.
+              Dapatkan layanan kesehatan terbaik dengan pemeriksaan langsung di
+              klinik kami. Dengan fasilitas yang lengkap dan dokter yang
+              berpengalaman, kami memastikan Anda mendapatkan diagnosis yang
+              akurat serta penanganan medis yang tepat sesuai kebutuhan.
             </p>
             <Button size={"lg"} className="w-fit">
-              Buat Janji
+              <Link href={"/buat-janji"}>Buat Janji</Link>
             </Button>
           </div>
           <div className=" w-full mx-auto md:mx-0 max-w-[400px] md:max-w-max aspect-square rounded-lg bg-gray-400 mt-8 md:mt-0" />
@@ -120,14 +128,12 @@ export default function Home() {
               <h3 className="text-lg">Konsultasi Dokter 24/7</h3>
             </div>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem
-              officiis, aliquid inventore ipsam odit omnis nemo fugiat nesciunt
-              debitis error doloribus veritatis ratione ipsa minima dolorum
-              exercitationem minus possimus beatae.
+              Kami memahami bahwa tidak semua pasien dapat datang langsung ke
+              klinik. Oleh karena itu, kami menyediakan layanan konsultasi
+              online yang memudahkan Anda untuk berkonsultasi dengan dokter
+              kapan saja dan di mana saja, tanpa harus meninggalkan kenyamanan
+              rumah.
             </p>
-            <Button size={"lg"} className="w-fit">
-              Buat Janji
-            </Button>
           </div>
           <div className="order-2 md:order-1 w-full mx-auto md:mx-0 max-w-[400px] md:max-w-max aspect-square rounded-lg bg-gray-400 mt-8 md:mt-0" />
         </div>
@@ -139,10 +145,10 @@ export default function Home() {
               <h3 className="text-lg">Obat-obatan Lengkap, Pengiriman Cepat</h3>
             </div>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem
-              officiis, aliquid inventore ipsam odit omnis nemo fugiat nesciunt
-              debitis error doloribus veritatis ratione ipsa minima dolorum
-              exercitationem minus possimus beatae.
+              Tak perlu repot mencari obat setelah konsultasi. Kami menyediakan
+              layanan pembelian obat langsung di klinik maupun secara online,
+              sehingga Anda dapat memperoleh obat dengan mudah dan aman sesuai
+              resep dokter.
             </p>
           </div>
           <div className=" w-full mx-auto md:mx-0 max-w-[400px] md:max-w-max aspect-square rounded-lg bg-gray-400 mt-8 md:mt-0" />
@@ -151,15 +157,22 @@ export default function Home() {
 
       <div className="flex flex-col items-center">
         <h1 className="font-bold text-4xl mb-8 text-center">
-          Kesehatan Anda, Segera dan Mudah
+          Kesehatan Anda adalah Prioritas Kami!
         </h1>
         <p className="text-center text-lg mt-4 mb-8">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Delectus
-          repellendus beatae, quisquam ipsa corporis debitis deleniti quia
-          reiciendis ut pariatur, aspernatur eligendi ad dolorem facere illo
-          repudiandae porro vel doloremque!
+          Kami di klinik dr. Hema Milini berkomitmen untuk selalu memberikan
+          layanan kesehatan terbaik bagi Anda dan keluarga. Dengan tenaga medis
+          yang profesional, fasilitas yang nyaman, serta layanan yang mudah
+          diakses, kami siap mendampingi Anda dalam menjaga kesehatan. Jangan
+          ragu untuk menghubungi kami atau datang langsung ke klinik untuk
+          mendapatkan konsultasi dan perawatan terbaik. Kesehatan yang baik
+          dimulai dari langkah kecil
+          <br />
+          <b>—ayo mulai perjalanan sehat Anda bersama kami!</b>
         </p>
-        <Button size={"lg"}>Konsultasi Sekarang</Button>
+        <Button size={"lg"}>
+          <Link href={"/buat-janji"}>Konsultasi Sekarang</Link>
+        </Button>
         <iframe
           className="w-full mt-12 rounded-xl shadow"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31777.436927829334!2d105.30455994183347!3d-5.389575242472901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e40dc99e12771b7%3A0xca8e1bccee0c223a!2sPerumahan%20Sabah%20Balau%20Residence!5e0!3m2!1sid!2sid!4v1737348687802!5m2!1sid!2sid"

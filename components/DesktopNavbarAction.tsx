@@ -26,7 +26,6 @@ const DesktopNavbarAction = () => {
     <div>
       {user ? (
         <div className="flex gap-x-4 items-center ml-8">
-          <Button onClick={signOut}>Logout</Button>
           {user.role !== Role.PASIEN && (
             <Link
               href="/dashboard"
@@ -35,6 +34,15 @@ const DesktopNavbarAction = () => {
               Dashboard
             </Link>
           )}
+          {user.role === Role.PASIEN && (
+            <Link
+              href="/daftar-janji"
+              className={buttonVariants({ variant: "outline" })}
+            >
+              Janji Saya
+            </Link>
+          )}
+          <Button onClick={signOut}>Keluar</Button>
         </div>
       ) : (
         <div className="flex gap-x-4 items-center ml-8">

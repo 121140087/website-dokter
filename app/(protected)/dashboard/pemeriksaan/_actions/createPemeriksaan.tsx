@@ -3,7 +3,7 @@
 import { auth } from "@/auth";
 import { pemeriksaanFormSchema } from "@/lib/definitions/schemas";
 import { prisma } from "@/prisma";
-import { Obat } from "@prisma/client";
+import { Obat, StatusAntrian } from "@prisma/client";
 import { z } from "zod";
 
 interface CreatePemeriksaanProps {
@@ -55,6 +55,22 @@ export const createPemeriksaan = async ({
         dokterId: user.dokterId!,
       },
     });
+    const antrian = await prisma.antrian.findFirst({
+      where: {
+        pasienNIK,
+        statusAntrian: StatusAntrian.SEDANG_DIPERIKSA,
+      },
+    });
+    if (antrian) {
+      await prisma.antrian.update({
+        where: {
+          id: antrian.id,
+        },
+        data: {
+          statusAntrian: StatusAntrian.SELESAI_DIPERIKSA,
+        },
+      });
+    }
     // if (response) {
     //   await createResep({
     //     pemeriksaanId: response.id,

@@ -19,7 +19,7 @@ const ChatList = ({ onChange }: { onChange: (page: ChatPage) => any }) => {
         onClick={() => onChange(ChatPage.AI)}
       >
         <div className="rounded-full w-10 h-10 bg-slate-500" />
-        <p>Chatbot</p>
+        <p>Asisten AI</p>
       </div>
       {user && (
         <div
@@ -27,7 +27,7 @@ const ChatList = ({ onChange }: { onChange: (page: ChatPage) => any }) => {
           onClick={() => onChange(ChatPage.DOKTER)}
         >
           <div className="rounded-full w-10 h-10 bg-slate-500" />
-          <p>Dokter Irawan</p>
+          <p>Dokter Hema Malini</p>
         </div>
       )}
     </div>
