@@ -60,16 +60,19 @@ const PasienDetail = ({ params }: { params: Promise<{ nik: string }> }) => {
   async function onSubmit(values: z.infer<typeof pasienFormSchema>) {
     toast("Mengupdate data pasien");
     try {
-      await updatePasien({
-        nik: values.nik,
-        nama: values.nama,
-        golonganDarah: GolonganDarah[values.GolonganDarah],
-        alamat: values.alamat,
-        jenisKelamin: JenisKelamin[values.JenisKelamin],
-        noHp: values.noHp,
-        status: StatusPasien[values.status],
-        tanggalLahir: tanggalLahir,
-      } as Pasien);
+      await updatePasien(
+        {
+          nik: values.nik,
+          nama: values.nama,
+          golonganDarah: GolonganDarah[values.GolonganDarah],
+          alamat: values.alamat,
+          jenisKelamin: JenisKelamin[values.JenisKelamin],
+          noHp: values.noHp,
+          status: StatusPasien[values.status],
+          tanggalLahir: tanggalLahir,
+        } as Pasien,
+        values.nik
+      );
       router.push("/dashboard/pasien");
     } catch {
       toast("Gagal Mengupdate data pasien");
