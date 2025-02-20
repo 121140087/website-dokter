@@ -41,7 +41,7 @@ export const authConfig = {
       if (user) {
         token.role = user.role;
         token.name = user.nama;
-        token.nik = user.nik;
+        token.nik = user.nik!;
         token.dokterId = user.dokterId;
       }
       return token;
