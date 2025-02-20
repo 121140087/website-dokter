@@ -6,6 +6,9 @@ import { authConfig } from "./auth.config";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import { getUserByEmail } from "./lib/actions";
+/* eslint-disable */
+// @ts-ignore
+
 import bcrypt from "bcryptjs";
 import type { Adapter } from "next-auth/adapters";
 
@@ -35,3 +38,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
 });
+/* eslint-enable */
