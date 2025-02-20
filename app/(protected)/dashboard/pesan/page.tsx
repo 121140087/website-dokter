@@ -19,7 +19,7 @@ const PesanPage = () => {
   const [chats, setChats] = useState<Chat[] | undefined>();
   const [input, setInput] = useState("");
   const [selectedUserId, setSelectedUserId] = useState("");
-  const messageScrollRef = useRef(null);
+  const messageScrollRef = useRef<null | HTMLDivElement>(null);
 
   const updateChatrooms = async () => {
     const response = await getChatRooms();

@@ -1,4 +1,7 @@
 import { randomUUID } from "crypto";
+/* eslint-disable */
+// @ts-ignore
+
 import Midtrans from "midtrans-client";
 import { NextResponse } from "next/server";
 
@@ -49,3 +52,4 @@ export async function POST(req: Request) {
     });
   }
 }
+/* eslint-enable */

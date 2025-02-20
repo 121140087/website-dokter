@@ -7,7 +7,7 @@ declare module "next-auth" {
   }
   interface User {
     role: Role;
-    nik: string;
+    nik: string?;
     dokterId: string?;
     nama: string;
   }

@@ -35,7 +35,7 @@ const ChatDokter = () => {
     setInput("");
     await updateMessage();
   };
-  const messageScrollRef = useRef(null);
+  const messageScrollRef = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
     if (messageScrollRef.current) {
       messageScrollRef.current.scrollIntoView({ behavior: "smooth" });
