@@ -35,9 +35,6 @@ const SettingsPage = () => {
     <div className="flex flex-col gap-y-8 p-8">
       <div className="w-full p-4 rounded-md shadow flex flex-col gap-y-4s">
         <h2 className="text-xl font-bold">Profil</h2>
-        <Form>
-          <form></form>
-        </Form>
       </div>
       <div className="w-full p-4 rounded-md shadow flex flex-col gap-y-4s">
         <h2 className="text-xl font-bold">Ganti Password</h2>
