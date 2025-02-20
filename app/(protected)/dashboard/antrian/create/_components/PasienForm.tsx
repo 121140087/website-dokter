@@ -101,16 +101,19 @@ const PasienForm = ({ date }: { date: Date }) => {
     }
     toast("Menambahkan ke antrian");
     try {
-      await updatePasien({
-        nik: values.nik,
-        nama: values.nama,
-        golonganDarah: GolonganDarah[values.GolonganDarah],
-        alamat: values.alamat,
-        jenisKelamin: JenisKelamin[values.JenisKelamin],
-        noHp: values.noHp,
-        status: StatusPasien[values.status],
-        tanggalLahir: tanggalLahir,
-      } as Pasien);
+      await updatePasien(
+        {
+          nik: values.nik,
+          nama: values.nama,
+          golonganDarah: GolonganDarah[values.GolonganDarah],
+          alamat: values.alamat,
+          jenisKelamin: JenisKelamin[values.JenisKelamin],
+          noHp: values.noHp,
+          status: StatusPasien[values.status],
+          tanggalLahir: tanggalLahir,
+        } as Pasien,
+        values.nik
+      );
       await createAntrian({
         keluhan: values.keluhan,
         tanggal: date,

@@ -52,7 +52,7 @@ const BuatJanjiPage = () => {
   const buatJanjiHandler = async () => {
     if (tanggal && keluhan) {
       const user = await getCurrentUser();
-      const pasien = await getPasienByNIK(user!.nik);
+      const pasien = await getPasienByNIK(user!.nik!);
 
       await createAntrian({
         keluhan: keluhan,

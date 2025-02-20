@@ -10,7 +10,7 @@ interface SidebarItemProps {
 const SidebarItem = ({ link, name }: SidebarItemProps) => {
   const pathName = usePathname();
   const isDashboard = link == "/dashboard";
-  let isActive = isDashboard
+  const isActive = isDashboard
     ? pathName == "/dashboard"
     : pathName.startsWith(link);
   return (

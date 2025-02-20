@@ -29,7 +29,7 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<String | undefined>();
+  const [error, setError] = useState<string | undefined>();
   const router = useRouter();
   const searchParams = useSearchParams();
 

@@ -19,7 +19,7 @@ export const createPemeriksaan = async ({
   const session = await auth();
   const user = session?.user;
   if (user) {
-    var totalHarga = 0;
+    let totalHarga = 0;
     const postedResep: { jumlah: number; obatId: string }[] = [];
     resep.forEach(async (r) => {
       totalHarga += r.jumlah * r.obat.harga;

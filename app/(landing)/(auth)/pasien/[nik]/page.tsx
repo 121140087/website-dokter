@@ -42,7 +42,7 @@ import { z } from "zod";
 
 const UserCreatePage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<String | undefined>();
+  const [error, setError] = useState<string | undefined>();
   const [date, setDate] = useState<Date>();
 
   const form = useForm<z.infer<typeof createPasienSchema>>({

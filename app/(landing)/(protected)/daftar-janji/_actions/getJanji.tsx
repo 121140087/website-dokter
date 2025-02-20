@@ -10,7 +10,7 @@ export const getJanji = async () => {
   }
   const janji = await prisma.antrian.findMany({
     where: {
-      pasienNIK: user.nik,
+      pasienNIK: user.nik!,
     },
   });
   return janji;

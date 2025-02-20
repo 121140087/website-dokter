@@ -35,7 +35,15 @@ const EditObat = ({ params }: { params: Promise<{ obatId: string }> }) => {
     nama: z.string().min(1),
     stok: z.coerce.number(),
     harga: z.coerce.number(),
-    golongan: z.string().min(1),
+    golongan: z.enum([
+      "BEBAS",
+      "BEBAS_TERBATAS",
+      "KERAS",
+      "NARKOTIKA",
+      "FITOMARKA",
+      "JAMU",
+      "HERBAL",
+    ]),
     deskripsi: z.string().min(1),
     aturanPakai: z.string(),
   });

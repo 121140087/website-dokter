@@ -31,7 +31,7 @@ const ResepForm = ({
   onResepChange,
   resep,
 }: {
-  onResepChange: (resep: { obat: Obat; jumlah: number }[]) => {};
+  onResepChange: (resep: { obat: Obat; jumlah: number }[]) => void;
   resep: { obat: Obat; jumlah: number }[];
 }) => {
   const [obats, setObats] = useState<Obat[]>([]);
@@ -73,7 +73,7 @@ const ResepForm = ({
       setSelectedObat(undefined);
     }
   };
-  const deleteObat = (id: String) => {
+  const deleteObat = (id: string) => {
     const newResep = resep.filter((obat) => obat.obat.id != id);
     onResepChange(newResep);
   };

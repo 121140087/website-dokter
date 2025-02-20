@@ -46,9 +46,9 @@ const PasienForm = () => {
   const userFormSchema = z.object({
     nama: z.string().min(1),
     nik: z.string().min(16).max(16),
-    status: z.string().min(1),
-    GolonganDarah: z.string().min(1),
-    JenisKelamin: z.string().min(1),
+    status: z.enum(["LAJANG", "MENIKAH"]),
+    GolonganDarah: z.enum(["A", "B", "AB", "O"]),
+    JenisKelamin: z.enum(["LAKILAKI", "PEREMPUAN"]),
     tanggalLahir: z.date(),
     alamat: z.string().min(1),
     noHp: z.string().min(1),
