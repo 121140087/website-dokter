@@ -9,8 +9,11 @@ const VerifyEmailPage = async ({
   params: Promise<{ token: string }>;
 }) => {
   const parm = await params;
-  await verifyEmail(parm.token);
-  return redirect("/login" + "?" + "message=Email+berhasil+diverifikasi");
+  const response = await verifyEmail(parm.token);
+  if (response.error) {
+    return redirect("/login" + "?" + "error=" + response?.error);
+  }
+  return redirect("/login" + "?" + "message=" + response?.message);
 };
 
 export default VerifyEmailPage;

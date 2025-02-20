@@ -9,7 +9,7 @@ export const verifyEmail = async (token: string) => {
     },
   });
   if (!verificationToken) {
-    return;
+    return { error: "Email gagal diverifikasi" };
   }
   await prisma.user.updateMany({
     where: {
