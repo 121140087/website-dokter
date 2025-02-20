@@ -40,7 +40,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const UserCreatePage = ({ params }: { params: { nik: string } }) => {
+const UserCreatePage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<String | undefined>();
   const [date, setDate] = useState<Date>();
