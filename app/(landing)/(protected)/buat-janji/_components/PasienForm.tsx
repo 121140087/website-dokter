@@ -86,7 +86,7 @@ const PasienForm = ({ onUpdate }: { onUpdate: () => void }) => {
       redirect("/login");
       return;
     }
-    const response = await getPasienByNIK(pasienData!.nik);
+    const response = await getPasienByNIK(pasienData!.nik!);
 
     if (response) {
       setPasien(response);
