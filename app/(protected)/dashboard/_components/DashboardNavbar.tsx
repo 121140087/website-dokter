@@ -31,7 +31,7 @@ const DashboardNavbar = () => {
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Avatar>
-            <AvatarImage src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Elon_Musk_Royal_Society_crop.jpg/1200px-Elon_Musk_Royal_Society_crop.jpg" />
+            <AvatarImage src="/images/user.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>

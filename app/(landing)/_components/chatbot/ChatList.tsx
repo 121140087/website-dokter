@@ -1,4 +1,5 @@
 import { getCurrentUser } from "@/actions/getCurrentUser";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { ChatPage } from "@/lib/definitions/enum";
 import { User } from "next-auth";
 import { useEffect, useState } from "react";
@@ -18,7 +19,9 @@ const ChatList = ({ onChange }: { onChange: (page: ChatPage) => any }) => {
         className="flex gap-x-4 items-center hover:bg-slate-100 cursor-pointer p-4 "
         onClick={() => onChange(ChatPage.AI)}
       >
-        <div className="rounded-full w-10 h-10 bg-slate-500" />
+        <Avatar className="rounded-full w-10 h-10 bg-slate-500">
+          <AvatarImage src="/images/assistent.png" className="object-cover" />
+        </Avatar>
         <p>Asisten AI</p>
       </div>
       {user && (
@@ -26,7 +29,9 @@ const ChatList = ({ onChange }: { onChange: (page: ChatPage) => any }) => {
           className="flex gap-x-4 items-center hover:bg-slate-100 cursor-pointer p-4 "
           onClick={() => onChange(ChatPage.DOKTER)}
         >
-          <div className="rounded-full w-10 h-10 bg-slate-500" />
+          <Avatar className="rounded-full w-10 h-10 bg-slate-500">
+            <AvatarImage src="/images/dokter.jpg" className="object-cover" />
+          </Avatar>
           <p>Dokter Hema Malini</p>
         </div>
       )}

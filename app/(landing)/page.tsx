@@ -78,11 +78,11 @@ export default function Home() {
         <div className=" mt-12 flex items-center justify-center object-cover">
           <div className="p-4 rounded-xl shadow-lg bg-white">
             <Image
-              src={"/images/elon.jpg"}
+              src={"/images/dokter.jpg"}
               alt={"Dokter"}
               width={1024}
               height={1024}
-              className="w-full sm:w-60 md:w-72 lg:w-96  aspect-square rounded-xl"
+              className="w-full sm:w-60 md:w-72 lg:w-96  aspect-square rounded-xl object-cover"
             />
           </div>
         </div>
@@ -118,7 +118,13 @@ export default function Home() {
               <Link href={"/buat-janji"}>Buat Janji</Link>
             </Button>
           </div>
-          <div className=" w-full mx-auto md:mx-0 max-w-[400px] md:max-w-max aspect-square rounded-lg bg-gray-400 mt-8 md:mt-0" />
+          <Image
+            src={"/images/pemeriksaan-langsung.jpg"}
+            width={400}
+            height={400}
+            alt="pemeriksaan langsung"
+            className=" w-full mx-auto md:mx-0 md:max-w-[400px] max-w-max aspect-square rounded-lg  mt-8 md:mt-0 object-cover"
+          />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 md:h-[400px] w-full">
           <div className="order-1 md:order-2 flex flex-col items-center md:items-start gap-y-8">
@@ -135,7 +141,13 @@ export default function Home() {
               rumah.
             </p>
           </div>
-          <div className="order-2 md:order-1 w-full mx-auto md:mx-0 max-w-[400px] md:max-w-max aspect-square rounded-lg bg-gray-400 mt-8 md:mt-0" />
+          <Image
+            src={"/images/komputer.png"}
+            width={400}
+            height={400}
+            alt="Konsultasi Online"
+            className="order-2 md:order-1 w-full mx-auto md:mx-0 md:max-w-[400px] max-w-max aspect-square rounded-lg  mt-8 md:mt-0 object-cover"
+          />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 md:h-[400px] w-full">
           <div className=" flex flex-col items-center md:items-start gap-y-8">
@@ -151,7 +163,13 @@ export default function Home() {
               resep dokter.
             </p>
           </div>
-          <div className=" w-full mx-auto md:mx-0 max-w-[400px] md:max-w-max aspect-square rounded-lg bg-gray-400 mt-8 md:mt-0" />
+          <Image
+            src={"/images/obat.png"}
+            width={400}
+            height={400}
+            alt="Pembelian Obat"
+            className=" w-full mx-auto md:mx-0 md:max-w-[400px] max-w-max aspect-square rounded-lg  mt-8 md:mt-0 object-cover"
+          />{" "}
         </div>
       </div>
 
