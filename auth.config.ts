@@ -12,9 +12,14 @@ export const authConfig = {
     async authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const adminRoutes = ["/dashboard"];
-      const protectedRoutes = "/pasien/create/";
+      const protectedRoutes = [
+        "/pasien/create/",
+        "/buat-janji",
+        "/pemeriksaan",
+        "/antrian",
+      ];
       const authenticationRoutes = ["/login", "/register"];
-      const isOnProtectedRoutes = nextUrl.pathname.startsWith(protectedRoutes);
+      const isOnProtectedRoutes = protectedRoutes.includes(nextUrl.pathname);
       const isOnAdminRoutes = adminRoutes.includes(nextUrl.pathname);
       const isOnAuthenticationRoutes = authenticationRoutes.includes(
         nextUrl.pathname
