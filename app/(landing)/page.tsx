@@ -36,13 +36,13 @@ export default function Home() {
       <div className="grid grid-cols-1  xl:grid-cols-2 w-full  xl:h-[600px]">
         <div className="flex flex-col gap-y-8 justify-center items-center xl:items-start">
           <h1 className="text-center xl:text-start text-6xl font-bold">
-            Klinik Praktek Umum dr. Hema Milini
+            Klinik Praktek Umum dr. Hema Malini
           </h1>
           <h3 className="font-bold text-2xl">
             Pelayanan Kesehatan yang Ramah & Profesional
           </h3>
           <p className="text-center xl:text-start text-slate-800 text-lg xl:max-w-[600px]">
-            Selamat datang di praktik umum dr. Hema Milini, tempat di mana
+            Selamat datang di praktik umum dr. Hema Malini, tempat di mana
             kesehatan Anda adalah prioritas utama kami. Kami menyediakan layanan
             medis yang profesional, ramah, dan terpercaya untuk membantu Anda
             dan keluarga mendapatkan perawatan kesehatan terbaik.
@@ -97,7 +97,7 @@ export default function Home() {
             bagi Anda dan keluarga. Dengan tenaga medis yang profesional,
             fasilitas yang nyaman, serta pelayanan yang cepat dan ramah, kami
             memastikan setiap pasien mendapatkan perawatan yang optimal. Berikut
-            adalah beberapa alasan mengapa klinik dr. Hema Milini menjadi
+            adalah beberapa alasan mengapa klinik dr. Hema Malini menjadi
             pilihan yang tepat untuk kebutuhan kesehatan Anda:
           </p>
         </div>
@@ -178,7 +178,7 @@ export default function Home() {
           Kesehatan Anda adalah Prioritas Kami!
         </h1>
         <p className="text-center text-lg mt-4 mb-8">
-          Kami di klinik dr. Hema Milini berkomitmen untuk selalu memberikan
+          Kami di klinik dr. Hema Malini berkomitmen untuk selalu memberikan
           layanan kesehatan terbaik bagi Anda dan keluarga. Dengan tenaga medis
           yang profesional, fasilitas yang nyaman, serta layanan yang mudah
           diakses, kami siap mendampingi Anda dalam menjaga kesehatan. Jangan
