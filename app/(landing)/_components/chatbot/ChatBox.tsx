@@ -52,12 +52,12 @@ const ChatBox = () => {
         )}
       >
         {chatPage == ChatPage.CHATLIST ? (
-          <div className="border-b-2 p-4 flex  justify-between items-center">
+          <div className="border-b-2 p-4 flex  justify-between items-center mt-[72px]">
             <h2 className="font-bold">{getTitle(chatPage)}</h2>
             <X className="cursor-pointer" onClick={toggleChat} />
           </div>
         ) : (
-          <div className="border-b-2 p-4 flex justify-between items-center">
+          <div className="border-b-2 p-4 flex justify-between items-center mt-[72px]">
             <div className="flex gap-x-4">
               <ArrowLeft
                 className="cursor-pointer"
