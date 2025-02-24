@@ -152,9 +152,7 @@ CREATE TABLE "Chat" (
 CREATE TABLE "Jadwal" (
     "id" TEXT NOT NULL,
     "jumlahAntrian" INTEGER NOT NULL,
-    "jumlahAntrianMaksimal" INTEGER NOT NULL DEFAULT 12,
     "tanggal" TIMESTAMP(3) NOT NULL,
-    "tanggalSelesai" TIMESTAMP(3) NOT NULL,
     "statusKlinik" "StatusKlinik" NOT NULL,
     "keteranganTutup" TEXT,
 
@@ -170,6 +168,7 @@ CREATE TABLE "Antrian" (
     "keluhan" TEXT NOT NULL,
     "nama" TEXT NOT NULL,
     "statusAntrian" "StatusAntrian" NOT NULL DEFAULT 'MENUNGGU',
+    "jam" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -212,6 +211,17 @@ CREATE TABLE "Config" (
     "value" TEXT NOT NULL,
 
     CONSTRAINT "Config_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "JamBuka" (
+    "id" TEXT NOT NULL,
+    "key" INTEGER NOT NULL,
+    "startTime" TEXT NOT NULL,
+    "endTime" TEXT NOT NULL,
+    "jumlahAntrian" INTEGER NOT NULL DEFAULT 12,
+
+    CONSTRAINT "JamBuka_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
