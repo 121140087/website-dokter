@@ -3,7 +3,7 @@
 import { prisma } from "@/prisma";
 import { StatusKlinik } from "@prisma/client";
 
-export const closeDate = async (date: Date) => {
+export const closeDate = async (date: Date, endDate: Date) => {
   const jadwal = await prisma.jadwal.findFirst({
     where: {
       tanggal: {
@@ -36,7 +36,7 @@ export const closeDate = async (date: Date) => {
       data: {
         jumlahAntrian: 0,
         statusKlinik: StatusKlinik.TUTUP,
-        tanggal: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+        tanggal: date,
       },
     });
     console.log("Created");

@@ -152,7 +152,9 @@ CREATE TABLE "Chat" (
 CREATE TABLE "Jadwal" (
     "id" TEXT NOT NULL,
     "jumlahAntrian" INTEGER NOT NULL,
+    "jumlahAntrianMaksimal" INTEGER NOT NULL DEFAULT 12,
     "tanggal" TIMESTAMP(3) NOT NULL,
+    "tanggalSelesai" TIMESTAMP(3) NOT NULL,
     "statusKlinik" "StatusKlinik" NOT NULL,
     "keteranganTutup" TEXT,
 
@@ -188,7 +190,7 @@ CREATE TABLE "Pemeriksaan" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "dibayar" BOOLEAN NOT NULL DEFAULT false,
-    "totalHarga" INTEGER NOT NULL,
+    "totalHarga" INTEGER NOT NULL DEFAULT 0,
 
     CONSTRAINT "Pemeriksaan_pkey" PRIMARY KEY ("id")
 );
@@ -198,10 +200,18 @@ CREATE TABLE "ResepObat" (
     "id" TEXT NOT NULL,
     "obatId" TEXT NOT NULL,
     "pemeriksaanId" TEXT NOT NULL,
-    "resepId" TEXT NOT NULL,
     "jumlah" INTEGER NOT NULL,
 
     CONSTRAINT "ResepObat_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Config" (
+    "id" TEXT NOT NULL,
+    "key" TEXT NOT NULL,
+    "value" TEXT NOT NULL,
+
+    CONSTRAINT "Config_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex

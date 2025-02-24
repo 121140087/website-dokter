@@ -2,6 +2,8 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import DatePicker from "react-multi-date-picker";
+import TimePicker from "react-multi-date-picker/plugins/time_picker";
 
 import { SetStateAction, useEffect, useState } from "react";
 import { getJadwal } from "./_actions/getJadwal";
@@ -9,6 +11,7 @@ import { format } from "date-fns";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -26,6 +29,8 @@ interface JadwalContent {
 const JadwalPage = () => {
   const [jadwal, setJadwal] = useState<JadwalContent[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date>();
+  const [startDate, setStartDate] = useState<Date>();
+  const [endDate, setEndDate] = useState<Date>();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const updateJadwal = async () => {
     const response = await getJadwal();
@@ -46,10 +51,9 @@ const JadwalPage = () => {
     setIsDialogOpen(true);
   };
   const setClosedDate = async () => {
-    if (selectedDate) {
+    if (startDate && endDate) {
       toast("Update kalender");
-      console.log(selectedDate);
-      await closeDate(selectedDate);
+      await closeDate(startDate, endDate);
       toast("Berhasil mengupdate kalender");
       setIsDialogOpen(false);
       window.location.reload();

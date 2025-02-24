@@ -7,6 +7,8 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import PasienForm from "./_components/PasienForm";
 import { Calendar } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
+import { checkAntrian } from "../_actions/checkAntrian";
+import { toast } from "sonner";
 
 const CreatePasien = () => {
   const [date, setDate] = useState<Date | undefined>();
@@ -28,8 +30,13 @@ const CreatePasien = () => {
               end: new Date(nowDate.getTime() + 1000 * 3600 * 24 * 7),
             };
           }}
-          dateClick={(info) => {
-            onDateClick(info.date);
+          dateClick={async (info) => {
+            const result = await checkAntrian(info.date);
+            if (result) {
+              onDateClick(info.date);
+            } else {
+              toast("Antrian Penuh");
+            }
           }}
         />
       </div>

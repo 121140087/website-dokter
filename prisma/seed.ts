@@ -13,6 +13,7 @@ async function main() {
       value: "40000",
     },
   });
+  const days = ["senin", "selasa", "rabu", "kamis", "jumat", "sabtu", "minggu"];
 }
 main()
   .then(async () => {

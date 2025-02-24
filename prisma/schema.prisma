@@ -130,7 +130,6 @@ model Chat{
 model Jadwal {
   id String @id @default(cuid())
   jumlahAntrian Int
-  jumlahAntrianMaksimal Int @default(12)
   tanggal DateTime
   statusKlinik StatusKlinik
   keteranganTutup String?
@@ -144,6 +143,7 @@ model Antrian {
   keluhan String
   nama String
   statusAntrian StatusAntrian @default(MENUNGGU)
+  jam String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   jadwal Jadwal @relation(fields: [jadwalId],references: [id],onDelete: Cascade)
@@ -180,6 +180,13 @@ model Config {
   id String @id @default(cuid())
   key String
   value String
+}
+model JamBuka {
+  id String @id @default(cuid())
+  key Int
+  startTime String
+  endTime String
+  jumlahAntrian Int @default(12)
 }
 enum StatusAntrian {
   MENUNGGU

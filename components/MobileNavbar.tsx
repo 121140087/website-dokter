@@ -11,6 +11,7 @@ const MobileNavbar = () => {
       <Link href="/" className={cn(path == "/" && "border-b-2")}>
         Home
       </Link>
+
       <MobileNavbarAction />
     </div>
   );

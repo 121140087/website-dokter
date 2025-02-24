@@ -36,7 +36,6 @@ export const createPemeriksaan = async ({
         },
       });
     });
-    console.log(totalHarga);
     const response = await prisma.pemeriksaan.create({
       data: {
         detakJantung: pemeriksaan.detakJantung,
@@ -71,11 +70,5 @@ export const createPemeriksaan = async ({
         },
       });
     }
-    // if (response) {
-    //   await createResep({
-    //     pemeriksaanId: response.id,
-    //     resep,
-    //   });
-    // }
   }
 };

@@ -42,6 +42,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { createAntrian } from "../../_actions/createAntrian";
 import { useRouter } from "next/navigation";
 import { antrianFormSchema } from "@/lib/definitions/schemas";
+import { createPasien } from "../../../pasien/_actions/createPasien";
+import { getPasienByNIK } from "@/actions/getPasienByNIK";
 
 const PasienForm = ({ date }: { date: Date }) => {
   const [pasien, setPasien] = useState<Pasien | undefined>();
@@ -101,8 +103,10 @@ const PasienForm = ({ date }: { date: Date }) => {
     }
     toast("Menambahkan ke antrian");
     try {
-      await updatePasien(
-        {
+      console.log(pasien);
+      const isPasienCreated = await getPasienByNIK(values.nik);
+      if (!isPasienCreated) {
+        await createPasien({
           nik: values.nik,
           nama: values.nama,
           golonganDarah: GolonganDarah[values.GolonganDarah],
@@ -111,14 +115,29 @@ const PasienForm = ({ date }: { date: Date }) => {
           noHp: values.noHp,
           status: StatusPasien[values.status],
           tanggalLahir: tanggalLahir,
-        } as Pasien,
-        values.nik
-      );
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        });
+      } else {
+        await updatePasien(
+          {
+            nik: values.nik,
+            nama: values.nama,
+            golonganDarah: GolonganDarah[values.GolonganDarah],
+            alamat: values.alamat,
+            jenisKelamin: JenisKelamin[values.JenisKelamin],
+            noHp: values.noHp,
+            status: StatusPasien[values.status],
+            tanggalLahir: tanggalLahir,
+          } as Pasien,
+          values.nik
+        );
+      }
       await createAntrian({
         keluhan: values.keluhan,
         tanggal: date,
-        nik: pasien?.nik!,
-        nama: pasien?.nama!,
+        nik: values.nik,
+        nama: values.nama,
       });
       toast("Berhasil menambahkan antrian");
       router.push("/dashboard/antrian");

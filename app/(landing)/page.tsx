@@ -191,6 +191,13 @@ export default function Home() {
         <Button size={"lg"}>
           <Link href={"/buat-janji"}>Konsultasi Sekarang</Link>
         </Button>
+        <div className="rounded shadow-md p-4 w-full max-w-[600px]">
+          <h2 className="font-bold text-2xl text-center">Jam Praktik</h2>
+          <div className="flex justify-between font-bold border-b-2 p-2">
+            <p>Senin</p>
+            <p>Jam 08:00 - 16:00</p>
+          </div>
+        </div>
         <iframe
           className="w-full mt-12 rounded-xl shadow"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31777.436927829334!2d105.30455994183347!3d-5.389575242472901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e40dc99e12771b7%3A0xca8e1bccee0c223a!2sPerumahan%20Sabah%20Balau%20Residence!5e0!3m2!1sid!2sid!4v1737348687802!5m2!1sid!2sid"

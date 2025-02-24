@@ -16,6 +16,7 @@ import { createAntrian } from "@/app/(protected)/dashboard/antrian/_actions/crea
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { getPasienByNIK } from "@/actions/getPasienByNIK";
 import { redirect } from "next/dist/server/api-utils";
+import { checkAntrian } from "@/app/(protected)/dashboard/antrian/_actions/checkAntrian";
 interface JadwalContent {
   start: string;
   end: string;
@@ -88,7 +89,7 @@ const BuatJanjiPage = () => {
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
             events={jadwal}
-            dateClick={(info) => {
+            dateClick={async (info) => {
               if (
                 jadwal.findIndex(
                   (j) => j.start === format(info.date, "yyyy-MM-dd")
@@ -99,8 +100,13 @@ const BuatJanjiPage = () => {
                 );
                 return;
               }
-              setTanggal(info.date);
-              setTab("keluhan");
+              const result = await checkAntrian(info.date);
+              if (result) {
+                setTanggal(info.date);
+                setTab("keluhan");
+              } else {
+                toast("Antrian Penuh");
+              }
             }}
           />
         </TabsContent>
