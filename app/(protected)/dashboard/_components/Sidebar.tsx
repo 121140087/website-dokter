@@ -46,11 +46,6 @@ const Sidebar = ({ role }: { role: Role }) => {
       link: "/dashboard/jam-buka",
       role: [Role.RESEPSIONIS, Role.DOKTER],
     },
-    {
-      name: "Settings",
-      link: "/dashboard/settings",
-      role: [Role.RESEPSIONIS, Role.DOKTER],
-    },
   ];
   return (
     <div className="sticky top-0 left-0 w-[300px] items-center bg-white border-r-2 h-screen flex flex-col gap-y-8">

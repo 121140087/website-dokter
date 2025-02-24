@@ -28,7 +28,8 @@ const DetailAntrian = ({ params }: { params: Promise<{ id: string }> }) => {
         </p>
       </div>
       <div className="w-full p-4 text-center font-bold text-xl">
-        {antrian && format(antrian.createdAt, "dd MMM yyyy")}
+        {antrian && format(antrian.createdAt, "dd MMM yyyy")}{" "}
+        {antrian && antrian.jam}
       </div>
       <div className="w-full p-4 bg-orange-500 text-white text-center">
         Tunjukan ketika melakukan pemeriksaan
