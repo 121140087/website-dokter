@@ -26,8 +26,8 @@ const CreatePasien = () => {
           height={650}
           validRange={(nowDate) => {
             return {
-              start: nowDate,
-              end: new Date(nowDate.getTime() + 1000 * 3600 * 24 * 7),
+              start: new Date(),
+              end: new Date(new Date().getTime() + 1000 * 3600 * 24 * 7),
             };
           }}
           dateClick={async (info) => {
