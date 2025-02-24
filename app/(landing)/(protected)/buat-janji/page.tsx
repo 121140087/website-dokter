@@ -51,6 +51,7 @@ const BuatJanjiPage = () => {
     updateJadwal();
   }, []);
   const buatJanjiHandler = async () => {
+    toast("Membuat Janji");
     if (tanggal && keluhan) {
       const user = await getCurrentUser();
       const pasien = await getPasienByNIK(user!.nik!);

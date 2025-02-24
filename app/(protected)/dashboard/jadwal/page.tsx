@@ -51,9 +51,9 @@ const JadwalPage = () => {
     setIsDialogOpen(true);
   };
   const setClosedDate = async () => {
-    if (startDate && endDate) {
+    if (selectedDate) {
       toast("Update kalender");
-      await closeDate(startDate, endDate);
+      await closeDate(selectedDate);
       toast("Berhasil mengupdate kalender");
       setIsDialogOpen(false);
       window.location.reload();

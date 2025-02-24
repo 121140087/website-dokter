@@ -3,7 +3,7 @@
 import { prisma } from "@/prisma";
 import { StatusKlinik } from "@prisma/client";
 
-export const closeDate = async (date: Date, endDate: Date) => {
+export const closeDate = async (date: Date) => {
   const jadwal = await prisma.jadwal.findFirst({
     where: {
       tanggal: {

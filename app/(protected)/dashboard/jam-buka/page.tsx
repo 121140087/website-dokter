@@ -42,6 +42,7 @@ const hari = [
 const JamBukaPage = () => {
   const [jamBuka, setJamBuka] = useState<JamBuka[]>([]);
   const initJamBuka = async () => {
+    toast("Mendapatkan data");
     const response = await getJamBuka();
     if (response) {
       setJamBuka(response);

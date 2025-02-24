@@ -30,26 +30,6 @@ const DashboardPage = async () => {
   const dataObat = await getDataObat();
   return (
     <div className="flex flex-col gap-y-6 items-center p-4">
-      <div className="flex w-full gap-x-4">
-        <div className="w-full flex-1 rounded shadow flex flex-col p-4">
-          <div className="flex items-center gap-x-4">
-            <div className="rounded-full bg-slate-100 w-20 h-20 flex items-center justify-center">
-              <ListMinus className="h-10 w-10" />
-            </div>
-            <h3 className="text-xl font-bold">Pasien</h3>
-          </div>
-          <PasienChart />
-        </div>
-        <div className="w-full flex-1 rounded shadow flex flex-col p-4">
-          <div className="flex items-center gap-x-4">
-            <div className="rounded-full bg-slate-100 w-20 h-20 flex items-center justify-center">
-              <Pill className="h-10 w-10" />
-            </div>
-            <h3 className="text-xl font-bold">Penjualan Obat</h3>
-          </div>
-          <PasienChart />
-        </div>
-      </div>
       <div className="grid grid-cols-3 gap-4 w-full">
         <div className="col-span-2">
           <DataTable
