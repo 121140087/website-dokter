@@ -20,7 +20,7 @@ export const authConfig = {
       ];
       const authenticationRoutes = ["/login", "/register"];
       const isOnProtectedRoutes = protectedRoutes.includes(nextUrl.pathname);
-      const isOnAdminRoutes = adminRoutes.includes(nextUrl.pathname);
+      const isOnAdminRoutes = nextUrl.pathname.startsWith("/dashboard");
       const isOnAuthenticationRoutes = authenticationRoutes.includes(
         nextUrl.pathname
       );
