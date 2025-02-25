@@ -11,7 +11,6 @@ export const authConfig = {
   callbacks: {
     async authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const adminRoutes = ["/dashboard"];
       const protectedRoutes = [
         "/pasien/create/",
         "/buat-janji",
