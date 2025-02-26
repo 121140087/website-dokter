@@ -4,7 +4,6 @@ import { Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import DesktopNavbar from "./DesktopNavbar";
 import MobileNavbar from "./MobileNavbar";
-import { Scope_One } from "next/font/google";
 import { cn } from "@/lib/utils";
 const Navbar = () => {
   const [isShowMenu, setIsShowMenu] = useState(false);

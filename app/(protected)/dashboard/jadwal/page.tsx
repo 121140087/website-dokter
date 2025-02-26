@@ -79,8 +79,14 @@ const JadwalPage = () => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              Apakah anda yakin tutup atau buka di tanggal{" "}
-              {selectedDate && format(selectedDate, "yyyy-MM-dd")} ?
+              Apakah anda yakin{" "}
+              {selectedDate &&
+              jadwal.findIndex(
+                (v) => v.start === format(selectedDate, "yyyy-MM-dd")
+              ) !== -1
+                ? "Buka"
+                : "Tutup"}{" "}
+              di tanggal {selectedDate && format(selectedDate, "dd MMM yyyy")} ?
             </DialogTitle>
           </DialogHeader>
           <DialogFooter>
