@@ -88,7 +88,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-y-12">
+      <div className="flex flex-col gap-y-12 mt-24">
         <div>
           <h1 className="font-bold text-4xl mb-8 text-center">
             Mengapa Memilih Kami?
