@@ -27,7 +27,7 @@ const ChatBot = () => {
         id: "192n39n12n378",
         role: "assistant",
         content:
-          "Halo saya adalah Asisten AI Dr. Irawan, Apakah ada yang bisa saya bantu?",
+          "Halo saya adalah Asisten AI Dr. Hema Malini, Apakah ada yang bisa saya bantu?",
         createdAt: new Date(),
       },
     ],
