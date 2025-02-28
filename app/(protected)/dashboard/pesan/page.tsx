@@ -50,7 +50,7 @@ const PesanPage = () => {
   return (
     <div className="grid grid-cols-4 w-full h-[calc(100vh-72px)]">
       <div className="overflow-y-scroll relative top-0 left-0 h-[calc(100vh-72px)] border-r-2 w-full">
-        {chatRooms &&
+        {chatRooms ? (
           chatRooms.map((c) => {
             return (
               <div
@@ -69,7 +69,10 @@ const PesanPage = () => {
                 </p>
               </div>
             );
-          })}
+          })
+        ) : (
+          <p className="text-center">Tidak ada pesan</p>
+        )}
       </div>
       <div className="h-[calc(100vh-72px)] col-span-3 p-4 flex flex-col justify-end">
         <div className="h-full flex flex-col gap-y-2 overflow-y-scroll">

@@ -187,6 +187,7 @@ model JamBuka {
   startTime String
   endTime String
   jumlahAntrian Int @default(12)
+  createdAt DateTime? @default(now())
 }
 enum StatusAntrian {
   MENUNGGU

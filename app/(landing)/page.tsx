@@ -48,10 +48,9 @@ export default function Home() {
             medis yang profesional, ramah, dan terpercaya untuk membantu Anda
             dan keluarga mendapatkan perawatan kesehatan terbaik.
           </p>
-
-          <Button className="w-44 h-14 text-lg">
-            <Link href={"/buat-janji"}>Buat Janji</Link>
-          </Button>
+          <Link href={"/buat-janji"}>
+            <Button className="w-44 h-14 text-lg">Buat Janji</Button>
+          </Link>
           <div className="rounded-lg bg-white shadow-md p-4 hidden md:flex gap-x-8 w-fit">
             <div className="flex gap-x-2 items-center">
               <Star />
@@ -115,9 +114,11 @@ export default function Home() {
               berpengalaman, kami memastikan Anda mendapatkan diagnosis yang
               akurat serta penanganan medis yang tepat sesuai kebutuhan.
             </p>
-            <Button size={"lg"} className="w-fit">
-              <Link href={"/buat-janji"}>Buat Janji</Link>
-            </Button>
+            <Link href={"/buat-janji"}>
+              <Button size={"lg"} className="w-fit">
+                Buat Janji
+              </Button>
+            </Link>
           </div>
           <Image
             src={"/images/pemeriksaan-langsung.jpg"}
@@ -189,9 +190,9 @@ export default function Home() {
           <br />
           <b>—ayo mulai perjalanan sehat Anda bersama kami!</b>
         </p>
-        <Button size={"lg"}>
-          <Link href={"/buat-janji"}>Konsultasi Sekarang</Link>
-        </Button>
+        <Link href={"/buat-janji"}>
+          <Button size={"lg"}>Konsultasi Sekarang</Button>
+        </Link>
         <JamPraktik />
         <iframe
           className="w-full mt-12 rounded-xl shadow"

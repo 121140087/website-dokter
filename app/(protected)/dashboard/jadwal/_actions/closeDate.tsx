@@ -12,13 +12,6 @@ export const closeDate = async (date: Date) => {
       },
     },
   });
-  console.log(date);
-  console.log(jadwal);
-  console.log(
-    new Date(date.getFullYear(), date.getMonth(), date.getDate()).getDate()
-  );
-  console.log(date.getDate());
-  console.log(new Date(date.getFullYear(), date.getMonth(), date.getDate()));
   if (jadwal) {
     await prisma.jadwal.update({
       where: {

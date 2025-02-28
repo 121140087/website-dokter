@@ -27,9 +27,9 @@ const DaftarJanjiPage = () => {
           <div className="text-center text-lg my-6">
             Tidak ada janji yang dibuat
           </div>
-          <Button>
-            <Link href={"/buat-janji"}>Buat Janji</Link>
-          </Button>
+          <Link href={"/buat-janji"}>
+            <Button>Buat Janji</Button>
+          </Link>
         </div>
       )}
       {janji && (

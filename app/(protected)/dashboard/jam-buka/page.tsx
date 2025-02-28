@@ -51,11 +51,11 @@ const JamBukaPage = () => {
   const addJamBukaHandler = async (key: number) => {
     toast("Menambahkan Jam");
 
-    addJamBuka(key);
+    await addJamBuka(key);
     window.location.reload();
   };
   const deleteJamBukaHandler = async (id: string) => {
-    deleteJamBuka(id);
+    await deleteJamBuka(id);
     toast("Menghapus Jam");
     window.location.reload();
   };
@@ -80,7 +80,7 @@ const JamBukaPage = () => {
                       <Input
                         type="time"
                         defaultValue={val.startTime}
-                        onChange={(e) => {
+                        onChange={async (e) => {
                           e.preventDefault();
                           const index = jamBuka.findIndex(
                             (v) => v.id === val.id
@@ -91,8 +91,9 @@ const JamBukaPage = () => {
                             startTime: e.currentTarget.value,
                             endTime: val.endTime,
                             jumlahAntrian: val.jumlahAntrian,
+                            createdAt: val.createdAt,
                           };
-                          updateJamBuka({
+                          await updateJamBuka({
                             id: val.id,
                             endTime: val.endTime,
                             startTime: e.currentTarget.value,
@@ -116,8 +117,9 @@ const JamBukaPage = () => {
                             startTime: val.startTime,
                             endTime: e.currentTarget.value,
                             jumlahAntrian: val.jumlahAntrian,
+                            createdAt: val.createdAt,
                           };
-                          updateJamBuka({
+                          await updateJamBuka({
                             id: val.id,
                             endTime: e.currentTarget.value,
                             startTime: val.startTime,
@@ -142,8 +144,9 @@ const JamBukaPage = () => {
                             startTime: val.startTime,
                             endTime: val.endTime,
                             jumlahAntrian: Number(e.currentTarget.value),
+                            createdAt: val.createdAt,
                           };
-                          updateJamBuka({
+                          await updateJamBuka({
                             id: val.id,
                             endTime: val.endTime,
                             startTime: val.startTime,

@@ -304,11 +304,11 @@ const PasienDetail = () => {
                 }}
               />
             </div>
-            <Button className="w-fit" disabled={!pasien}>
-              <Link href={"/dashboard/pemeriksaan/create/" + pasien?.nik}>
+            <Link href={"/dashboard/pemeriksaan/create/" + pasien?.nik}>
+              <Button className="w-fit" disabled={!pasien}>
                 Periksa
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </form>
         </Form>
       </div>

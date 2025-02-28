@@ -43,7 +43,7 @@ const JamPraktik = () => {
   };
   useEffect(() => {
     updateJamBuka();
-  });
+  }, []);
   return (
     <div className="rounded shadow-md p-4 w-full max-w-[600px] my-12">
       <h2 className="font-bold text-2xl text-center">Jam Praktik</h2>
@@ -57,7 +57,6 @@ const JamPraktik = () => {
               <p>{h.name}</p>
               {jamBuka
                 .filter((f) => f.key === h.key)
-                .reverse()
                 .map((j) => {
                   return (
                     <p key={j.id}>
