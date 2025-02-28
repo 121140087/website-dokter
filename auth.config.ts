@@ -15,6 +15,7 @@ export const authConfig = {
         "/pasien/create/",
         "/buat-janji",
         "/pemeriksaan",
+        "/daftar-janji",
         "/antrian",
       ];
       const authenticationRoutes = ["/login", "/register"];

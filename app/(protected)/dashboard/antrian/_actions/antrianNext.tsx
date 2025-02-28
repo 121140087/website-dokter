@@ -24,12 +24,19 @@ export const antrianNext = async (currentAntrian: Antrian | null) => {
         gte: new Date(
           currentDate.getFullYear(),
           currentDate.getMonth(),
-          currentDate.getDate()
+          currentDate.getDate(),
+          0,
+          0,
+          0
         ),
         lte: new Date(
           currentDate.getFullYear(),
           currentDate.getMonth(),
-          currentDate.getDate()
+          currentDate.getDate(),
+          23,
+          59,
+          59,
+          999
         ),
       },
     },

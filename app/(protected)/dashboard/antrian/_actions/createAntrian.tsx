@@ -23,12 +23,20 @@ export const createAntrian = async ({
         gte: new Date(
           tanggal.getFullYear(),
           tanggal.getMonth(),
-          tanggal.getDate()
+          tanggal.getDate(),
+          0,
+          0,
+          0,
+          0
         ),
         lte: new Date(
           tanggal.getFullYear(),
           tanggal.getMonth(),
-          tanggal.getDate()
+          tanggal.getDate(),
+          23,
+          59,
+          59,
+          999
         ),
       },
     },

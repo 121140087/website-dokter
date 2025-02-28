@@ -7,8 +7,23 @@ export const closeDate = async (date: Date) => {
   const jadwal = await prisma.jadwal.findFirst({
     where: {
       tanggal: {
-        gte: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
-        lte: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+        gte: new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          0,
+          0,
+          0
+        ),
+        lte: new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          23,
+          59,
+          59,
+          999
+        ),
       },
     },
   });
