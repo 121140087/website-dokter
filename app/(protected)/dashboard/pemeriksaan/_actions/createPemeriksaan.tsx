@@ -21,6 +21,14 @@ export const createPemeriksaan = async ({
   if (user) {
     let totalHarga = 0;
     const postedResep: { jumlah: number; obatId: string }[] = [];
+    const biayaPeriksa = await prisma.config.findFirst({
+      where: {
+        key: "biayaPemeriksaan",
+      },
+    });
+    if (biayaPeriksa) {
+      totalHarga += Number(biayaPeriksa.value);
+    }
     resep.forEach(async (r) => {
       totalHarga += r.jumlah * r.obat.harga;
       postedResep.push({

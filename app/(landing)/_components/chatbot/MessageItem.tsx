@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Chat } from "@prisma/client";
 import { format } from "date-fns";
+import Linkify from "linkify-react";
 import Markdown from "react-markdown";
 
 const MessageItem = ({ m }: { m: Chat }) => {
@@ -12,10 +13,9 @@ const MessageItem = ({ m }: { m: Chat }) => {
           m.role === "user" && "ml-auto text-end"
         )}
       >
-        <Markdown
-          children={m.message}
-          className={"max-w-[250px] break-words"}
-        />
+        <p className={"max-w-[250px] break-words"}>
+          <Linkify>{m.message}</Linkify>
+        </p>
         <p
           className={cn(
             "text-end text-sm text-slate-600",

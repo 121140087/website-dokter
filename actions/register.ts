@@ -10,11 +10,12 @@ import { hashSync } from "bcryptjs";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { generateVerificationToken } from "./generateVerificationToken";
 import { sendVerificationEmail } from "./sendVerificationEmail";
+import { getPasienByNIK } from "./getPasienByNIK";
 
 export async function register(form: z.infer<typeof registerSchema>) {
   const { email, nama, nik, password } = form;
   try {
-    const userByEmail = await prisma.user.findUnique({
+    const userByEmail = await prisma.user.findFirst({
       where: { email },
     });
     if (userByEmail) {
@@ -22,7 +23,7 @@ export async function register(form: z.infer<typeof registerSchema>) {
         message: "Email telah terdaftar",
       };
     }
-    const userByNik = await prisma.user.findUnique({
+    const userByNik = await prisma.user.findFirst({
       where: {
         nik,
       },
@@ -48,13 +49,17 @@ export async function register(form: z.infer<typeof registerSchema>) {
     nik,
     password: hashPassword,
   };
+
   try {
-    await prisma.pasien.create({
-      data: {
-        nama,
-        nik,
-      },
-    });
+    const pasienByNik = getPasienByNIK(nik);
+    if (!pasienByNik) {
+      await prisma.pasien.create({
+        data: {
+          nama,
+          nik,
+        },
+      });
+    }
     await prisma.user.create({
       data: payload,
     });

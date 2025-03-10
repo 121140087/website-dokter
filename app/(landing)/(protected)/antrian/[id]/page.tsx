@@ -1,12 +1,12 @@
 "use client";
 import { getAntrianById } from "@/actions/getAntrianById";
 import { getAntrians } from "@/app/(protected)/dashboard/antrian/_actions/getAntrians";
-import { Antrian } from "@prisma/client";
+import { Antrian, Jadwal } from "@prisma/client";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 
 const DetailAntrian = ({ params }: { params: Promise<{ id: string }> }) => {
-  const [antrian, setAntrian] = useState<Antrian>();
+  const [antrian, setAntrian] = useState<Antrian & { jadwal: Jadwal }>();
   const updateAntrian = async () => {
     const par = await params;
     const response = await getAntrianById(par.id);
@@ -28,7 +28,7 @@ const DetailAntrian = ({ params }: { params: Promise<{ id: string }> }) => {
         </p>
       </div>
       <div className="w-full p-4 text-center font-bold text-xl">
-        {antrian && format(antrian.createdAt, "dd MMM yyyy")}{" "}
+        {antrian && format(antrian.jadwal.tanggal, "dd MMM yyyy")}{" "}
         {antrian && antrian.jam}
       </div>
       <div className="w-full p-4 bg-orange-500 text-white text-center">

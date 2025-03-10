@@ -37,6 +37,7 @@ export const checkAntrian = async (tanggal: Date) => {
     },
   });
   console.log(jadwal);
+  console.log(maksimalAntrian);
   if (!jadwal) {
     jadwal = await createJadwal(tanggal);
   }

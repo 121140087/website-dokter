@@ -6,7 +6,7 @@ import { Message } from "ai";
 
 export async function getUserByEmail(email: string): Promise<User | undefined> {
   try {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.user.findFirst({
       where: { email },
     });
     if (!user) return undefined;

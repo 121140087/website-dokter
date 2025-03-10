@@ -7,6 +7,9 @@ export const getAntrianById = async (id: string) => {
     where: {
       id,
     },
+    include: {
+      jadwal: true,
+    },
   });
   return antrian;
 };

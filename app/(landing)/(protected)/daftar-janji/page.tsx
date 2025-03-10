@@ -1,5 +1,5 @@
 "use client";
-import { Antrian } from "@prisma/client";
+import { Antrian, StatusAntrian } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { getJanji } from "./_actions/getJanji";
 import { format } from "date-fns";
@@ -46,12 +46,14 @@ const DaftarJanjiPage = () => {
                 <p className="font-bold">Keluhan</p>
                 <p>{j.keluhan}</p>
                 <p>No Antrian : {j.noAntrian}</p>
-                <Link
-                  className={cn("w-full", buttonVariants())}
-                  href={`/antrian/${j.id}`}
-                >
-                  Lihat Kartu Antrian
-                </Link>
+                {j.statusAntrian != StatusAntrian.MENUNGGU && (
+                  <Link
+                    className={cn("w-full", buttonVariants())}
+                    href={`/antrian/${j.id}`}
+                  >
+                    Lihat Kartu Antrian
+                  </Link>
+                )}
               </div>
             );
           })}

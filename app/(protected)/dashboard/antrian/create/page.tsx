@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import PasienForm from "./_components/PasienForm";
@@ -9,13 +9,42 @@ import { Calendar } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
 import { checkAntrian } from "../_actions/checkAntrian";
 import { toast } from "sonner";
-
+import { format } from "date-fns";
+import { getJadwal } from "../../jadwal/_actions/getJadwal";
+import { StatusKlinik } from "@prisma/client";
+interface JadwalContent {
+  start: string;
+  end: string;
+  overlap: boolean;
+  display: string;
+}
 const CreatePasien = () => {
   const [date, setDate] = useState<Date | undefined>();
+  const [jadwal, setJadwal] = useState<JadwalContent[]>([]);
+
   const onDateClick = (date: Date) => {
-    console.log(date.getDate());
     setDate(new Date(date.getFullYear(), date.getMonth(), date.getDate()));
   };
+
+  const updateJadwal = async () => {
+    const response = await getJadwal();
+
+    const mapped: SetStateAction<JadwalContent[]> = [];
+    response.forEach((e) => {
+      if (e.statusKlinik != StatusKlinik.BUKA) {
+        mapped.push({
+          start: format(e.tanggal, "yyyy-MM-dd"),
+          end: format(e.tanggal, "yyyy-MM-dd"),
+          overlap: false,
+          display: "background",
+        });
+      }
+    });
+    setJadwal(mapped);
+  };
+  useEffect(() => {
+    updateJadwal();
+  }, []);
   if (!date) {
     return (
       <div className="m-4 p-4 rounded shadow-md">
@@ -24,6 +53,7 @@ const CreatePasien = () => {
           initialView="dayGridMonth"
           fixedWeekCount={false}
           height={650}
+          events={jadwal}
           validRange={(nowDate) => {
             return {
               start: new Date(),
@@ -31,6 +61,16 @@ const CreatePasien = () => {
             };
           }}
           dateClick={async (info) => {
+            if (
+              jadwal.findIndex(
+                (j) => j.start === format(info.date, "yyyy-MM-dd")
+              ) !== -1
+            ) {
+              toast(
+                "Klinik Tutup pada tanggal " + format(info.date, "yyyy-MM-dd")
+              );
+              return;
+            }
             const result = await checkAntrian(info.date);
             if (result) {
               onDateClick(info.date);
