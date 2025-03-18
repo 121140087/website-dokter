@@ -54,6 +54,7 @@ export const createPemeriksaan = async ({
         trombosit: pemeriksaan.trombosit,
         pasienNik: pasienNIK,
         totalHarga,
+        dibayar: false,
         resepObat: {
           createMany: {
             data: postedResep,

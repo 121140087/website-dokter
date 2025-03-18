@@ -57,7 +57,6 @@ const PemeriksaanDetailPage = ({
   ) => {
     toast("Menyimpan data pemeriksaan");
     try {
-      // [TODO] : Ganti NIK
       const nik = (await params).nik;
       await createPemeriksaan({
         pasienNIK: nik,

@@ -47,6 +47,5 @@ export const closeDate = async (date: Date) => {
         tanggal: date,
       },
     });
-    console.log("Created");
   }
 };

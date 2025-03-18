@@ -11,6 +11,7 @@ const CurrentAntrian = () => {
   const updateCurrentAntrian = async () => {
     setLoading(true);
     const result = await getCurrentAntrian();
+  
     setCurrentAntrian(result);
     setLoading(false);
   };

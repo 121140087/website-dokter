@@ -17,7 +17,6 @@ interface JadwalData {
 }
 
 const AntrianChart = () => {
-  const [loading, setLoading] = useState(true);
   const [jadwal, setJadwal] = useState<JadwalData[]>();
   const chartConfig = {
     jumlahAntrian: {

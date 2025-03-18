@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 
 const DashboardBreadcrumb = () => {
   const pathName = usePathname();
+   "/dashboard/antrian"
   const paths = pathName.split("/");
   paths.shift();
   return (

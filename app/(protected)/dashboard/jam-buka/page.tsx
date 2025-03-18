@@ -55,8 +55,8 @@ const JamBukaPage = () => {
     window.location.reload();
   };
   const deleteJamBukaHandler = async (id: string) => {
-    await deleteJamBuka(id);
     toast("Menghapus Jam");
+    await deleteJamBuka(id);
     window.location.reload();
   };
   useEffect(() => {

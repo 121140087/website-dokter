@@ -10,11 +10,7 @@ import { z } from "zod";
 
 const SettingsPage = () => {
   const [biayaPemeriksaan, setBiayaPemeriksaan] = useState("");
-  const passwordSchema = z.object({
-    currentPassword: z.string().min(6, "password minimal 6 karakter"),
-    newPassword: z.string().min(6, "password minimal 6 karakter"),
-    confirmPassword: z.string().min(6, "password minimal 6 karakter"),
-  });
+
   const updateBiayaPemeriksaan = async () => {
     const response = await getConfig("biayaPemeriksaan");
     if (response) {
@@ -42,10 +38,12 @@ const SettingsPage = () => {
             setBiayaPemeriksaan(e.currentTarget.value);
           }}
         />
+        
         <Button className="w-fit" onClick={onUpdateBiayaPemeriksaan}>
           Update
         </Button>
       </div>
+      
     </div>
   );
 };

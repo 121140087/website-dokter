@@ -29,12 +29,11 @@ interface JadwalContent {
 const JadwalPage = () => {
   const [jadwal, setJadwal] = useState<JadwalContent[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date>();
-  const [startDate, setStartDate] = useState<Date>();
-  const [endDate, setEndDate] = useState<Date>();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const updateJadwal = async () => {
     const response = await getJadwal();
     const mapped: SetStateAction<JadwalContent[]> = [];
+
     response.forEach((e) => {
       if (e.statusKlinik != StatusKlinik.BUKA) {
         mapped.push({
@@ -76,8 +75,6 @@ const JadwalPage = () => {
         }}
         dateClick={(info) => {
           setSelectedDate(info.date);
-          console.log(info);
-          console.log(selectedDate);
           openDialog();
         }}
       />

@@ -63,6 +63,15 @@ model VerificationToken {
   @@unique([email, token])
   @@map("verification_tokens")
 }
+model ResetToken {
+  id String @id @default(cuid())
+  email String
+  token      String
+  expires    DateTime
+ 
+  @@unique([email, token])
+  @@map("reset_tokens")
+}
 
 model Pasien {
   nik           String         @id
