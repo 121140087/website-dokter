@@ -127,6 +127,13 @@ const LoginPage = () => {
                   <p className=" text-green-700 text-center">{message}</p>
                 </div>
               )}
+              <Link
+                href={"/forgot-password"}
+                className="text-end text-slate-500 mt-8"
+              >
+                Lupa password?
+              </Link>
+
               <Button className="w-full" disabled={isLoading}>
                 Masuk
               </Button>
