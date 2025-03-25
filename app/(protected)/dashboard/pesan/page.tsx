@@ -60,7 +60,7 @@ const PesanPage = () => {
               >
                 <div className="flex gap-x-4 items-center">
                   <Avatar>
-                    <AvatarImage src="/images/dokter.jpg" />
+                    <AvatarImage src="/images/user.png" />
                   </Avatar>
                   <p>{c.nama}</p>
                 </div>
