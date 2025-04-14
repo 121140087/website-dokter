@@ -17,6 +17,8 @@ import PasienChart from "./_chart/pasienChart";
 import { Antrian, Obat } from "@prisma/client";
 import { getAntrians } from "./antrian/_actions/getAntrians";
 import { getObats } from "./obat/_actions/getObats";
+import ResepObatChart from "./_chart/resepObatChart";
+import PendapatanChart from "./_chart/pendapatanChart";
 async function getDataAntrian(): Promise<Antrian[]> {
   const response = await getAntrians();
   return response;
@@ -30,7 +32,11 @@ const DashboardPage = async () => {
   const dataObat = await getDataObat();
   return (
     <div className="flex flex-col gap-y-6 items-center p-4">
-      <div className="grid grid-cols-3 gap-4 w-full">
+      <div className="grid grid-cols-2 gap-4 w-full">
+        <ResepObatChart />
+        <PendapatanChart />
+      </div>
+      <div className="grid grid-cols-3 gap-4 w-full mt-12">
         <div className="col-span-2">
           <DataTable
             columns={antrianColumns}

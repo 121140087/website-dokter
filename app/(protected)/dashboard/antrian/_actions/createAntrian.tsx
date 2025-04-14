@@ -47,7 +47,7 @@ export const createAntrian = async ({
   }
   const jamBuka = await prisma.jamBuka.findMany({
     where: {
-      key: tanggal.getDay(),
+      key: tanggal.getDay() === 0 ? 7 : tanggal.getDay() + 1,
     },
   });
   if (!jamBuka) {

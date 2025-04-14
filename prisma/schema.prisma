@@ -112,9 +112,9 @@ model Obat {
   golongan    GolonganObat
   deskripsi   String
   aturanPakai String
+  sediaanObat String?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @default(now())
-
   ResepObat ResepObat[]
 }
 model ChatRoom {
@@ -175,7 +175,8 @@ model Pemeriksaan {
   resepObat ResepObat[]
   dibayar Boolean @default(false)
   totalHarga Int @default(0)
-
+  hargaResep Int @default(0)
+  hargaPemeriksaan Int @default(0)
 }
 model ResepObat {
   id String @id @default(cuid())
@@ -184,6 +185,9 @@ model ResepObat {
   pemeriksaan Pemeriksaan @relation(fields: [pemeriksaanId],references: [id],onDelete: Cascade)
   obat Obat @relation(fields: [obatId],references: [id],onDelete: Cascade)
   jumlah Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
 }
 model Config {
   id String @id @default(cuid())

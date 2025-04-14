@@ -1,35 +1,6 @@
 "use client";
 import PemeriksaanForm from "./_components/PemeriksaanForm";
 import { Button } from "@/components/ui/button";
-
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Obat, Pemeriksaan } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -42,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { redirect } from "next/navigation";
 import { getPemeriksaanById } from "../_actions/getPemeriksaanById";
+import { updatePemeriksaan } from "../_actions/updatePemeriksaan";
 
 const PemeriksaanDetailPage = ({
   params,
@@ -55,32 +27,6 @@ const PemeriksaanDetailPage = ({
   const onResepChangeHandler = (resep: { obat: Obat; jumlah: number }[]) => {
     setResep(resep);
   };
-  const updateData = async () => {
-    const id = (await params).id;
-    const pemeriksaan = await getPemeriksaanById(id);
-    setPemeriksaan(pemeriksaan);
-    const tempResep: { obat: Obat; jumlah: number }[] = [];
-    pemeriksaan?.resepObat.forEach((r) => {
-      tempResep.push({
-        obat: r.obat,
-        jumlah: r.jumlah,
-      });
-    });
-    setResep(tempResep);
-  };
-  const createPemeriksaanHandler = async (
-    values: z.infer<typeof pemeriksaanFormSchema>
-  ) => {
-    toast("Menyimpan data pemeriksaan");
-    try {
-      const id = (await params).id;
-
-      toast("Berhasil menyimpan data pemeriksaan");
-      redirect("/dashboard/pemeriksaan");
-    } catch (error) {
-      toast("Gagal menyimpan data pemeriksaan");
-    }
-  };
   const form = useForm<z.infer<typeof pemeriksaanFormSchema>>({
     resolver: zodResolver(pemeriksaanFormSchema),
     defaultValues: {
@@ -90,8 +36,54 @@ const PemeriksaanDetailPage = ({
       tekananDarahTDS: 0,
       tekananDarahTTD: 0,
       trombosit: 0,
+      totalHarga: 0,
     },
   });
+  const updateData = async () => {
+    const id = (await params).id;
+    const pemeriksaan = await getPemeriksaanById(id);
+    setPemeriksaan(pemeriksaan);
+    if (pemeriksaan) {
+      form.setValue("detakJantung", pemeriksaan.detakJantung);
+      form.setValue("diagnosis", pemeriksaan.diagnosis);
+      form.setValue("gulaDarah", pemeriksaan.gulaDarah);
+      form.setValue("tekananDarahTDS", pemeriksaan.tekananDarahTDS);
+      form.setValue("tekananDarahTTD", pemeriksaan.tekananDarahTTD);
+      form.setValue("totalHarga", pemeriksaan.totalHarga);
+      form.setValue("trombosit", pemeriksaan.trombosit);
+    }
+    const tempResep: { obat: Obat; jumlah: number }[] = [];
+    pemeriksaan?.resepObat.forEach((r) => {
+      tempResep.push({
+        obat: r.obat,
+        jumlah: r.jumlah,
+      });
+    });
+    setResep(tempResep);
+  };
+  const updatePemeriksaanHandler = async (
+    values: z.infer<typeof pemeriksaanFormSchema>
+  ) => {
+    toast("Menyimpan data pemeriksaan");
+    if (!pemeriksaan) {
+      return;
+    }
+    try {
+      const id = (await params).id;
+      await updatePemeriksaan({
+        id,
+        resep,
+        pemeriksaan: values,
+        currentPemeriksaan: pemeriksaan,
+      });
+      toast("Berhasil menyimpan data pemeriksaan");
+      window.location.replace("/dashboard/pemeriksaan");
+    } catch (error) {
+      console.log(error);
+      toast("Gagal menyimpan data pemeriksaan");
+    }
+  };
+
   useEffect(() => {
     updateData();
   }, []);
@@ -99,7 +91,7 @@ const PemeriksaanDetailPage = ({
     <div className="p-4 flex flex-col gap-y-8">
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(createPemeriksaanHandler)}
+          onSubmit={form.handleSubmit(updatePemeriksaanHandler)}
           className="flex flex-col gap-y-4"
         >
           <div className="w-full p-4 rounded shadow flex justify-between items-center">

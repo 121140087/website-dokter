@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/prisma";
-import { GolonganObat } from "@prisma/client";
+import { GolonganObat, Obat } from "@prisma/client";
 interface CreateObatProps {
   nama: string;
   golongan: GolonganObat;
@@ -9,6 +9,7 @@ interface CreateObatProps {
   harga: number;
   deskripsi: string;
   aturanPakai: string;
+  sediaanObat?: string;
 }
 export const createObat = async ({
   nama,
@@ -17,6 +18,7 @@ export const createObat = async ({
   harga,
   deskripsi,
   aturanPakai,
+  sediaanObat,
 }: CreateObatProps) => {
   await prisma.obat.create({
     data: {
@@ -26,6 +28,7 @@ export const createObat = async ({
       harga,
       deskripsi,
       aturanPakai,
+      sediaanObat,
     },
   });
 };

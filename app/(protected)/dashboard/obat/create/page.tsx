@@ -41,11 +41,19 @@ const CreateObatPage = () => {
       "JAMU",
       "HERBAL",
     ]),
+    sediaanObat: z.string(),
     deskripsi: z.string().min(1),
     aturanPakai: z.string(),
   });
   const form = useForm<z.infer<typeof obatFormSchema>>({
     resolver: zodResolver(obatFormSchema),
+    defaultValues: {
+      aturanPakai: "",
+      deskripsi: "",
+      harga: 0,
+      nama: "",
+      stok: 0,
+    },
   });
   async function onSubmit(values: z.infer<typeof obatFormSchema>) {
     await createObat({
@@ -55,6 +63,7 @@ const CreateObatPage = () => {
       golongan: GolonganObat[values.golongan],
       harga: values.harga,
       stok: values.stok,
+      sediaanObat: values.sediaanObat,
     });
     toast("Berhasil Menambahkan obat");
     router.push("/dashboard/obat");
@@ -130,6 +139,58 @@ const CreateObatPage = () => {
               />
               <FormField
                 control={form.control}
+                name="sediaanObat"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel>Sediaan Obat</FormLabel>
+                      <FormControl>
+                        <Select
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder="Sediaan Obat"
+                              {...field}
+                            />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value={"Tablet"}>Tablet</SelectItem>
+                            <SelectItem value={"Kapsul"}>Kapsul</SelectItem>
+                            <SelectItem value={"Sirup"}>Sirup</SelectItem>
+                            <SelectItem value={"Suspensi"}>Suspensi</SelectItem>
+                            <SelectItem value={"Obat Oles"}>
+                              Obat Oles
+                            </SelectItem>
+                            <SelectItem value={"Obat Tetes"}>
+                              Obat Tetes
+                            </SelectItem>
+                            <SelectItem value={"Obat Suntik"}>
+                              Obat Suntik
+                            </SelectItem>
+                            <SelectItem value={"Obat Inhaler"}>
+                              Obat Inhaler
+                            </SelectItem>
+                            <SelectItem value={"Obat Tempel"}>
+                              Obat Tempel
+                            </SelectItem>
+                            <SelectItem value={"Obat Sublingual"}>
+                              Obat Sublingual
+                            </SelectItem>
+                            <SelectItem value={"Obat Supositoria"}>
+                              Obat Supositoria
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
+              <FormField
+                control={form.control}
                 name="stok"
                 render={({ field }) => {
                   return (
@@ -158,6 +219,7 @@ const CreateObatPage = () => {
                   );
                 }}
               />
+              <div></div>
               <FormField
                 control={form.control}
                 name="deskripsi"

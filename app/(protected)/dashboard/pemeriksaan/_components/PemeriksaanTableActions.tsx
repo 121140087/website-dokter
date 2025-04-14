@@ -46,7 +46,7 @@ const PemeriksaanTableAction = ({ id }: { id: string }) => {
   }, []);
   return (
     <div className="flex gap-x-2">
-      {pemeriksaan?.dibayar ? (
+      {!pemeriksaan?.dibayar ? (
         <AlertDialog>
           <AlertDialogTrigger className="bg-green-500 rounded p-2 text-white">
             Tandai Sudah Bayar

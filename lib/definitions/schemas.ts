@@ -54,4 +54,5 @@ export const pemeriksaanFormSchema = z.object({
   trombosit: z.coerce.number(),
   tekananDarahTDS: z.coerce.number(),
   tekananDarahTTD: z.coerce.number(),
+  totalHarga: z.coerce.number(),
 });

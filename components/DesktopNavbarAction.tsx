@@ -34,14 +34,7 @@ const DesktopNavbarAction = () => {
               Dashboard
             </Link>
           )}
-          {user.role === Role.PASIEN && (
-            <Link
-              href="/daftar-janji"
-              className={buttonVariants({ variant: "outline" })}
-            >
-              Janji Saya
-            </Link>
-          )}
+
           <Button onClick={signOut}>Keluar</Button>
         </div>
       ) : (

@@ -97,6 +97,21 @@ const PemeriksaanForm = ({
             );
           }}
         />
+        <FormField
+          control={form.control}
+          name="totalHarga"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>Biaya Pemeriksaan</FormLabel>
+                <FormControl>
+                  <Input placeholder="0" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
       </div>
       <FormField
         control={form.control}

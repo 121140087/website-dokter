@@ -81,6 +81,7 @@ const PemeriksaanDetailPage = ({
       tekananDarahTDS: 0,
       tekananDarahTTD: 0,
       trombosit: 0,
+      totalHarga: 0,
     },
   });
 

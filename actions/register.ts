@@ -51,7 +51,7 @@ export async function register(form: z.infer<typeof registerSchema>) {
   };
 
   try {
-    const pasienByNik = getPasienByNIK(nik);
+    const pasienByNik = await getPasienByNIK(nik);
     if (!pasienByNik) {
       await prisma.pasien.create({
         data: {
@@ -72,6 +72,7 @@ export async function register(form: z.infer<typeof registerSchema>) {
     if (error instanceof TypeError) {
       console.log(error.message);
     }
+    console.log(error);
   }
 }
 /* eslint-enable */

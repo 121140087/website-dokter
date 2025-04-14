@@ -6,7 +6,7 @@ import { createJadwal } from "../../jadwal/_actions/createJadwal";
 export const checkAntrian = async (tanggal: Date) => {
   const jamBuka = await prisma.jamBuka.findMany({
     where: {
-      key: tanggal.getDay(),
+      key: tanggal.getDay() === 0 ? 7 : tanggal.getDay() + 1,
     },
   });
   var maksimalAntrian = 0;
@@ -36,8 +36,6 @@ export const checkAntrian = async (tanggal: Date) => {
       },
     },
   });
-  console.log(jadwal);
-  console.log(maksimalAntrian);
   if (!jadwal) {
     jadwal = await createJadwal(tanggal);
   }

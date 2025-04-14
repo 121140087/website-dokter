@@ -66,7 +66,7 @@ const PemeriksaanDetailPage = ({
             </div>
             {pemeriksaan.resepObat.map((r) => {
               return (
-                <div className="grid grid-cols-3">
+                <div className="grid grid-cols-3" key={r.id}>
                   <p>{r.obat?.nama}</p>
                   <p>{r.jumlah}</p>
                   <p>Rp. {r.jumlah * (r.obat?.harga ?? 0)}</p>
