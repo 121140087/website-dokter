@@ -27,7 +27,7 @@ const DesktopNavbar = () => {
           <Link href="/pemeriksaan">Hasil Pemeriksaan</Link>
         </>
       )}
-      <DesktopNavbarAction />
+      <DesktopNavbarAction user={user} />
     </div>
   );
 };

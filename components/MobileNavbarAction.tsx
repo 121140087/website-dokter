@@ -8,20 +8,12 @@ import { getCurrentUser } from "@/actions/getCurrentUser";
 import { logout } from "@/actions/logout";
 import { toast } from "sonner";
 
-const MobileNavbarAction = () => {
-  const [user, setUser] = useState<User | undefined>();
-  const getUser = async () => {
-    const user = await getCurrentUser();
-    setUser(user);
-  };
+const MobileNavbarAction = ({ user }: { user: User | undefined }) => {
   const signOut = async () => {
     await logout();
     toast("Berhasil Logout");
     window.location.reload();
   };
-  useEffect(() => {
-    getUser();
-  }, []);
   return (
     <div className="flex flex-col gap-y-4">
       {user ? (
