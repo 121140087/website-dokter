@@ -19,6 +19,7 @@ const PesanPage = () => {
   const [chats, setChats] = useState<Chat[] | undefined>();
   const [input, setInput] = useState("");
   const [selectedUserId, setSelectedUserId] = useState("");
+  const [search, setSearch] = useState<string>("");
   const messageScrollRef = useRef<null | HTMLDivElement>(null);
 
   const updateChatrooms = async () => {
@@ -50,26 +51,40 @@ const PesanPage = () => {
   return (
     <div className="grid grid-cols-4 w-full h-[calc(100vh-72px)]">
       <div className="overflow-y-scroll relative top-0 left-0 h-[calc(100vh-72px)] border-r-2 w-full">
+        <Input
+          className="w-full my-2"
+          placeholder="Cari..."
+          value={search}
+          onChange={(e) => {
+            e.preventDefault();
+            setSearch(e.currentTarget.value);
+          }}
+        />
+
         {chatRooms ? (
-          chatRooms.map((c) => {
-            return (
-              <div
-                onClick={() => updateChat({ userId: c.id })}
-                key={c.id}
-                className="cursor-pointer flex items-center p-4 border-b-2 justify-between"
-              >
-                <div className="flex gap-x-4 items-center">
-                  <Avatar>
-                    <AvatarImage src="/images/user.png" />
-                  </Avatar>
-                  <p>{c.nama}</p>
+          chatRooms
+            .filter((v) =>
+              v.nama.toLowerCase().startsWith(search.toLocaleLowerCase())
+            )
+            .map((c) => {
+              return (
+                <div
+                  onClick={() => updateChat({ userId: c.id })}
+                  key={c.id}
+                  className="cursor-pointer flex items-center p-4 border-b-2 justify-between"
+                >
+                  <div className="flex gap-x-4 items-center">
+                    <Avatar>
+                      <AvatarImage src="/images/user.png" />
+                    </Avatar>
+                    <p>{c.nama}</p>
+                  </div>
+                  <p className="text-slate-400">
+                    {moment(c.updatedAt).fromNow()}
+                  </p>
                 </div>
-                <p className="text-slate-400">
-                  {moment(c.updatedAt).fromNow()}
-                </p>
-              </div>
-            );
-          })
+              );
+            })
         ) : (
           <p className="text-center">Tidak ada pesan</p>
         )}

@@ -19,10 +19,12 @@ export async function saveChat({
   text,
   chatRole,
   userId,
+  name,
 }: {
   text: string;
   chatRole: ChatRole;
   userId?: string;
+  name?: string;
 }) {
   if (text.length <= 0 || !text) {
     return;
@@ -36,15 +38,14 @@ export async function saveChat({
       },
     });
     if (!chatRoom) {
-      console.log(user);
       await prisma.chatRoom.create({
         data: {
           id: userId ?? user.id!,
-          nama: user.name!,
+          nama: name ?? user.name!,
         },
       });
     }
-    const response = await prisma.chat.create({
+    await prisma.chat.create({
       data: {
         role: chatRole,
         message: text,
