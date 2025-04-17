@@ -1,5 +1,4 @@
 "use client";
-import { obatsData } from "@/data/obatsData";
 import { DataTable } from "../_components/DataTable";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
