@@ -12,6 +12,9 @@ export const getJanji = async () => {
     where: {
       pasienNIK: user.nik!,
     },
+    include: {
+      jadwal: true,
+    },
   });
   return janji;
 };

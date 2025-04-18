@@ -1,5 +1,5 @@
 "use client";
-import { Antrian, StatusAntrian } from "@prisma/client";
+import { Antrian, Jadwal, StatusAntrian } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { getJanji } from "./_actions/getJanji";
 import { format } from "date-fns";
@@ -8,7 +8,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 const DaftarJanjiPage = () => {
-  const [janji, setJanji] = useState<Antrian[]>([]);
+  const [janji, setJanji] = useState<(Antrian & { jadwal: Jadwal })[]>([]);
   const updateJanji = async () => {
     const response = await getJanji();
     if (response) {
@@ -41,7 +41,7 @@ const DaftarJanjiPage = () => {
                 className="w-full rounded border p-4 flex flex-col gap-y-3"
               >
                 <p>
-                  <b>Tanggal</b> : {format(j.createdAt, "dd MMM yyyy")}
+                  <b>Tanggal</b> : {format(j.jadwal.tanggal, "dd MMM yyyy")}
                 </p>
                 <p className="font-bold">Keluhan</p>
                 <p>{j.keluhan}</p>
