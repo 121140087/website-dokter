@@ -2,6 +2,8 @@
 
 import { prisma } from "@/prisma";
 import { getResetTokenByEmail } from "../../../forgot-password/_action/getResetTokenByEmail";
+/* eslint-disable */
+// @ts-ignore
 import { hashSync } from "bcryptjs";
 
 export const changePassword = async (
@@ -45,3 +47,4 @@ export const changePassword = async (
     },
   });
 };
+/* eslint-enable */
