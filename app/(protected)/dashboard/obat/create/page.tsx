@@ -24,6 +24,7 @@ import { z } from "zod";
 import { createObat } from "../_actions/createObat";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { getObatByName } from "../_actions/getObatByName";
 
 const CreateObatPage = () => {
   const router = useRouter();
@@ -56,6 +57,12 @@ const CreateObatPage = () => {
     },
   });
   async function onSubmit(values: z.infer<typeof obatFormSchema>) {
+    const response = await getObatByName(values.nama);
+    if (response) {
+      toast("Obat Telah Terdaftar");
+
+      return;
+    }
     await createObat({
       nama: values.nama,
       aturanPakai: values.aturanPakai,
