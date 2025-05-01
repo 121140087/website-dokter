@@ -88,10 +88,10 @@ const BuatJanjiPage = () => {
         <TabsContent value="tanggal">
           <div className="flex flex-wrap w-full gap-x-2 p-4 rounded border m-4">
             <div className="h-12 w-32 bg-calendar-closed  border-slate-300 flex justify-center items-center">
-              Tutup
+              Tutup hari ini
             </div>
             <div className="h-12 w-32 bg-calendar-today-closed  border-slate-300 flex justify-center items-center">
-              Tutup hari ini
+              Tutup
             </div>
             <div className="h-12 w-32 bg-calendar-today border-slate-300 flex justify-center items-center">
               hari ini
