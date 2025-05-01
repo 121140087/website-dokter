@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Obat } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
+import Link from "next/link";
 
 export type ObatTableDef = {
   id: string;
@@ -31,9 +32,13 @@ export const obatColumns: ColumnDef<Obat>[] = [
     },
   },
   {
-    id: "actions",
+    accessorKey: "id",
     cell: ({ row }) => {
-      return <Button>Buka</Button>;
+      return (
+        <Link href={"/dashboard/obat/" + row.getValue("id")}>
+          <Button>Buka</Button>
+        </Link>
+      );
     },
   },
 ];
