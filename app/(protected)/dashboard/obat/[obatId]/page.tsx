@@ -49,6 +49,13 @@ const EditObat = ({ params }: { params: Promise<{ obatId: string }> }) => {
   });
   const form = useForm<z.infer<typeof obatFormSchema>>({
     resolver: zodResolver(obatFormSchema),
+    defaultValues: {
+      aturanPakai: "",
+      deskripsi: "",
+      harga: 0,
+      nama: "",
+      stok: 0,
+    },
   });
   const updateValue = async () => {
     const obatId = (await params).obatId;

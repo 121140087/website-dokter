@@ -12,6 +12,7 @@ export default {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -50,6 +51,10 @@ export default {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        "calendar-closed": "#d4fabe",
+        "calendar-today-closed": "#d4fbd8",
+        "calendar-open": "#ffffff",
+        "calendar-today": "#fefcd9",
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -26,7 +26,7 @@ export const getCurrentAntrian = async () => {
           999
         ),
       },
-    }
+    },
   });
   if (!responseJadwal) {
     return null;
