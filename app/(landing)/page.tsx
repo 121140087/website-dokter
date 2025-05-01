@@ -196,7 +196,7 @@ export default function Home() {
         <JamPraktik />
         <iframe
           className="w-full mt-12 rounded-xl shadow"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31777.436927829334!2d105.30455994183347!3d-5.389575242472901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e40dc99e12771b7%3A0xca8e1bccee0c223a!2sPerumahan%20Sabah%20Balau%20Residence!5e0!3m2!1sid!2sid!4v1737348687802!5m2!1sid!2sid"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.33924316086!2d104.6502174235216!3d-4.153533236911388!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e39190024eafa35%3A0x7198817065b22e2f!2sPraktek%20dr.%20Hema%20Malini!5e0!3m2!1sid!2sid!4v1746105491131!5m2!1sid!2sid"
           width="600"
           height="450"
           allowFullScreen={false}
