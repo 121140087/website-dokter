@@ -20,9 +20,9 @@ const DetailAntrian = ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <div className="max-w-[400px] border rounded mx-auto mt-12 shadow-md">
       <div className="w-full p-4 bg-white">
-        <p className="text-center font-bold text-lg">Klinik Dokter x</p>
+        <p className="text-center font-bold text-lg">Klinik Dr Hema Malini</p>
       </div>
-      <div className="w-full p-4 h-[200px] bg-orange-500 flex justify-center items-center">
+      <div className="w-full p-4 h-[200px] bg-slate-950 flex justify-center items-center">
         <p className="font-bold text-5xl text-white">
           {antrian?.noAntrian ?? ""}
         </p>
@@ -31,7 +31,7 @@ const DetailAntrian = ({ params }: { params: Promise<{ id: string }> }) => {
         {antrian && format(antrian.jadwal.tanggal, "dd MMM yyyy")}{" "}
         {antrian && antrian.jam}
       </div>
-      <div className="w-full p-4 bg-orange-500 text-white text-center">
+      <div className="w-full p-4 bg-slate-950 text-white text-center">
         Tunjukan ketika melakukan pemeriksaan
       </div>
     </div>
