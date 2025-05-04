@@ -8,7 +8,6 @@ export const generateResetPasswordToken = async (email: string) => {
   const expires = new Date().getTime() + 1000 * 60 * 60;
 
   const existingToken = await getResetTokenByEmail(email);
-  console.log(existingToken);
   if (existingToken) {
     await prisma.resetToken.delete({
       where: {

@@ -41,7 +41,6 @@ const AntrianChart = () => {
         day: i,
       });
     }
-    console.log(result);
     setJadwal(jadwals);
   };
   useEffect(() => {

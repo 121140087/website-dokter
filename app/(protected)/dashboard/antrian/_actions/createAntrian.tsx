@@ -41,7 +41,6 @@ export const createAntrian = async ({
       },
     },
   });
-  console.log(jadwal);
   if (!jadwal) {
     jadwal = await createJadwal(tanggal);
   }

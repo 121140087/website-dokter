@@ -103,7 +103,6 @@ const PasienForm = ({ date }: { date: Date }) => {
     }
     toast("Menambahkan ke antrian");
     try {
-      console.log(pasien);
       const isPasienCreated = await getPasienByNIK(values.nik);
       if (!isPasienCreated) {
         await createPasien({

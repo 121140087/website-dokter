@@ -13,9 +13,7 @@ let snap = new Midtrans.Snap({
 
 export async function POST(req: Request) {
   const { pemeriksaanId, price } = await req.json();
-  console.log("harga", price);
   const uuid = randomUUID();
-  console.log("pemeriksaan Id", pemeriksaanId);
   let parameter = {
     item_details: {
       name: "Website Dokter",

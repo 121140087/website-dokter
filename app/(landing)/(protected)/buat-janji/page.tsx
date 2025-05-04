@@ -122,8 +122,6 @@ const BuatJanjiPage = () => {
                 return;
               }
               const result = await checkAntrian(info.date);
-              console.log(result);
-              console.log(info.date);
               if (result) {
                 setTanggal(info.date);
 

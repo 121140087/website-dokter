@@ -25,7 +25,6 @@ const PemeriksaanPaymentConfirmation = ({
 
       setTransactionStatus(result.transaction_status);
     }
-    console.log(transactionStatus);
     setTimeout(() => {
       redirect("/pemeriksaan/" + par.id);
     }, 2000);

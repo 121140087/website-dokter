@@ -11,13 +11,12 @@ const CurrentAntrian = () => {
   const updateCurrentAntrian = async () => {
     setLoading(true);
     const result = await getCurrentAntrian();
-  
+
     setCurrentAntrian(result);
     setLoading(false);
   };
   const next = async () => {
     setLoading(true);
-    console.log("called");
     const response = await antrianNext(currentAntrian);
     if (response.message) {
       toast(response.message);

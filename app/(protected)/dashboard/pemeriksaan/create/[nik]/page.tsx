@@ -49,7 +49,6 @@ const PemeriksaanDetailPage = ({
 }) => {
   const [resep, setResep] = useState<{ obat: Obat; jumlah: number }[]>([]);
   const onResepChangeHandler = (resep: { obat: Obat; jumlah: number }[]) => {
-    console.log(resep);
     setResep(resep);
   };
   const createPemeriksaanHandler = async (
