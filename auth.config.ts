@@ -14,12 +14,13 @@ export const authConfig = {
       const protectedRoutes = [
         "/pasien/create/",
         "/buat-janji",
-        "/pemeriksaan",
         "/daftar-janji",
         "/antrian",
       ];
       const authenticationRoutes = ["/login", "/register"];
-      const isOnProtectedRoutes = protectedRoutes.includes(nextUrl.pathname);
+      const isOnProtectedRoutes =
+        protectedRoutes.includes(nextUrl.pathname) ||
+        nextUrl.pathname.startsWith("/pemeriksaan");
       const isOnAdminRoutes = nextUrl.pathname.startsWith("/dashboard");
       const isOnAuthenticationRoutes = authenticationRoutes.includes(
         nextUrl.pathname
