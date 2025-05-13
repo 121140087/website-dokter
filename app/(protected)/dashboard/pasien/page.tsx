@@ -3,12 +3,15 @@ import { DataTable } from "../_components/DataTable";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Obat, Pasien } from "@prisma/client";
+import { Obat, Pasien, Pemeriksaan } from "@prisma/client";
 import { getPasiens } from "./_actions/getpasiens";
 import { pasienColumn } from "./columns";
+import { pemeriksaanColumn } from "../pemeriksaan/columns";
+import { getPemeriksaanByNIK } from "@/actions/getPemeriksaanByNIK";
 
 const PasienPage = () => {
   const [pasiens, setPasiens] = useState<Pasien[] | undefined>();
+
   const updateObats = async () => {
     const response = await getPasiens();
     setPasiens(response);

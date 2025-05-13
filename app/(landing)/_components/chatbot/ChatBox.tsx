@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils";
 import { ArrowLeft, MessageCircle, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChatList from "./ChatList";
 import ChatBot from "./ChatBot";
 import ChatDokter from "./ChatDokter";
 import { ChatPage } from "@/lib/definitions/enum";
+import { checkOnlineStatus } from "@/actions/checkOnlineStatus";
 
 const getTitle = (chatPage: ChatPage) => {
   switch (chatPage) {
@@ -20,8 +21,14 @@ const getTitle = (chatPage: ChatPage) => {
 const ChatBox = () => {
   const [chatPage, setChatPage] = useState<ChatPage>(ChatPage.CHATLIST);
   const [openChat, setOpenChat] = useState(false);
+  const [isOnline, setIsOnline] = useState(false);
+
   const toggleChat = () => {
     setOpenChat(!openChat);
+  };
+  const updateStatus = async () => {
+    const response = await checkOnlineStatus();
+    setIsOnline(response);
   };
 
   const getPage = () => {
@@ -34,6 +41,9 @@ const ChatBox = () => {
         return <ChatList onChange={(c) => setChatPage(c)} />;
     }
   };
+  useEffect(() => {
+    updateStatus();
+  }, []);
   return (
     <>
       <div
@@ -58,13 +68,21 @@ const ChatBox = () => {
           </div>
         ) : (
           <div className="border-b-2 p-4 flex justify-between items-center mt-[72px] sm:mt-0">
-            <div className="flex gap-x-4">
+            <div className="flex items-center gap-x-4">
               <ArrowLeft
                 className="cursor-pointer"
                 onClick={() => setChatPage(ChatPage.CHATLIST)}
               />
 
               <h2 className="font-bold">{getTitle(chatPage)}</h2>
+              <div
+                className={cn(
+                  " w-3 h-3 rounded-full",
+                  isOnline || chatPage === ChatPage.AI
+                    ? "bg-green-500"
+                    : "bg-gray-400"
+                )}
+              />
             </div>
             <X className="cursor-pointer" onClick={toggleChat} />
           </div>

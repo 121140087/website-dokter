@@ -15,7 +15,26 @@ const MessageItem = ({ m }: { m: Chat }) => {
         )}
       >
         <p className={"max-w-[250px] break-words"}>
-          <Linkify>{m.message}</Linkify>
+          <Linkify
+            options={{
+              render: ({ attributes, content }) => {
+                return (
+                  <a
+                    {...attributes}
+                    className="bg-slate-500 text-white px-4 py-2 rounded text-sm hover:bg-slate-600 transition"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {content.startsWith(process.env.NEXT_PUBLIC_DOMAIN!)
+                      ? "Lihat Hasil Pemeriksaan"
+                      : content}
+                  </a>
+                );
+              },
+            }}
+          >
+            {m.message}
+          </Linkify>
         </p>
         <p
           className={cn(

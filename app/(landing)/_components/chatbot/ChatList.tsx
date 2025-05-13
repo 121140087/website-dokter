@@ -1,17 +1,25 @@
+import { checkOnlineStatus } from "@/actions/checkOnlineStatus";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { ChatPage } from "@/lib/definitions/enum";
+import { cn } from "@/lib/utils";
 import { User } from "next-auth";
 import { useEffect, useState } from "react";
 
 const ChatList = ({ onChange }: { onChange: (page: ChatPage) => any }) => {
   const [user, setUser] = useState<User | undefined>();
+  const [isOnline, setIsOnline] = useState(false);
   const updateUser = async () => {
     const session = await getCurrentUser();
     setUser(session);
   };
+  const updateStatus = async () => {
+    const response = await checkOnlineStatus();
+    setIsOnline(response);
+  };
   useEffect(() => {
     updateUser();
+    updateStatus();
   }, []);
   return (
     <div className="flex flex-col h-full ">
@@ -23,6 +31,7 @@ const ChatList = ({ onChange }: { onChange: (page: ChatPage) => any }) => {
           <AvatarImage src="/images/assistent.png" className="object-cover" />
         </Avatar>
         <p>Asisten AI</p>
+        <div className=" w-3 h-3 rounded-full bg-green-500" />
       </div>
       {user && (
         <div
@@ -33,6 +42,12 @@ const ChatList = ({ onChange }: { onChange: (page: ChatPage) => any }) => {
             <AvatarImage src="/images/dokter.jpg" className="object-cover" />
           </Avatar>
           <p>Dokter Hema Malini</p>
+          <div
+            className={cn(
+              " w-3 h-3 rounded-full",
+              isOnline ? "bg-green-500" : "bg-gray-400"
+            )}
+          />
         </div>
       )}
     </div>

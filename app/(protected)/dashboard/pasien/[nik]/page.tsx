@@ -28,6 +28,7 @@ import {
   GolonganDarah,
   JenisKelamin,
   Pasien,
+  Pemeriksaan,
   StatusPasien,
 } from "@prisma/client";
 import { format } from "date-fns";
@@ -40,12 +41,25 @@ import { toast } from "sonner";
 import { CalendarIcon } from "lucide-react";
 import { updatePasien } from "@/actions/updatePasien";
 import { useRouter } from "next/navigation";
+import { getPemeriksaanByNIK } from "@/actions/getPemeriksaanByNIK";
+import { DataTable } from "../../_components/DataTable";
+import { pemeriksaanColumn } from "../../pemeriksaan/columns";
 
 const PasienDetail = ({ params }: { params: Promise<{ nik: string }> }) => {
   const [pasien, setPasien] = useState<Pasien | null>();
   const [tanggalLahir, setTanggalLahir] = useState<Date | undefined>(
     new Date()
   );
+  const [pemeriksaan, setPemeriksaan] = useState<Pemeriksaan[]>([]);
+
+  const updatePemeriksaan = async () => {
+    const parms = await params;
+
+    const response = await getPemeriksaanByNIK(parms.nik);
+    if (response) {
+      setPemeriksaan(response);
+    }
+  };
   const router = useRouter();
 
   const form = useForm<z.infer<typeof pasienFormSchema>>({
@@ -108,9 +122,10 @@ const PasienDetail = ({ params }: { params: Promise<{ nik: string }> }) => {
   };
   useEffect(() => {
     updateCurrentPasien();
+    updatePemeriksaan();
   }, []);
   return (
-    <div className="p-4 flex gap-x-4">
+    <div className="p-4 flex flex-col gap-x-4 gap-y-4">
       <div className="w-full p-4 rounded shadow-md ">
         <h1 className="font-bold text-2xl">Data Pasien</h1>
 
@@ -336,6 +351,12 @@ const PasienDetail = ({ params }: { params: Promise<{ nik: string }> }) => {
           </form>
         </Form>
       </div>
+      <DataTable
+        columns={pemeriksaanColumn}
+        data={pemeriksaan}
+        title="Hasil Pemeriksaan"
+        searchKey="pasienNik"
+      />
     </div>
   );
 };

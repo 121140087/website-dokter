@@ -49,30 +49,9 @@ const PasienTableActions = ({ nik }: { nik: string }) => {
   return (
     <div className="flex gap-x-2">
       <Link href={`/dashboard/pasien/${nik}`} className={buttonVariants()}>
-        Edit
+        Detail
       </Link>
-      <AlertDialog>
-        <AlertDialogTrigger className="bg-destructive rounded p-2 text-white">
-          Hapus
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Apakah kamu yakin?</AlertDialogTitle>
-            <AlertDialogDescription>
-              Aksi ini akan menghapus data obat keseluruhan
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={() => deletePasienAction()}
-              className="hover:bg-destructive"
-            >
-              Hapus
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+
       <AlertDialog>
         <AlertDialogTrigger className="bg-primary  rounded p-2 text-white">
           Kirim Pesan
@@ -99,6 +78,29 @@ const PasienTableActions = ({ nik }: { nik: string }) => {
               className="hover:bg-slate-500"
             >
               Kirim
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog>
+        <AlertDialogTrigger className="bg-destructive rounded p-2 text-white">
+          Hapus
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Apakah kamu yakin?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Aksi ini akan menghapus data obat keseluruhan
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => deletePasienAction()}
+              className="hover:bg-destructive"
+            >
+              Hapus
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

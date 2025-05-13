@@ -49,6 +49,7 @@ model User {
   updatedAt DateTime  @default(now())
   accounts  Account[]
   sessions  Session[]
+  isOnline  Boolean  @default(false) 
   Dokter    Dokter?   @relation(fields: [dokterId], references: [id], onDelete: Cascade)
   pasien    Pasien?   @relation(fields: [nik], references: [nik], onDelete: Cascade)
 

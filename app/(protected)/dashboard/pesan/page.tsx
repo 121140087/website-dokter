@@ -16,12 +16,17 @@ import { supabase } from "@/lib/supabaseClient";
 import Linkify from "linkify-react";
 
 import LastPemeriksaan from "./_components/LastPemeriksaan";
+import { setOnlineStatus } from "@/actions/setOnlineStatus";
+import { checkOnlineStatus } from "@/actions/checkOnlineStatus";
+import { toast } from "sonner";
+import { env } from "process";
 const PesanPage = () => {
   const [chatRooms, setChatRooms] = useState<ChatRoom[] | undefined>();
   const [chats, setChats] = useState<Chat[] | undefined>();
   const [input, setInput] = useState("");
   const [selectedUserId, setSelectedUserId] = useState("");
   const [search, setSearch] = useState<string>("");
+  const [isOnline, setIsOnline] = useState(false);
   const messageScrollRef = useRef<null | HTMLDivElement>(null);
 
   const updateChatrooms = async () => {
@@ -33,6 +38,10 @@ const PesanPage = () => {
     setSelectedUserId(userId);
     setChats(response);
   };
+  const updateStatus = async () => {
+    const response = await checkOnlineStatus();
+    setIsOnline(response);
+  };
   const sendChat = async () => {
     saveChat({
       text: input,
@@ -43,6 +52,7 @@ const PesanPage = () => {
   };
   useEffect(() => {
     updateChatrooms();
+    updateStatus();
   }, []);
   useEffect(() => {
     if (messageScrollRef.current) {
@@ -92,7 +102,6 @@ const PesanPage = () => {
               (r) => r.id === updatedRoom.id
             );
             if (existingIndex !== -1) {
-              // Ganti yang lama dengan yang baru, lalu sort berdasarkan updatedAt
               const newRooms = [...prevRooms];
               newRooms[existingIndex] = updatedRoom;
               return newRooms.sort(
@@ -101,7 +110,6 @@ const PesanPage = () => {
                   new Date(a.updatedAt).getTime()
               );
             } else {
-              // Tambahkan jika belum ada
               return [updatedRoom, ...prevRooms];
             }
           });
@@ -117,6 +125,34 @@ const PesanPage = () => {
   return (
     <div className="grid grid-cols-4 w-full h-[calc(100vh-72px)]">
       <div className="overflow-y-scroll relative top-0 left-0 h-[calc(100vh-72px)] border-r-2 w-full">
+        {isOnline ? (
+          <Button
+            variant={"destructive"}
+            className="w-full my-4"
+            onClick={async () => {
+              toast("Mengupdate status");
+
+              await setOnlineStatus(false);
+
+              setIsOnline(false);
+              toast("Status terupdate");
+            }}
+          >
+            Offline
+          </Button>
+        ) : (
+          <Button
+            className="w-full my-4"
+            onClick={async () => {
+              toast("Mengupdate status");
+              await setOnlineStatus(true);
+              setIsOnline(true);
+              toast("Status terupdate");
+            }}
+          >
+            Online
+          </Button>
+        )}
         <Input
           className="w-full my-2"
           placeholder="Cari..."
@@ -167,7 +203,26 @@ const PesanPage = () => {
                     c.role === ChatRole.dokter && "ml-auto"
                   )}
                 >
-                  <Linkify>{c.message}</Linkify>
+                  <Linkify
+                    options={{
+                      render: ({ attributes, content }) => {
+                        return (
+                          <a
+                            {...attributes}
+                            className="bg-slate-500 text-white px-4 py-2 rounded text-sm hover:bg-slate-600 transition"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {content.startsWith(process.env.NEXT_PUBLIC_DOMAIN!)
+                              ? "Lihat Hasil Pemeriksaan"
+                              : content}
+                          </a>
+                        );
+                      },
+                    }}
+                  >
+                    {c.message}
+                  </Linkify>
                   <p className="text-sm text-slate-500 text-end">
                     {moment.utc(c.createdAt).local().fromNow()}
                   </p>
