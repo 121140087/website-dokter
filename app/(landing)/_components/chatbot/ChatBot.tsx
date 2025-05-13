@@ -20,6 +20,7 @@ const ChatBot = () => {
     handleSubmit,
     isLoading,
     setMessages,
+
     setInput,
   } = useChat({
     initialMessages: [
