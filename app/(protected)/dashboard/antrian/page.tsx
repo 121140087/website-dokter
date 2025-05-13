@@ -34,6 +34,7 @@ const PasienPage = () => {
         columns={pasienAntrianColumns}
         data={antrians}
         title="Antrian"
+        defaultFilter="harian"
       />
     </div>
   );

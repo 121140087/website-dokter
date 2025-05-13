@@ -1,4 +1,6 @@
 import Skeleton from "react-loading-skeleton";
+import { supabase } from "@/lib/supabaseClient";
+
 import "react-loading-skeleton/dist/skeleton.css";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -21,8 +23,29 @@ const ChatDokter = () => {
     setMessages(response);
   };
   useEffect(() => {
-    updateMessage();
+    updateMessage(); // initial fetch
+
+    const channel = supabase
+      .channel("chat-room")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "Chat",
+        },
+        (payload) => {
+          const newMessage = payload.new as Chat;
+          setMessages((prev) => [...prev, newMessage]);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (input.length <= 0) {
@@ -33,7 +56,6 @@ const ChatDokter = () => {
       text: input,
     });
     setInput("");
-    await updateMessage();
   };
   const messageScrollRef = useRef<null | HTMLDivElement>(null);
   useEffect(() => {

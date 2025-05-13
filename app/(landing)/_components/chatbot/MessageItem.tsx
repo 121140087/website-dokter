@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { Chat } from "@prisma/client";
 import { format } from "date-fns";
 import Linkify from "linkify-react";
+import moment from "moment";
 import Markdown from "react-markdown";
 
 const MessageItem = ({ m }: { m: Chat }) => {
@@ -22,7 +23,7 @@ const MessageItem = ({ m }: { m: Chat }) => {
             m.role === "user" && "text-start"
           )}
         >
-          {format(m.createdAt?.toISOString()!, "hh:mm a")}
+          {moment.utc(m.createdAt).local().fromNow()}
         </p>
       </div>
     </div>

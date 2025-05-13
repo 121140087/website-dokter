@@ -41,7 +41,8 @@ const DashboardPage = async () => {
           <DataTable
             columns={antrianColumns}
             data={dataAntrian}
-            title="Antrian"
+            title="Antrian Hari ini"
+            defaultFilter="harian"
           />
         </div>
         <div className="col-span-1">

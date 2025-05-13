@@ -7,7 +7,15 @@ import {
 import { antrianChart } from "@/data/chartData";
 import { Antrian, Jadwal } from "@prisma/client";
 import { useEffect, useState } from "react";
-import { Bar, BarChart, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Label,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import { getJadwalThisMonth } from "../_actions/getJadwal";
 import { format } from "date-fns";
 
@@ -15,6 +23,21 @@ interface JadwalData {
   data: number;
   day: number;
 }
+
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="rounded border bg-white p-2 shadow">
+        <p className="text-sm font-medium">Tanggal: {label}</p>
+        <p className="text-xs text-muted-foreground">
+          Total Antrian: {payload[0].value}
+        </p>
+      </div>
+    );
+  }
+
+  return null;
+};
 
 const AntrianChart = () => {
   const [jadwal, setJadwal] = useState<JadwalData[]>();
@@ -49,16 +72,36 @@ const AntrianChart = () => {
   return (
     <ChartContainer config={chartConfig} className="w-full h-[250px]">
       <BarChart accessibilityLayer data={jadwal}>
-        <ChartTooltip content={<ChartTooltipContent />} />
+        <Tooltip content={<CustomTooltip />} />
+        <CartesianGrid strokeDasharray="3 3" />
+
         <Bar dataKey={"data"} fill="--var(color-value)" radius={4} />
-        <YAxis />
+        <YAxis dataKey={"data"}>
+          <Label
+            value="Jumlah Antrian"
+            offset={-5}
+            position="left"
+            style={{
+              textAnchor: "middle",
+            }}
+            angle={-90}
+            fontSize={14}
+          />
+        </YAxis>
         <XAxis
           dataKey={"day"}
           tickLine={false}
           tickMargin={10}
           axisLine={false}
           tickFormatter={(value) => value}
-        />
+        >
+          <Label
+            value="Tanggal"
+            dy={10}
+            position="insideBottom"
+            fontSize={14}
+          />
+        </XAxis>
       </BarChart>
     </ChartContainer>
   );

@@ -18,7 +18,7 @@ const PendapatanChart = () => {
   const updateData = async () => {
     const response = await getPemeriksaanThisMonth();
     const grouped = response.reduce((acc, curr) => {
-      const day = format(curr.createdAt, "dd");
+      const day = format(curr.createdAt, "dd/MM/yyyy");
       acc[day] = (acc[day] || 0) + curr.totalHarga;
       return acc;
     }, {} as Record<string, number>);
@@ -35,7 +35,9 @@ const PendapatanChart = () => {
   return (
     <div className="w-full h-[300px] p-4 rounded border">
       <div className="p-4 rounded border">
-        <p className="font-bold">Pendapatan Bulan Ini</p>
+        <p className="font-bold">
+          Pendapatan Bulan {format(new Date(), "MMM")}
+        </p>
         <p className="font-bold text-2xl">
           Total Rp.{" "}
           {Intl.NumberFormat("id-Id", {
@@ -50,6 +52,7 @@ const PendapatanChart = () => {
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
+          <YAxis dataKey={"jumlah"} />
           <Tooltip />
           <Line
             type="monotone"

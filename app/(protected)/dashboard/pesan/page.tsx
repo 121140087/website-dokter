@@ -11,6 +11,8 @@ import moment from "moment";
 import { getChats } from "./_actions/getChats";
 import { saveChat } from "@/lib/actions";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/lib/supabaseClient";
+
 import Linkify from "linkify-react";
 
 import LastPemeriksaan from "./_components/LastPemeriksaan";
@@ -38,7 +40,6 @@ const PesanPage = () => {
       userId: selectedUserId,
     });
     setInput("");
-    updateChat({ userId: selectedUserId });
   };
   useEffect(() => {
     updateChatrooms();
@@ -48,6 +49,71 @@ const PesanPage = () => {
       messageScrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [chats]);
+  useEffect(() => {
+    if (!selectedUserId) return;
+
+    const channel = supabase
+      .channel(`realtime-chat-${selectedUserId}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "Chat",
+          filter: `userId=eq.${selectedUserId}`,
+        },
+        (payload) => {
+          const newChat = payload.new as Chat;
+          setChats((prev) => (prev ? [...prev, newChat] : [newChat]));
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [selectedUserId]);
+  useEffect(() => {
+    const channel = supabase
+      .channel("realtime-chatrooms")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "ChatRoom",
+        },
+        (payload) => {
+          const updatedRoom = payload.new as ChatRoom;
+          setChatRooms((prevRooms) => {
+            if (!prevRooms) return [updatedRoom];
+
+            const existingIndex = prevRooms.findIndex(
+              (r) => r.id === updatedRoom.id
+            );
+            if (existingIndex !== -1) {
+              // Ganti yang lama dengan yang baru, lalu sort berdasarkan updatedAt
+              const newRooms = [...prevRooms];
+              newRooms[existingIndex] = updatedRoom;
+              return newRooms.sort(
+                (a, b) =>
+                  new Date(b.updatedAt).getTime() -
+                  new Date(a.updatedAt).getTime()
+              );
+            } else {
+              // Tambahkan jika belum ada
+              return [updatedRoom, ...prevRooms];
+            }
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
   return (
     <div className="grid grid-cols-4 w-full h-[calc(100vh-72px)]">
       <div className="overflow-y-scroll relative top-0 left-0 h-[calc(100vh-72px)] border-r-2 w-full">
@@ -80,7 +146,7 @@ const PesanPage = () => {
                     <p>{c.nama}</p>
                   </div>
                   <p className="text-slate-400">
-                    {moment(c.updatedAt).fromNow()}
+                    {moment.utc(c.updatedAt).local().fromNow()}
                   </p>
                 </div>
               );
@@ -103,7 +169,7 @@ const PesanPage = () => {
                 >
                   <Linkify>{c.message}</Linkify>
                   <p className="text-sm text-slate-500 text-end">
-                    {moment(c.createdAt).fromNow()}
+                    {moment.utc(c.createdAt).local().fromNow()}
                   </p>
                 </div>
               );

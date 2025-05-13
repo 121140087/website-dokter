@@ -17,7 +17,7 @@ const ResepObatChart = () => {
   const updateData = async () => {
     const response = await getResepObatThisMonth();
     const grouped = response.reduce((acc, curr) => {
-      const day = format(curr.createdAt, "dd");
+      const day = format(curr.createdAt, "dd/MM/yyyy");
       acc[day] = (acc[day] || 0) + curr.jumlah;
       return acc;
     }, {} as Record<string, number>);
@@ -34,7 +34,9 @@ const ResepObatChart = () => {
   return (
     <div className="w-full h-[300px] p-4 rounded border">
       <div className="p-4 rounded border">
-        <p className="font-bold">Obat Terjual Bulan Ini</p>
+        <p className="font-bold">
+          Obat Terjual Bulan {format(new Date(), "MMM")}
+        </p>
         <p className="font-bold text-2xl">
           Total {data.reduce((acc, item) => acc + item.jumlah, 0)}
         </p>
@@ -43,6 +45,8 @@ const ResepObatChart = () => {
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
+          <YAxis dataKey={"jumlah"} />
+
           <Tooltip />
           <Line
             type="monotone"
