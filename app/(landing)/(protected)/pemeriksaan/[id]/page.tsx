@@ -28,7 +28,9 @@ const PemeriksaanDetailPage = ({
     updatePemeriksaan();
   }, []);
   if (!pemeriksaan) {
-    return <div className="text-center mx-auto font-bold text-xl">Loading</div>;
+    return (
+      <div className="text-center mx-auto font-bold text-3xl">Loading...</div>
+    );
   }
   if (pemeriksaan.dibayar) {
     return (

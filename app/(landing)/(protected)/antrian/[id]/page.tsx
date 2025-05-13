@@ -7,16 +7,20 @@ import { useEffect, useState } from "react";
 
 const DetailAntrian = ({ params }: { params: Promise<{ id: string }> }) => {
   const [antrian, setAntrian] = useState<Antrian & { jadwal: Jadwal }>();
+  const [loading, setLoading] = useState(true);
   const updateAntrian = async () => {
+    setLoading(true);
     const par = await params;
     const response = await getAntrianById(par.id);
     if (response) {
       setAntrian(response);
     }
+    setLoading(false);
   };
   useEffect(() => {
     updateAntrian();
   }, []);
+
   return (
     <div className="max-w-[400px] border rounded mx-auto mt-12 shadow-md">
       <div className="w-full p-4 bg-white">
@@ -24,7 +28,7 @@ const DetailAntrian = ({ params }: { params: Promise<{ id: string }> }) => {
       </div>
       <div className="w-full p-4 h-[200px] bg-slate-950 flex justify-center items-center">
         <p className="font-bold text-5xl text-white">
-          {antrian?.noAntrian ?? ""}
+          {loading ? "Loading..." : antrian?.noAntrian ?? ""}
         </p>
       </div>
       <div className="w-full p-4 text-center font-bold text-xl">
