@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const DaftarJanjiPage = () => {
   const [janji, setJanji] = useState<(Antrian & { jadwal: Jadwal })[]>([]);
@@ -25,7 +26,19 @@ const DaftarJanjiPage = () => {
     <div className="px-8 md:px-16 lg:px-36 xl:px-52 2xl:px-96 mt-24">
       <h2 className="font-bold text-3xl text-center mb-12">Daftar Janji</h2>
       {loading ? (
-        <div className="text-center font-bold text-3xl">Loading....</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div
+              key={i}
+              className="w-full rounded border p-4 flex flex-col gap-y-3"
+            >
+              <Skeleton className="h-4 w-1/3" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-8 w-1/2 mt-2" />
+            </div>
+          ))}
+        </div>
       ) : (
         <>
           {janji.length === 0 && (

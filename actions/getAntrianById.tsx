@@ -11,5 +11,6 @@ export const getAntrianById = async (id: string) => {
       jadwal: true,
     },
   });
+
   return antrian;
 };
