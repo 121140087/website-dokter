@@ -1,9 +1,10 @@
 "use client";
 import { getResepObatThisMonth } from "@/actions/getResepObatThisMonth";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { useEffect, useState } from "react";
 import {
   CartesianGrid,
+  Legend,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -12,8 +13,25 @@ import {
   YAxis,
 } from "recharts";
 
+const renderVerticalTick = (props: any) => {
+  const { x, y, payload } = props;
+  return (
+    <text
+      x={x}
+      y={y}
+      transform={`rotate(-70, ${x}, ${y})`}
+      textAnchor="end"
+      dominantBaseline="middle"
+      fontSize={12}
+    >
+      {payload.value}
+    </text>
+  );
+};
+
 const ResepObatChart = () => {
   const [data, setData] = useState<{ date: string; jumlah: number }[]>([]);
+
   const updateData = async () => {
     const response = await getResepObatThisMonth();
     const grouped = response.reduce((acc, curr) => {
@@ -22,37 +40,74 @@ const ResepObatChart = () => {
       return acc;
     }, {} as Record<string, number>);
 
-    const chartData = Object.entries(grouped).map(([date, jumlah]) => ({
-      date,
-      jumlah,
-    }));
+    const chartData = Object.entries(grouped)
+      .map(([date, jumlah]) => ({ date, jumlah }))
+      .sort(
+        (a, b) =>
+          parse(a.date, "dd/MM/yyyy", new Date()).getTime() -
+          parse(b.date, "dd/MM/yyyy", new Date()).getTime()
+      );
+
     setData(chartData);
   };
+
   useEffect(() => {
     updateData();
   }, []);
+
   return (
-    <div className="w-full h-[300px] p-4 rounded border">
-      <div className="p-4 rounded border">
+    <div className="w-full h-[400px] p-4 mb-16">
+      <div className="p-4 rounded border mb-4">
         <p className="font-bold">
           Obat Terjual Bulan {format(new Date(), "MMM")}
         </p>
         <p className="font-bold text-2xl">
-          Total {data.reduce((acc, item) => acc + item.jumlah, 0)}
+          Total {data.reduce((acc, item) => acc + item.jumlah, 0)} Obat
         </p>
       </div>
-      <ResponsiveContainer width="100%" height="100%">
+
+      <ResponsiveContainer
+        width="100%"
+        height="100%"
+        className="bg-white rounded shadow border z-50"
+      >
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis dataKey={"jumlah"} />
-
+          <XAxis
+            dataKey="date"
+            height={100}
+            tick={renderVerticalTick}
+            label={{
+              value: "Tanggal",
+              position: "outsideBottom",
+              offset: 50,
+              style: { fontSize: 12 },
+            }}
+          />
+          <YAxis
+            tickFormatter={(value) =>
+              Intl.NumberFormat("id-ID", { minimumFractionDigits: 0 }).format(
+                value
+              )
+            }
+            width={100}
+            label={{
+              value: "Jumlah Obat Terjual",
+              angle: -90,
+              position: "outsideLeft",
+              offset: 40,
+              style: { fontSize: 12 },
+            }}
+          />
           <Tooltip />
+          <Legend verticalAlign="bottom" height={36} />
+
           <Line
             type="monotone"
             dataKey="jumlah"
-            stroke="#8884d8"
+            stroke="#10b981"
             strokeWidth={2}
+            dot={false}
           />
         </LineChart>
       </ResponsiveContainer>

@@ -5,28 +5,60 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { chartData } from "@/data/chartData";
-import { Bar, BarChart, XAxis } from "recharts";
+import { Bar, BarChart, XAxis, YAxis, TooltipProps } from "recharts";
+import {
+  ValueType,
+  NameType,
+} from "recharts/types/component/DefaultTooltipContent";
 
 const PasienChart = () => {
   const chartConfig = {
     value: {
-      label: "value",
-      color: "#2563eb",
+      label: "Jumlah",
+      color: "#2563eb", // warna biru sesuai tailwind blue-600
     },
   };
+
+  // Custom tooltip agar angka jadi integer
+  const CustomTooltip = ({
+    active,
+    payload,
+    label,
+  }: TooltipProps<ValueType, NameType>) => {
+    if (active && payload && payload.length) {
+      return (
+        <ChartTooltipContent>
+          <p className="text-sm font-medium text-gray-700">{label}</p>
+          <p className="text-lg font-semibold text-blue-600">
+            {Math.round(payload[0].value as number)}
+          </p>
+        </ChartTooltipContent>
+      );
+    }
+    return null;
+  };
+
   return (
     <ChartContainer config={chartConfig} className="w-full">
-      <BarChart accessibilityLayer data={chartData}>
-        <ChartTooltip content={<ChartTooltipContent />} />
+      <BarChart data={chartData}>
+        <ChartTooltip content={<CustomTooltip />} />
 
-        <Bar dataKey={"value"} fill="--var(color-label)" radius={4} />
         <XAxis
-          dataKey={"day"}
+          dataKey="day"
           tickLine={false}
-          tickMargin={10}
           axisLine={false}
+          tickMargin={10}
           tickFormatter={(value) => value.slice(0, 3)}
         />
+
+        <YAxis
+          tickLine={false}
+          axisLine={false}
+          tickMargin={10}
+          tickFormatter={(value, index) => Math.round(value).toString()}
+        />
+
+        <Bar dataKey="value" fill="#2563eb" radius={4} />
       </BarChart>
     </ChartContainer>
   );
