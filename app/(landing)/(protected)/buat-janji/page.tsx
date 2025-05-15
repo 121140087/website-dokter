@@ -99,6 +99,9 @@ const BuatJanjiPage = () => {
             <div className="h-12 w-32 border border-slate-300 flex justify-center items-center">
               buka
             </div>
+            <div className="h-12 w-32 border bg-calendar-disabled border-slate-300 flex justify-center items-center">
+              Bukan Opsi
+            </div>
           </div>
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin]}

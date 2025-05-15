@@ -10,6 +10,7 @@ body {
   --calendar-today-closed-color: rgba(212, 250, 190, 0);
   --calendar-today-color: rgba(212, 250, 190, 0);
   --calendar-open-color: rgba(255, 255, 255, 0);
+  --calendar-disabled-color: rgba(242, 242, 242, 0);
 }
 
 @layer base {

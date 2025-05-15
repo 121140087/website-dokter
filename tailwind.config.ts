@@ -55,6 +55,7 @@ export default {
         "calendar-today-closed": "#d4fbd8",
         "calendar-open": "#ffffff",
         "calendar-today": "#fefcd9",
+        "calendar-disabled": "#f2f2f2",
       },
       borderRadius: {
         lg: "var(--radius)",
