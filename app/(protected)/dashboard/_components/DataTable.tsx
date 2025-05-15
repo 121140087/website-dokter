@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import React from "react";
 import { ChevronDown } from "lucide-react";
+import * as XLSX from "xlsx";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData & { createdAt: Date }, TValue>[];
@@ -103,6 +104,13 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   });
+  const handleExport = () => {
+    const worksheet = XLSX.utils.json_to_sheet(filteredData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+    XLSX.writeFile(workbook, `${title}.xlsx`);
+  };
+
   return (
     <div className="rounded-md border p-4 w-full">
       <h2 className="font-bold text-2xl">{title}</h2>
@@ -116,6 +124,10 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
         <div>
+          <Button variant="outline" onClick={handleExport}>
+            Export ke Excel
+          </Button>
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline">
