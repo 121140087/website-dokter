@@ -27,8 +27,8 @@ export const updatePemeriksaan = async ({
         gulaDarah: pemeriksaan.gulaDarah,
         tekananDarahTDS: pemeriksaan.tekananDarahTDS,
         tekananDarahTTD: pemeriksaan.tekananDarahTTD,
-        hargaPemeriksaan: pemeriksaan.totalHarga,
-        totalHarga: pemeriksaan.totalHarga + currentPemeriksaan.hargaResep,
+        hargaPemeriksaan: pemeriksaan.hargaPemeriksaan,
+        totalHarga: pemeriksaan.hargaPemeriksaan + currentPemeriksaan.hargaResep,
       },
     });
     return;
