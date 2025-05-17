@@ -81,24 +81,24 @@ const AntrianChart = () => {
     updateJumlahAntrian();
   }, []);
   return (
-    <ChartContainer config={chartConfig} className="w-full h-[250px]">
+    <ChartContainer config={chartConfig} className="w-full h-[300px]">
       <BarChart accessibilityLayer data={jadwal}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="date"
-          height={100}
+          height={80}
           tick={renderVerticalTick}
           label={{
             value: "Tanggal",
-            position: "outsideBottom",
-            offset: 50,
+            position: "bottom",
+            offset: 0,
             style: { fontSize: 12 },
           }}
         />
         <YAxis
-          domain={[0, 2, "auto"]}
+          domain={[0,2]}
           tickFormatter={(value) => Math.round(value).toString()}
-          width={100}
+          width={80}
           label={{
             value: "Jumlah Antrian",
             angle: -90,

@@ -107,30 +107,30 @@ const PendapatanChart = () => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             dataKey="date"
-            height={100}
+            height={80}
             tick={renderVerticalTick}
             tickMargin={10}
             label={{
               value: "Tanggal",
-              position: "outsideBottom",
-              offset: 80,
+              position: "bottom",
+              offset: 0,
               style: { fontSize: 12 },
             }}
           />
 
           <YAxis
-            domain={[0, 2, "auto"]}
+            domain={[0, 2]}
             tickFormatter={(value) =>
               Intl.NumberFormat("id-ID", {
                 minimumFractionDigits: 0,
               }).format(value)
             }
-            width={100}
+            width={80}
             label={{
               value: "Jumlah Pendapatan (Rp)",
               angle: -90,
-              position: "outsideLeft",
-              offset: 20,
+              position: "left",
+              offset: 0,
               style: { fontSize: 12 },
             }}
           />

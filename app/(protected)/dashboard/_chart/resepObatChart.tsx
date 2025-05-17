@@ -74,14 +74,13 @@ const ResepObatChart = () => {
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
-            domain={[0, 2, "auto"]}
+            domain={[0, 2]}
             dataKey="date"
-            height={100}
+            height={80}
             tick={renderVerticalTick}
             label={{
               value: "Tanggal",
-              position: "outsideBottom",
-              offset: 50,
+              position: "bottom",
               style: { fontSize: 12 },
             }}
           />
@@ -91,12 +90,13 @@ const ResepObatChart = () => {
                 value
               )
             }
-            width={100}
+            width={80}
             label={{
               value: "Jumlah Obat Terjual",
               angle: -90,
-              position: "outsideLeft",
-              offset: 40,
+              position: "left",
+              offset: 0,
+
               style: { fontSize: 12 },
             }}
           />
