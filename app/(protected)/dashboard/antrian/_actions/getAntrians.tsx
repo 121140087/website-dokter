@@ -35,7 +35,14 @@ export const getAntrians = async () => {
     //   },
     // });
     // return response?.Antrian ?? [];
-    return prisma.antrian.findMany();
+    return prisma.antrian.findMany({
+      orderBy: {
+        noAntrian: "asc",
+      },
+      include: {
+        jadwal: {},
+      },
+    });
   } catch (error) {
     return [];
   }

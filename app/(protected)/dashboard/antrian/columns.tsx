@@ -4,8 +4,9 @@ import { StatusAntrian } from "@/lib/definitions/enum";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { AntrianTableDef } from "../_components/_table/_antrianTable/columns";
-import { Antrian } from "@prisma/client";
+import { Antrian, Jadwal } from "@prisma/client";
 import AntrianAksi from "./_components/AntrianAksi";
+import { format } from "date-fns";
 export const pasienAntrianColumns: ColumnDef<Antrian>[] = [
   {
     accessorKey: "noAntrian",
@@ -42,6 +43,15 @@ export const pasienAntrianColumns: ColumnDef<Antrian>[] = [
   {
     accessorKey: "statusAntrian",
     header: "Status",
+  },
+  {
+    accessorKey: "jadwal",
+    header: "Tanggal",
+    cell: ({ row }) => {
+      const jadwal = row.getValue("jadwal") as Jadwal;
+      const tanggal = new Date(jadwal.tanggal);
+      return format(tanggal,"MMM dd, yyyy")
+    },
   },
   {
     accessorKey: "id",

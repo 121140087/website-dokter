@@ -61,23 +61,21 @@ const AntrianChart = () => {
   };
   const currentDate = new Date();
   const updateJumlahAntrian = async () => {
-        const response = await getJadwalThisMonth();
-        const grouped = response.reduce((acc, curr) => {
-          const day = format(curr.tanggal, "dd/MM/yyyy");
-          acc[day] = (acc[day] || 0) + curr._count.Antrian;
-          return acc;
-        }, {} as Record<string, number>);
-    
-        const chartData = Object.entries(grouped)
-          .map(([date, jumlah]) => ({ date, jumlah }))
-          .sort(
-            (a, b) =>
-              parse(a.date, "dd/MM/yyyy", new Date()).getTime() -
-              parse(b.date, "dd/MM/yyyy", new Date()).getTime()
-          );
-        setJadwal(chartData);
+    const response = await getJadwalThisMonth();
+    const grouped = response.reduce((acc, curr) => {
+      const day = format(curr.tanggal, "dd/MM/yyyy");
+      acc[day] = (acc[day] || 0) + curr._count.Antrian;
+      return acc;
+    }, {} as Record<string, number>);
 
-
+    const chartData = Object.entries(grouped)
+      .map(([date, jumlah]) => ({ date, jumlah }))
+      .sort(
+        (a, b) =>
+          parse(a.date, "dd/MM/yyyy", new Date()).getTime() -
+          parse(b.date, "dd/MM/yyyy", new Date()).getTime()
+      );
+    setJadwal(chartData);
   };
   useEffect(() => {
     updateJumlahAntrian();
@@ -98,8 +96,7 @@ const AntrianChart = () => {
           }}
         />
         <YAxis
-          domain={[0,2, "auto"]}
-          
+          domain={[0, 2, "auto"]}
           tickFormatter={(value) => Math.round(value).toString()}
           width={100}
           label={{

@@ -99,11 +99,11 @@ const PemeriksaanForm = ({
         />
         <FormField
           control={form.control}
-          name="totalHarga"
+          name="hargaPemeriksaan"
           render={({ field }) => {
             return (
               <FormItem>
-                <FormLabel>Total Harga</FormLabel>
+                <FormLabel>Harga Pemeriksaan</FormLabel>
                 <FormControl>
                   <Input placeholder="0" {...field} />
                 </FormControl>

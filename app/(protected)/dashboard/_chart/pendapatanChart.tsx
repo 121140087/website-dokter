@@ -23,6 +23,7 @@ const PendapatanChart = () => {
 
   const updateData = async () => {
     const response = await getPemeriksaanThisMonth();
+    console.log(response)
     const grouped = response.reduce((acc, curr) => {
       const day = format(curr.createdAt, "dd/MM/yyyy");
       acc[day] = (acc[day] || 0) + curr.totalHarga;

@@ -3,6 +3,8 @@
 import { prisma } from "@/prisma";
 import { StatusAntrian, StatusKlinik } from "@prisma/client";
 import { createJadwal } from "../../jadwal/_actions/createJadwal";
+import { now } from "moment";
+import { endOfDay, startOfDay } from "date-fns";
 
 interface CreateAntrianProps {
   keluhan: string;
@@ -17,27 +19,16 @@ export const createAntrian = async ({
   nik,
   nama,
 }: CreateAntrianProps) => {
+  const now = new Date();
+
+    const start = startOfDay(now);
+    const end = endOfDay(now);
+  
   let jadwal = await prisma.jadwal.findFirst({
     where: {
       tanggal: {
-        gte: new Date(
-          tanggal.getFullYear(),
-          tanggal.getMonth(),
-          tanggal.getDate(),
-          0,
-          0,
-          0,
-          0
-        ),
-        lte: new Date(
-          tanggal.getFullYear(),
-          tanggal.getMonth(),
-          tanggal.getDate(),
-          23,
-          59,
-          59,
-          999
-        ),
+        gte: start,
+        lte:end,
       },
     },
   });

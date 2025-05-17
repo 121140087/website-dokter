@@ -5,13 +5,19 @@ import { pasienAntrianColumns } from "./columns";
 import AntrianChart from "./_antrianChart/AntrianChart";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Antrian } from "@prisma/client";
+import { Antrian, Jadwal } from "@prisma/client";
 import CurrentAntrian from "./_components/CurrentAntrian";
 import { getAntrians } from "./_actions/getAntrians";
 const PasienPage = () => {
-  const [antrians, setAntrians] = useState<Antrian[]>([]);
+  const [antrians, setAntrians] = useState<(Antrian & { jadwal: Jadwal })[]>(
+    []
+  );
   const updateAntrians = async () => {
     const response = await getAntrians();
+    response.sort((a, b) => {
+      return a.jadwal.tanggal.getTime() - b.jadwal.tanggal.getTime();
+    }
+    );
     setAntrians(response);
   };
   useEffect(() => {
@@ -35,6 +41,38 @@ const PasienPage = () => {
         data={antrians}
         title="Antrian"
         defaultFilter="harian"
+        customFilter={(rangeFilter) => {
+          const today = new Date();
+          return antrians.filter((item) => {
+            const createdAt = new Date(item.jadwal.tanggal);
+
+            switch (rangeFilter) {
+              case "harian":
+                return createdAt.toDateString() === today.toDateString();
+
+              case "mingguan": {
+                const startOfWeek = new Date(today);
+                startOfWeek.setDate(today.getDate() - today.getDay());
+                const endOfWeek = new Date(startOfWeek);
+                endOfWeek.setDate(startOfWeek.getDate() + 6);
+                return createdAt >= startOfWeek && createdAt <= endOfWeek;
+              }
+
+              case "bulanan":
+                return (
+                  createdAt.getFullYear() === today.getFullYear() &&
+                  createdAt.getMonth() === today.getMonth()
+                );
+
+              case "tahunan":
+                return createdAt.getFullYear() === today.getFullYear();
+
+              case "semua":
+              default:
+                return true;
+            }
+          });
+        }}
       />
     </div>
   );

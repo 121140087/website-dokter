@@ -34,6 +34,7 @@ import {
 import React from "react";
 import { ChevronDown } from "lucide-react";
 import * as XLSX from "xlsx";
+import { custom } from "zod";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData & { createdAt: Date }, TValue>[];
@@ -41,7 +42,11 @@ interface DataTableProps<TData, TValue> {
   title: string;
   searchKey?: string;
   defaultFilter?: string;
-  onFilterChange?: (value: string) => {};
+  onFilterChange?: (value: string, data: (TData & { createdAt: Date })[]) => void;
+  customFilter?: (value: string) =>
+    | (TData & {
+        createdAt: Date;
+      })[];
 }
 export function DataTable<TData, TValue>({
   columns,
@@ -50,14 +55,17 @@ export function DataTable<TData, TValue>({
   searchKey = "nama",
   defaultFilter = "semua",
   onFilterChange,
+  customFilter,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rangeFilter, setRangeFilter] = React.useState(defaultFilter);
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const filteredData = React.useMemo(() => {
+  const filteredData  = React.useMemo(() => {
     const today = new Date();
-
+    if (customFilter) {
+      return customFilter(rangeFilter);
+    }
     return data.filter((item) => {
       const createdAt = new Date(item.createdAt);
 
@@ -141,7 +149,7 @@ export function DataTable<TData, TValue>({
                 value={rangeFilter}
                 onValueChange={(value) => {
                   setRangeFilter(value);
-                  if (onFilterChange) onFilterChange(value);
+                  if (onFilterChange) onFilterChange(value,filteredData);
                 }}
               >
                 <DropdownMenuRadioItem value="harian">

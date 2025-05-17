@@ -304,7 +304,13 @@ const PasienDetail = () => {
                 }}
               />
             </div>
-            <Link href={"/dashboard/pemeriksaan/create/" + pasien?.nik}>
+            <Link
+              href={
+                pasien?.nik
+                  ? "/dashboard/pemeriksaan/create/" + pasien?.nik
+                  : "#"
+              }
+            >
               <Button className="w-fit" disabled={!pasien}>
                 Periksa
               </Button>

@@ -36,7 +36,7 @@ const PemeriksaanDetailPage = ({
       tekananDarahTDS: 0,
       tekananDarahTTD: 0,
       trombosit: 0,
-      totalHarga: 0,
+      hargaPemeriksaan: 0,
     },
   });
   const updateData = async () => {
@@ -49,7 +49,7 @@ const PemeriksaanDetailPage = ({
       form.setValue("gulaDarah", pemeriksaan.gulaDarah);
       form.setValue("tekananDarahTDS", pemeriksaan.tekananDarahTDS);
       form.setValue("tekananDarahTTD", pemeriksaan.tekananDarahTTD);
-      form.setValue("totalHarga", pemeriksaan.totalHarga);
+      form.setValue("hargaPemeriksaan", pemeriksaan.hargaPemeriksaan);
       form.setValue("trombosit", pemeriksaan.trombosit);
     }
     const tempResep: { obat: Obat; jumlah: number }[] = [];

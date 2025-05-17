@@ -2,9 +2,13 @@
 
 import { prisma } from "@/prisma";
 import { Antrian, StatusAntrian } from "@prisma/client";
+import { endOfDay, startOfDay } from "date-fns";
 
 export const antrianNext = async (currentAntrian: Antrian | null) => {
-  const currentDate = new Date();
+      const now = new Date();
+      const start = startOfDay(now);
+      const end = endOfDay(now);
+    
   if (currentAntrian) {
     const response = await prisma.antrian.findUnique({
       where: {
@@ -21,23 +25,8 @@ export const antrianNext = async (currentAntrian: Antrian | null) => {
   const res = await prisma.jadwal.findFirst({
     where: {
       tanggal: {
-        gte: new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth(),
-          currentDate.getDate(),
-          0,
-          0,
-          0
-        ),
-        lte: new Date(
-          currentDate.getFullYear(),
-          currentDate.getMonth(),
-          currentDate.getDate(),
-          23,
-          59,
-          59,
-          999
-        ),
+        gte: start,
+        lte: end,
       },
     },
     include: {

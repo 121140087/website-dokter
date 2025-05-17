@@ -46,8 +46,8 @@ export const createPemeriksaan = async ({
         tekananDarahTTD: pemeriksaan.tekananDarahTTD,
         trombosit: pemeriksaan.trombosit,
         pasienNik: pasienNIK,
-        totalHarga: pemeriksaan.totalHarga + totalHarga,
-        hargaPemeriksaan: pemeriksaan.totalHarga,
+        totalHarga: pemeriksaan.hargaPemeriksaan + totalHarga,
+        hargaPemeriksaan: pemeriksaan.hargaPemeriksaan,
         hargaResep: totalHarga,
         dibayar: false,
         resepObat: {
