@@ -25,7 +25,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Command,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandEmpty,
+} from "@/components/ui/command";
+
 import { Input } from "@/components/ui/input";
+import { DialogCommandObat } from "./SearchObatCommand";
 
 const ResepForm = ({
   onResepChange,
@@ -34,6 +43,7 @@ const ResepForm = ({
 }) => {
   const [resep, setResep] = useState<{ obat: Obat; jumlah: number }[]>([]);
   const [obats, setObats] = useState<Obat[]>([]);
+  const [openSelect, setOpenSelect] = useState(false); 
   const [jumlahObat, setJumlahObat] = useState<number | undefined>();
   const [selectedObat, setSelectedObat] = useState<Obat | undefined>();
   const updateObat = async () => {
@@ -118,6 +128,7 @@ const ResepForm = ({
           })}
         </TableBody>
       </Table>
+
       <Dialog>
         <DialogTrigger asChild>
           <Button>Tambahkan Obat</Button>
@@ -125,24 +136,12 @@ const ResepForm = ({
         <DialogContent>
           <DialogTitle>Menambahkan Obat</DialogTitle>
           <div className="flex flex-col gap-y-4">
-            <Select
-              onValueChange={(value) => {
-                setSelectedObat(obats.find((val) => val.id === value));
-              }}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Pilih Obat" />
-              </SelectTrigger>
-              <SelectContent>
-                {obats.map((obat) => {
-                  return (
-                    <SelectItem value={obat.id} key={obat.id}>
-                      {obat.nama}
-                    </SelectItem>
-                  );
-                })}
-              </SelectContent>
-            </Select>
+            <DialogCommandObat
+              obats={obats}
+              selected={selectedObat}
+              onChange={setSelectedObat}
+            />
+
             <div className="grid grid-cols-2 gap-4">
               <div className="w-full py-2 px-4 border rounded-lg">
                 Stok <b>{selectedObat?.stok}</b>
