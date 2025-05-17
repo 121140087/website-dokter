@@ -118,6 +118,7 @@ const PendapatanChart = () => {
           />
 
           <YAxis
+            domain={[0, 2, "auto"]}
             tickFormatter={(value) =>
               Intl.NumberFormat("id-ID", {
                 minimumFractionDigits: 0,

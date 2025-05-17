@@ -12,18 +12,30 @@ import {
   BarChart,
   CartesianGrid,
   Label,
+  Legend,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 import { getJadwalThisMonth } from "../_actions/getJadwal";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 
-interface JadwalData {
-  data: number;
-  day: number;
-}
 
+const renderVerticalTick = (props: any) => {
+  const { x, y, payload } = props;
+  return (
+    <text
+      x={x}
+      y={y}
+      transform={`rotate(-90, ${x}, ${y})`}
+      textAnchor="end"
+      dominantBaseline="middle"
+      fontSize={12}
+    >
+      {payload.value}
+    </text>
+  );
+};
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
@@ -40,7 +52,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 const AntrianChart = () => {
-  const [jadwal, setJadwal] = useState<JadwalData[]>();
+  const [jadwal, setJadwal] = useState<{ date: string; jumlah: number }[]>();
   const chartConfig = {
     jumlahAntrian: {
       label: "value",
@@ -49,22 +61,23 @@ const AntrianChart = () => {
   };
   const currentDate = new Date();
   const updateJumlahAntrian = async () => {
-    const result = await getJadwalThisMonth();
-    const jadwals: JadwalData[] = [];
-    for (
-      let i = 1;
-      i <=
-      new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate();
-      i++
-    ) {
-      jadwals.push({
-        data:
-          result.find((data) => data.tanggal.getDate() === i)?._count.Antrian ??
-          0,
-        day: i,
-      });
-    }
-    setJadwal(jadwals);
+        const response = await getJadwalThisMonth();
+        const grouped = response.reduce((acc, curr) => {
+          const day = format(curr.tanggal, "dd/MM/yyyy");
+          acc[day] = (acc[day] || 0) + curr._count.Antrian;
+          return acc;
+        }, {} as Record<string, number>);
+    
+        const chartData = Object.entries(grouped)
+          .map(([date, jumlah]) => ({ date, jumlah }))
+          .sort(
+            (a, b) =>
+              parse(a.date, "dd/MM/yyyy", new Date()).getTime() -
+              parse(b.date, "dd/MM/yyyy", new Date()).getTime()
+          );
+        setJadwal(chartData);
+
+
   };
   useEffect(() => {
     updateJumlahAntrian();
@@ -72,36 +85,34 @@ const AntrianChart = () => {
   return (
     <ChartContainer config={chartConfig} className="w-full h-[250px]">
       <BarChart accessibilityLayer data={jadwal}>
-        <Tooltip content={<CustomTooltip />} />
         <CartesianGrid strokeDasharray="3 3" />
-
-        <Bar dataKey={"data"} fill="--var(color-value)" radius={4} />
-        <YAxis dataKey={"data"}>
-          <Label
-            value="Jumlah Antrian"
-            offset={-5}
-            position="left"
-            style={{
-              textAnchor: "middle",
-            }}
-            angle={-90}
-            fontSize={14}
-          />
-        </YAxis>
         <XAxis
-          dataKey={"day"}
-          tickLine={false}
-          tickMargin={10}
-          axisLine={false}
-          tickFormatter={(value) => value}
-        >
-          <Label
-            value="Tanggal"
-            dy={10}
-            position="insideBottom"
-            fontSize={14}
-          />
-        </XAxis>
+          dataKey="date"
+          height={100}
+          tick={renderVerticalTick}
+          label={{
+            value: "Tanggal",
+            position: "outsideBottom",
+            offset: 50,
+            style: { fontSize: 12 },
+          }}
+        />
+        <YAxis
+          domain={[0,2, "auto"]}
+          
+          tickFormatter={(value) => Math.round(value).toString()}
+          width={100}
+          label={{
+            value: "Jumlah Antrian",
+            angle: -90,
+            position: "outsideLeft",
+            offset: 40,
+            style: { fontSize: 12 },
+          }}
+        />
+        <Tooltip />
+        <Bar dataKey={"jumlah"} fill="--var(color-value)" radius={4} />
+        <Legend verticalAlign="bottom" height={36} />
       </BarChart>
     </ChartContainer>
   );

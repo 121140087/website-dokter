@@ -74,6 +74,7 @@ const ResepObatChart = () => {
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
+            domain={[0, 2, "auto"]}
             dataKey="date"
             height={100}
             tick={renderVerticalTick}
