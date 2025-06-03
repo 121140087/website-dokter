@@ -32,7 +32,7 @@ export function DialogCommandObat({
   const [open, setOpen] = useState(false);
 
   const filtered = obats.filter((obat) =>
-    obat.nama.toLowerCase().includes(query.toLowerCase())
+    obat.nama.toLowerCase().startsWith(query.toLowerCase())
   );
 
   return (
