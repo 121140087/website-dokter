@@ -17,6 +17,10 @@ export const updatePemeriksaan = async ({
   currentPemeriksaan: Pemeriksaan;
 }) => {
   try {
+    const totalHargaResep = resep.reduce(
+      (acc, r) => acc + r.jumlah * r.obat.harga,
+      0
+    );
     await prisma.pemeriksaan.update({
       where: {
         id,
@@ -28,9 +32,39 @@ export const updatePemeriksaan = async ({
         tekananDarahTDS: pemeriksaan.tekananDarahTDS,
         tekananDarahTTD: pemeriksaan.tekananDarahTTD,
         hargaPemeriksaan: pemeriksaan.hargaPemeriksaan,
-        totalHarga: pemeriksaan.hargaPemeriksaan + currentPemeriksaan.hargaResep,
+        totalHarga: pemeriksaan.hargaPemeriksaan + totalHargaResep,
       },
     });
+    resep.forEach(async (r) => {
+      await prisma.obat.update({
+        where: {
+          id: r.obat.id,
+        },
+        data: {
+          stok: r.obat.stok - r.jumlah,
+        },
+      });
+    });
+    const postedResep: { jumlah: number; obatId: string }[] = [];
+    resep.forEach((r) => {
+      postedResep.push({
+        jumlah: r.jumlah,
+        obatId: r.obat.id,
+      });
+    });
+    await prisma.resepObat.deleteMany({
+      where: {
+        pemeriksaanId: id,
+      },
+    });
+    await prisma.resepObat.createMany({
+      data: postedResep.map((r) => ({
+        jumlah: r.jumlah,
+        obatId: r.obatId,
+        pemeriksaanId: id,
+      })),
+    });
+
     return;
   } catch (error) {
     console.log(error);
