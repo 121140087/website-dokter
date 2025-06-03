@@ -43,7 +43,6 @@ const ResepForm = ({
 }) => {
   const [resep, setResep] = useState<{ obat: Obat; jumlah: number }[]>([]);
   const [obats, setObats] = useState<Obat[]>([]);
-  const [openSelect, setOpenSelect] = useState(false); 
   const [jumlahObat, setJumlahObat] = useState<number | undefined>();
   const [selectedObat, setSelectedObat] = useState<Obat | undefined>();
   const updateObat = async () => {
