@@ -30,10 +30,7 @@ export function DialogCommandObat({
 }) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
-
-  const filtered = obats.filter((obat) =>
-    obat.nama.toLowerCase().startsWith(query.toLowerCase())
-  );
+  const [filtered, setFiltered] = useState<Obat[]>(obats);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -47,37 +44,43 @@ export function DialogCommandObat({
         <Command>
           <CommandInput
             placeholder="Cari obat..."
-            onValueChange={setQuery}
+            onValueChange={(val) => {
+              setQuery(val);
+              setFiltered(
+                obats.filter((obat) =>
+                  obat.nama.toLowerCase().includes(val.toLowerCase())
+                )
+              );
+            }}
             autoFocus
           />
-          <CommandEmpty>Tidak ditemukan</CommandEmpty>
-          <CommandGroup>
-            <CommandList>
-              {filtered.map((obat) => (
-                <CommandItem
-                  key={obat.id}
-                  value={obat.id}
-                  onSelect={() => {
-                    onChange(obat);
-                    setOpen(false);
-                    setQuery("");
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      selected?.id === obat.id ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                  {obat.nama}
-                </CommandItem>
-              ))}
-            </CommandList>
-          </CommandGroup>
+          <CommandList>
+            <CommandEmpty>Tidak ditemukan</CommandEmpty>
+
+            {filtered.map((obat) => (
+              <CommandItem
+                key={obat.id}
+                value={obat.nama}
+                onSelect={() => {
+                  onChange(obat);
+                  setOpen(false);
+                  setQuery("");
+                }}
+              >
+                <Check
+                  className={cn(
+                    "mr-2 h-4 w-4",
+                    selected?.id === obat.id ? "opacity-100" : "opacity-0"
+                  )}
+                />
+                {obat.nama}
+              </CommandItem>
+            ))}
+          </CommandList>
         </Command>
         <DialogClose asChild>
           <Button variant="outline" className="mt-4 w-full">
-            Tutup
+            Tutup {filtered.length}
           </Button>
         </DialogClose>
       </DialogContent>
