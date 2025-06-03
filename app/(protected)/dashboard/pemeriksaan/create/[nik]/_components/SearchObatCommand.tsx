@@ -80,7 +80,7 @@ export function DialogCommandObat({
         </Command>
         <DialogClose asChild>
           <Button variant="outline" className="mt-4 w-full">
-            Tutup {filtered.length}
+            Tutup
           </Button>
         </DialogClose>
       </DialogContent>
