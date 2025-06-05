@@ -45,11 +45,16 @@ export const updatePemeriksaan = async ({
         },
       });
     });
-    const postedResep: { jumlah: number; obatId: string }[] = [];
+    const postedResep: {
+      jumlah: number;
+      obatId: string;
+      pemeriksaanId: string;
+    }[] = [];
     resep.forEach((r) => {
       postedResep.push({
         jumlah: r.jumlah,
         obatId: r.obat.id,
+        pemeriksaanId: id,
       });
     });
     await prisma.resepObat.deleteMany({
@@ -58,11 +63,7 @@ export const updatePemeriksaan = async ({
       },
     });
     await prisma.resepObat.createMany({
-      data: postedResep.map((r) => ({
-        jumlah: r.jumlah,
-        obatId: r.obatId,
-        pemeriksaanId: id,
-      })),
+      data: postedResep,
     });
 
     return;

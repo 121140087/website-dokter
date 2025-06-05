@@ -182,7 +182,7 @@ model Pemeriksaan {
 model ResepObat {
   id String @id @default(cuid())
   obatId String
-  pemeriksaanId String @unique
+  pemeriksaanId String
   pemeriksaan Pemeriksaan @relation(fields: [pemeriksaanId],references: [id],onDelete: Cascade)
   obat Obat @relation(fields: [obatId],references: [id],onDelete: Cascade)
   jumlah Int
