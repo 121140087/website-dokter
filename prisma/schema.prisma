@@ -178,6 +178,8 @@ model Pemeriksaan {
   totalHarga Int @default(0)
   hargaResep Int @default(0)
   hargaPemeriksaan Int @default(0)
+  suhu Int @default(0)
+  tinggiBadan Int @default(0)
 }
 model ResepObat {
   id String @id @default(cuid())

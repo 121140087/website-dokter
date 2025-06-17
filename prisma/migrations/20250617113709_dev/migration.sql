@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Pemeriksaan" ADD COLUMN     "suhu" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "tinggiBadan" INTEGER NOT NULL DEFAULT 0;

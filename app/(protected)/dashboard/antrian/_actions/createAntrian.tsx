@@ -21,14 +21,14 @@ export const createAntrian = async ({
 }: CreateAntrianProps) => {
   const now = new Date();
 
-    const start = startOfDay(now);
-    const end = endOfDay(now);
-  
+  const start = startOfDay(tanggal);
+  const end = endOfDay(tanggal);
+
   let jadwal = await prisma.jadwal.findFirst({
     where: {
       tanggal: {
         gte: start,
-        lte:end,
+        lte: end,
       },
     },
   });
