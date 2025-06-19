@@ -1,6 +1,6 @@
 "use server";
-import { v4 as uuidv4 } from "uuid";
 import { prisma } from "@/prisma";
+import { v4 as uuidv4 } from "uuid";
 import { getResetTokenByEmail } from "./getResetTokenByEmail";
 
 export const generateResetPasswordToken = async (email: string) => {

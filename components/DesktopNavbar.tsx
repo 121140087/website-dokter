@@ -1,13 +1,10 @@
 "use client";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { buttonVariants } from "./ui/button";
-import { auth } from "@/auth";
-import { Role } from "@prisma/client";
-import { useEffect, useState } from "react";
-import { User } from "next-auth";
-import DesktopNavbarAction from "./DesktopNavbarAction";
 import { getCurrentUser } from "@/actions/getCurrentUser";
+import { Role } from "@prisma/client";
+import { User } from "next-auth";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import DesktopNavbarAction from "./DesktopNavbarAction";
 
 const DesktopNavbar = () => {
   const [user, setUser] = useState<User | undefined>();

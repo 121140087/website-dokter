@@ -1,12 +1,11 @@
-import Link from "next/link";
-import { buttonVariants } from "./ui/button";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-import MobileNavbarAction from "./MobileNavbarAction";
-import { useEffect, useState } from "react";
-import { User } from "next-auth";
 import { getCurrentUser } from "@/actions/getCurrentUser";
+import { cn } from "@/lib/utils";
 import { Role } from "@prisma/client";
+import { User } from "next-auth";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import MobileNavbarAction from "./MobileNavbarAction";
 
 const MobileNavbar = () => {
   const path = usePathname();

@@ -1,13 +1,13 @@
 "use client";
 import { buttonVariants } from "@/components/ui/button";
-import { DataTable } from "../_components/DataTable";
-import { pasienAntrianColumns } from "./columns";
-import AntrianChart from "./_antrianChart/AntrianChart";
+import { Antrian, Jadwal } from "@prisma/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Antrian, Jadwal } from "@prisma/client";
-import CurrentAntrian from "./_components/CurrentAntrian";
+import { DataTable } from "../_components/DataTable";
 import { getAntrians } from "./_actions/getAntrians";
+import AntrianChart from "./_antrianChart/AntrianChart";
+import CurrentAntrian from "./_components/CurrentAntrian";
+import { pasienAntrianColumns } from "./columns";
 const PasienPage = () => {
   const [antrians, setAntrians] = useState<(Antrian & { jadwal: Jadwal })[]>(
     []
@@ -16,8 +16,7 @@ const PasienPage = () => {
     const response = await getAntrians();
     response.sort((a, b) => {
       return a.jadwal.tanggal.getTime() - b.jadwal.tanggal.getTime();
-    }
-    );
+    });
     setAntrians(response);
   };
   useEffect(() => {

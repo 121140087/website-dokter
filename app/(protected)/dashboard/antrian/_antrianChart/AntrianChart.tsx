@@ -1,25 +1,17 @@
 "use client";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { antrianChart } from "@/data/chartData";
-import { Antrian, Jadwal } from "@prisma/client";
+import { ChartContainer } from "@/components/ui/chart";
+import { format, parse } from "date-fns";
 import { useEffect, useState } from "react";
 import {
   Bar,
   BarChart,
   CartesianGrid,
-  Label,
   Legend,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 import { getJadwalThisMonth } from "../_actions/getJadwal";
-import { format, parse } from "date-fns";
-
 
 const renderVerticalTick = (props: any) => {
   const { x, y, payload } = props;
@@ -96,7 +88,7 @@ const AntrianChart = () => {
           }}
         />
         <YAxis
-          domain={[0,2]}
+          domain={[0, 2]}
           tickFormatter={(value) => Math.round(value).toString()}
           width={80}
           label={{

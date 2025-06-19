@@ -1,16 +1,5 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
-import { updatePasien } from "@/actions/updatePasien";
-import {
-  GolonganDarah,
-  JenisKelamin,
-  Pasien,
-  StatusPasien,
-  User,
-} from "@prisma/client";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -20,7 +9,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -28,19 +21,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { CalendarIcon } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  GolonganDarah,
+  JenisKelamin,
+  Pasien,
+  StatusPasien,
+} from "@prisma/client";
 import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
-import { Textarea } from "@/components/ui/textarea";
+import { CalendarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { createPasien } from "../../_actions/createPasien";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 import { getPasienByNIK } from "../../../../../../actions/getPasienByNIK";
+import { createPasien } from "../../_actions/createPasien";
 
 const PasienForm = () => {
   const userFormSchema = z.object({
@@ -124,7 +121,7 @@ const PasienForm = () => {
                   <FormItem>
                     <FormLabel>NIK</FormLabel>
                     <FormControl>
-                      <Input placeholder="NIK" {...field} />
+                      <Input placeholder="NIK" {...field} type="number" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -188,6 +185,7 @@ const PasienForm = () => {
                       <Input
                         disabled={!isNIKChecked}
                         placeholder="no hp"
+                        type="number"
                         {...field}
                       />
                     </FormControl>

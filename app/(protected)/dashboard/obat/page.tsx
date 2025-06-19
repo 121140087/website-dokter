@@ -1,11 +1,11 @@
 "use client";
-import { DataTable } from "../_components/DataTable";
-import { obatColumns } from "./columns";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { Obat } from "@prisma/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Obat } from "@prisma/client";
+import { DataTable } from "../_components/DataTable";
 import { getObats } from "./_actions/getObats";
+import { obatColumns } from "./columns";
 
 const ObatPage = () => {
   const [obats, setObats] = useState<Obat[] | undefined>();

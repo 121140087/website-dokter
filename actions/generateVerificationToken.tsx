@@ -1,7 +1,7 @@
 "use server";
+import { prisma } from "@/prisma";
 import { v4 as uuidv4 } from "uuid";
 import { getVerificationTokenByEmail } from "./getVerificationTokenByEmail";
-import { prisma } from "@/prisma";
 export const generateVerificationToken = async (email: string) => {
   const token = uuidv4();
   const expires = new Date().getTime() + 1000 * 60 * 60 * 1;

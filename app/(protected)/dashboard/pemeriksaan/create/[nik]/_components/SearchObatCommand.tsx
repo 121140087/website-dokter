@@ -1,23 +1,22 @@
-import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
-} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
-  CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 import { Obat } from "@prisma/client";
 import { Check } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 export function DialogCommandObat({
   obats,

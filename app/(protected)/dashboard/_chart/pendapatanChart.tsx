@@ -4,18 +4,18 @@ import { format, parse } from "date-fns";
 import { useEffect, useState } from "react";
 import {
   CartesianGrid,
+  Legend,
   Line,
   LineChart,
   ResponsiveContainer,
   Tooltip,
+  TooltipProps,
   XAxis,
   YAxis,
-  TooltipProps,
-  Legend,
 } from "recharts";
 import {
-  ValueType,
   NameType,
+  ValueType,
 } from "recharts/types/component/DefaultTooltipContent";
 
 const PendapatanChart = () => {
@@ -23,7 +23,7 @@ const PendapatanChart = () => {
 
   const updateData = async () => {
     const response = await getPemeriksaanThisMonth();
-    console.log(response)
+    console.log(response);
     const grouped = response.reduce((acc, curr) => {
       const day = format(curr.createdAt, "dd/MM/yyyy");
       acc[day] = (acc[day] || 0) + curr.totalHarga;

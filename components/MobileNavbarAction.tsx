@@ -1,12 +1,10 @@
 "use client";
-import Link from "next/link";
-import { Button, buttonVariants } from "./ui/button";
-import { useEffect, useState } from "react";
-import { User } from "next-auth";
-import { Role } from "@prisma/client";
-import { getCurrentUser } from "@/actions/getCurrentUser";
 import { logout } from "@/actions/logout";
+import { Role } from "@prisma/client";
+import { User } from "next-auth";
+import Link from "next/link";
 import { toast } from "sonner";
+import { Button, buttonVariants } from "./ui/button";
 
 const MobileNavbarAction = ({ user }: { user: User | undefined }) => {
   const signOut = async () => {

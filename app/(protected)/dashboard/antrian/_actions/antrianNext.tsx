@@ -5,10 +5,10 @@ import { Antrian, StatusAntrian } from "@prisma/client";
 import { endOfDay, startOfDay } from "date-fns";
 
 export const antrianNext = async (currentAntrian: Antrian | null) => {
-      const now = new Date();
-      const start = startOfDay(now);
-      const end = endOfDay(now);
-    
+  const now = new Date();
+  const start = startOfDay(now);
+  const end = endOfDay(now);
+
   if (currentAntrian) {
     const response = await prisma.antrian.findUnique({
       where: {

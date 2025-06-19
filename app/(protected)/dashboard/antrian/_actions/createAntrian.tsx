@@ -1,10 +1,9 @@
 "use server";
 
 import { prisma } from "@/prisma";
-import { StatusAntrian, StatusKlinik } from "@prisma/client";
-import { createJadwal } from "../../jadwal/_actions/createJadwal";
-import { now } from "moment";
+import { StatusAntrian } from "@prisma/client";
 import { endOfDay, startOfDay } from "date-fns";
+import { createJadwal } from "../../jadwal/_actions/createJadwal";
 
 interface CreateAntrianProps {
   keluhan: string;

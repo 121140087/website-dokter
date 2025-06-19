@@ -5,10 +5,10 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { chartData } from "@/data/chartData";
-import { Bar, BarChart, XAxis, YAxis, TooltipProps } from "recharts";
+import { Bar, BarChart, TooltipProps, XAxis, YAxis } from "recharts";
 import {
-  ValueType,
   NameType,
+  ValueType,
 } from "recharts/types/component/DefaultTooltipContent";
 
 const PasienChart = () => {

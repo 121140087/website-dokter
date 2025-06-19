@@ -1,10 +1,10 @@
 "use client";
+import { Pemeriksaan } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { DataTable } from "../_components/DataTable";
+import { getPemeriksaan } from "./_actions/getPemeriksaan";
 import PasienForm from "./_components/PasienForm";
 import { pemeriksaanColumn } from "./columns";
-import { Pemeriksaan } from "@prisma/client";
-import { getPemeriksaan } from "./_actions/getPemeriksaan";
 
 const PemeriksaanPage = () => {
   const [pemeriksaan, setPemeriksaan] = useState<Pemeriksaan[]>([]);

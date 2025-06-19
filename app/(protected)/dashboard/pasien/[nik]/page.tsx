@@ -1,4 +1,6 @@
 "use client";
+import { getPemeriksaanByNIK } from "@/actions/getPemeriksaanByNIK";
+import { updatePasien } from "@/actions/updatePasien";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -22,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { pasienFormSchema } from "@/lib/definitions/schemas";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -32,16 +35,13 @@ import {
   StatusPasien,
 } from "@prisma/client";
 import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import { getPasienByNIK } from "../../../../../actions/getPasienByNIK";
-import { pasienFormSchema } from "@/lib/definitions/schemas";
-import { toast } from "sonner";
-import { CalendarIcon } from "lucide-react";
-import { updatePasien } from "@/actions/updatePasien";
-import { useRouter } from "next/navigation";
-import { getPemeriksaanByNIK } from "@/actions/getPemeriksaanByNIK";
 import { DataTable } from "../../_components/DataTable";
 import { pemeriksaanColumn } from "../../pemeriksaan/columns";
 
@@ -199,6 +199,7 @@ const PasienDetail = ({ params }: { params: Promise<{ nik: string }> }) => {
                         <Input
                           placeholder="no hp"
                           disabled={!pasien}
+                          type="number"
                           {...field}
                         />
                       </FormControl>

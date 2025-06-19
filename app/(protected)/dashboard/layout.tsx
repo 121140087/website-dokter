@@ -1,9 +1,9 @@
 "use server";
-import { ReactNode } from "react";
-import Sidebar from "./_components/Sidebar";
-import DashboardNavbar from "./_components/DashboardNavbar";
 import { auth } from "@/auth";
 import { Role } from "@prisma/client";
+import { ReactNode } from "react";
+import DashboardNavbar from "./_components/DashboardNavbar";
+import Sidebar from "./_components/Sidebar";
 
 const DashboardLayout = async ({ children }: { children: ReactNode }) => {
   const session = await auth();

@@ -1,11 +1,10 @@
 "use client";
 import { getAntrianById } from "@/actions/getAntrianById";
+import { getCurrentUser } from "@/actions/getCurrentUser";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Antrian, Jadwal } from "@prisma/client";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useRouter } from "next/router";
-import { getCurrentUser } from "@/actions/getCurrentUser";
 
 const DetailAntrian = ({ params }: { params: Promise<{ id: string }> }) => {
   const [antrian, setAntrian] = useState<Antrian & { jadwal: Jadwal }>();

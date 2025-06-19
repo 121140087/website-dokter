@@ -1,7 +1,6 @@
-import { Feather } from "lucide-react";
-import Link from "next/link";
-import SidebarItem from "./SidebarItem";
 import { Role } from "@prisma/client";
+import { Feather } from "lucide-react";
+import SidebarItem from "./SidebarItem";
 
 const Sidebar = ({ role }: { role: Role }) => {
   const sidebarItems = [

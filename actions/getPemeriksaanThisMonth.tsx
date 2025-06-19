@@ -1,6 +1,6 @@
 "use server";
 import { prisma } from "@/prisma";
-import { startOfMonth, endOfMonth } from "date-fns";
+import { endOfMonth, startOfMonth } from "date-fns";
 
 export const getPemeriksaanThisMonth = async () => {
   const now = new Date();

@@ -1,12 +1,12 @@
 "use client";
 import { getPasienPemeriksaan } from "@/actions/getPasienPemeriksaan";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Pemeriksaan } from "@prisma/client";
 import { format } from "date-fns";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const PemeriksaanPage = () => {
   const [pemeriksaan, setPemeriksaan] = useState<Pemeriksaan[]>([]);

@@ -1,10 +1,4 @@
 import { z } from "zod";
-import {
-  GolonganDarah,
-  JenisKelamin,
-  StatusAntrian,
-  StatusPasien,
-} from "./enum";
 export const loginSchema = z.object({
   email: z.string().email("masukkan email dengan benar"),
   password: z.string().min(1, "password tidak boleh kosong"),
@@ -55,4 +49,6 @@ export const pemeriksaanFormSchema = z.object({
   tekananDarahTDS: z.coerce.number(),
   tekananDarahTTD: z.coerce.number(),
   hargaPemeriksaan: z.coerce.number(),
+  suhu: z.coerce.number(),
+  tinggiBadan: z.coerce.number(),
 });

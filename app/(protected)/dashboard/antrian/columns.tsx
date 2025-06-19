@@ -1,12 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { StatusAntrian } from "@/lib/definitions/enum";
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
-import { AntrianTableDef } from "../_components/_table/_antrianTable/columns";
 import { Antrian, Jadwal } from "@prisma/client";
-import AntrianAksi from "./_components/AntrianAksi";
+import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
+import { ArrowUpDown } from "lucide-react";
+import AntrianAksi from "./_components/AntrianAksi";
 export const pasienAntrianColumns: ColumnDef<Antrian>[] = [
   {
     accessorKey: "noAntrian",
@@ -50,7 +48,7 @@ export const pasienAntrianColumns: ColumnDef<Antrian>[] = [
     cell: ({ row }) => {
       const jadwal = row.getValue("jadwal") as Jadwal;
       const tanggal = new Date(jadwal.tanggal);
-      return format(tanggal,"MMM dd, yyyy")
+      return format(tanggal, "MMM dd, yyyy");
     },
   },
   {

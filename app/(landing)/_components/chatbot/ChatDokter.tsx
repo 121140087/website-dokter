@@ -1,18 +1,15 @@
-import Skeleton from "react-loading-skeleton";
 import { supabase } from "@/lib/supabaseClient";
 
-import "react-loading-skeleton/dist/skeleton.css";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
-import { useChat } from "ai/react";
-import { MessageCircle, Send, X } from "lucide-react";
-import { FormEvent, useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { saveChat } from "@/lib/actions";
 import { Chat, ChatRole } from "@prisma/client";
+import { Send } from "lucide-react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import "react-loading-skeleton/dist/skeleton.css";
 import MessageItem from "./MessageItem";
 import { getChats } from "./_actions/getChats";
-import { saveChat } from "@/lib/actions";
 
 const ChatDokter = () => {
   const [messages, setMessages] = useState<Chat[]>([]);

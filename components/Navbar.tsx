@@ -1,10 +1,10 @@
 "use client";
-import Link from "next/link";
+import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import DesktopNavbar from "./DesktopNavbar";
 import MobileNavbar from "./MobileNavbar";
-import { cn } from "@/lib/utils";
 const Navbar = () => {
   const [isShowMenu, setIsShowMenu] = useState(false);
   const [enableNavbarShadow, setEnableNavbarShadow] = useState(false);

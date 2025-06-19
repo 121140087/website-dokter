@@ -1,25 +1,22 @@
 "use client";
-import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import DatePicker from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/time_picker";
+import FullCalendar from "@fullcalendar/react";
 
-import { SetStateAction, useEffect, useState } from "react";
-import { getJadwal } from "./_actions/getJadwal";
-import { format } from "date-fns";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { closeDate } from "./_actions/closeDate";
-import { toast } from "sonner";
 import { StatusKlinik } from "@prisma/client";
+import { format } from "date-fns";
+import { SetStateAction, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { closeDate } from "./_actions/closeDate";
+import { getJadwal } from "./_actions/getJadwal";
 interface JadwalContent {
   start: string;
   end: string;

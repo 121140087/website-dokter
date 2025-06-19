@@ -1,14 +1,10 @@
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
 import { useChat } from "ai/react";
-import { MessageCircle, Send, X } from "lucide-react";
+import { Send } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ChatRole } from "@prisma/client";
-import MessageItem from "./MessageItem";
+import "react-loading-skeleton/dist/skeleton.css";
 import ChatBotMessageItem from "./ChatbotMessageItem";
 
 const ChatBot = () => {

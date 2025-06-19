@@ -1,10 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
 import { Pemeriksaan } from "@prisma/client";
-import PemeriksaanTableAction from "./_components/PemeriksaanTableActions";
+import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
+import { ArrowUpDown } from "lucide-react";
+import PemeriksaanTableAction from "./_components/PemeriksaanTableActions";
 export const pemeriksaanColumn: ColumnDef<Pemeriksaan>[] = [
   {
     accessorKey: "createdAt",

@@ -1,24 +1,23 @@
-import { toast } from "sonner";
+import { getUserByNIK } from "@/actions/getUserByNIK";
 import {
   AlertDialog,
-  AlertDialogTrigger,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
-import { deletePasien } from "../_actions/deletePasien";
 import { Input } from "@/components/ui/input";
-import { FormEvent, useState } from "react";
-import { ChatRole } from "@prisma/client";
 import { saveChat } from "@/lib/actions";
-import { getPasienByNIK } from "@/actions/getPasienByNIK";
-import { getUserByNIK } from "@/actions/getUserByNIK";
+import { ChatRole } from "@prisma/client";
+import Link from "next/link";
+import { useState } from "react";
+import { toast } from "sonner";
+import { deletePasien } from "../_actions/deletePasien";
 
 const PasienTableActions = ({ nik }: { nik: string }) => {
   const [message, setMessage] = useState<string>("");

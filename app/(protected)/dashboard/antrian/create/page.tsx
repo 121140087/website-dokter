@@ -1,17 +1,14 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { SetStateAction, useEffect, useState } from "react";
-import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import PasienForm from "./_components/PasienForm";
-import { Calendar } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
-import { checkAntrian } from "../_actions/checkAntrian";
-import { toast } from "sonner";
-import { format } from "date-fns";
-import { getJadwal } from "../../jadwal/_actions/getJadwal";
+import FullCalendar from "@fullcalendar/react";
 import { StatusKlinik } from "@prisma/client";
+import { format } from "date-fns";
+import { SetStateAction, useEffect, useState } from "react";
+import { toast } from "sonner";
+import { getJadwal } from "../../jadwal/_actions/getJadwal";
+import { checkAntrian } from "../_actions/checkAntrian";
+import PasienForm from "./_components/PasienForm";
 interface JadwalContent {
   start: string;
   end: string;

@@ -1,7 +1,6 @@
 "use client";
-import { ChatRole, Pasien, Pemeriksaan, User } from "@prisma/client";
-import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { getUserById } from "@/actions/getUserById";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -10,12 +9,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { File } from "lucide-react";
 import { saveChat } from "@/lib/actions";
-import { toast } from "sonner";
+import { ChatRole, Pemeriksaan, User } from "@prisma/client";
+import { format } from "date-fns";
+import { File } from "lucide-react";
 import Link from "next/link";
-import { getUserById } from "@/actions/getUserById";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { getLastPemeriksaanByNIK } from "../_actions/getLastPemeriksaan";
 
 const LastPemeriksaan = ({

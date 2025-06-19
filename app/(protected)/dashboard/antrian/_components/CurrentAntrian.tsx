@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
-import { getCurrentAntrian } from "../../../../../actions/getCurrentAntrian";
 import { Antrian } from "@prisma/client";
-import { antrianNext } from "../_actions/antrianNext";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { getCurrentAntrian } from "../../../../../actions/getCurrentAntrian";
+import { antrianNext } from "../_actions/antrianNext";
 
 const CurrentAntrian = () => {
   const [loading, setLoading] = useState(true);

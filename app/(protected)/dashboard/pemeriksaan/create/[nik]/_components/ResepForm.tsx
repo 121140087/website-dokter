@@ -1,15 +1,3 @@
-import { Obat } from "@prisma/client";
-import { useEffect, useState } from "react";
-import { getObats } from "../../../../obat/_actions/getObats";
-import { toast } from "sonner";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -19,19 +7,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Command,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandEmpty,
-} from "@/components/ui/command";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Obat } from "@prisma/client";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { getObats } from "../../../../obat/_actions/getObats";
 
 import { Input } from "@/components/ui/input";
 import { DialogCommandObat } from "./SearchObatCommand";

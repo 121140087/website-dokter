@@ -10,9 +10,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { deletePasien } from "../_actions/deletePasien";
+import { buttonVariants } from "@/components/ui/button";
 import { toast } from "sonner";
+import { deletePasien } from "../_actions/deletePasien";
 
 const AntrianAksi = ({ id }: { id: string }) => {
   const del = async () => {

@@ -5,7 +5,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -21,10 +20,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { registerSchema } from "@/lib/definitions/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import Link from "next/link";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
-import { useActionState, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 const RegisterPage = () => {
@@ -85,6 +83,7 @@ const RegisterPage = () => {
                         <Input
                           placeholder="nama"
                           {...field}
+                          type="text"
                           disabled={isLoading}
                         />
                       </FormControl>
@@ -105,6 +104,7 @@ const RegisterPage = () => {
                         <Input
                           placeholder="NIK"
                           {...field}
+                          type="number"
                           disabled={isLoading}
                         />
                       </FormControl>

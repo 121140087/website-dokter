@@ -1,14 +1,6 @@
 "use client";
 import { logout } from "@/actions/logout";
-import { signOut } from "@/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
-import { usePathname } from "next/navigation";
 import DashboardBreadcrumb from "./DashboardBreadcrumb";
 
 const DashboardNavbar = () => {

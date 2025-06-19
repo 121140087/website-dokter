@@ -1,46 +1,17 @@
 "use client";
-import PemeriksaanForm from "./_components/PemeriksaanForm";
 import { Button } from "@/components/ui/button";
+import PemeriksaanForm from "./_components/PemeriksaanForm";
 
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Obat } from "@prisma/client";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { pemeriksaanFormSchema } from "@/lib/definitions/schemas";
-import { z } from "zod";
-import ResepForm from "./_components/ResepForm";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
-import { redirect } from "next/navigation";
+import { pemeriksaanFormSchema } from "@/lib/definitions/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Obat } from "@prisma/client";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 import { createPemeriksaan } from "../../_actions/createPemeriksaan";
+import ResepForm from "./_components/ResepForm";
 
 const PemeriksaanDetailPage = ({
   params,
@@ -81,6 +52,8 @@ const PemeriksaanDetailPage = ({
       tekananDarahTTD: 0,
       trombosit: 0,
       hargaPemeriksaan: 0,
+      suhu: 0,
+      tinggiBadan: 0,
     },
   });
 

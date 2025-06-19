@@ -1,24 +1,11 @@
-import { Button, buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import {
-  antrianColumns,
-  AntrianTableDef,
-} from "./_components/_table/_antrianTable/columns";
-import { antrians } from "@/data/antrian";
-import { DataTable } from "./_components/DataTable";
-import {
-  obatColumns,
-  ObatTableDef,
-} from "./_components/_table/_obatTable/columns";
-import { obats } from "@/data/obats";
-import { ListMinus, Pill, User } from "lucide-react";
-import PasienChart from "./_chart/pasienChart";
 import { Antrian, Obat } from "@prisma/client";
+import PendapatanChart from "./_chart/pendapatanChart";
+import ResepObatChart from "./_chart/resepObatChart";
+import { antrianColumns } from "./_components/_table/_antrianTable/columns";
+import { obatColumns } from "./_components/_table/_obatTable/columns";
+import { DataTable } from "./_components/DataTable";
 import { getAntrians } from "./antrian/_actions/getAntrians";
 import { getObats } from "./obat/_actions/getObats";
-import ResepObatChart from "./_chart/resepObatChart";
-import PendapatanChart from "./_chart/pendapatanChart";
 async function getDataAntrian(): Promise<Antrian[]> {
   const response = await getAntrians();
   return response;

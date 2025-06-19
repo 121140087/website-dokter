@@ -1,13 +1,11 @@
 "use client";
-import { DataTable } from "../_components/DataTable";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { Pasien } from "@prisma/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Obat, Pasien, Pemeriksaan } from "@prisma/client";
+import { DataTable } from "../_components/DataTable";
 import { getPasiens } from "./_actions/getpasiens";
 import { pasienColumn } from "./columns";
-import { pemeriksaanColumn } from "../pemeriksaan/columns";
-import { getPemeriksaanByNIK } from "@/actions/getPemeriksaanByNIK";
 
 const PasienPage = () => {
   const [pasiens, setPasiens] = useState<Pasien[] | undefined>();

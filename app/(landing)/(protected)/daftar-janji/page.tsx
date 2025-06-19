@@ -1,12 +1,12 @@
 "use client";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 import { Antrian, Jadwal, StatusAntrian } from "@prisma/client";
+import { format } from "date-fns";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getJanji } from "./_actions/getJanji";
-import { format } from "date-fns";
-import { Button, buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const DaftarJanjiPage = () => {
   const [janji, setJanji] = useState<(Antrian & { jadwal: Jadwal })[]>([]);

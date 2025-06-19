@@ -19,11 +19,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GolonganObat } from "@prisma/client";
 import { SelectValue } from "@radix-ui/react-select";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import { createObat } from "../_actions/createObat";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { getObatByName } from "../_actions/getObatByName";
 
 const CreateObatPage = () => {

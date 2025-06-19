@@ -1,6 +1,5 @@
 "use client";
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
@@ -10,8 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { pemeriksaanFormSchema } from "@/lib/definitions/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
 const PemeriksaanForm = ({
@@ -30,7 +28,7 @@ const PemeriksaanForm = ({
               <FormItem>
                 <FormLabel>Detak Jantung</FormLabel>
                 <FormControl>
-                  <Input placeholder="0" {...field} />
+                  <Input placeholder="0" {...field} type="number" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -45,7 +43,7 @@ const PemeriksaanForm = ({
               <FormItem>
                 <FormLabel>Gula Darah</FormLabel>
                 <FormControl>
-                  <Input placeholder="0" {...field} />
+                  <Input placeholder="0" {...field} type="number" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -60,7 +58,7 @@ const PemeriksaanForm = ({
               <FormItem>
                 <FormLabel>Tekanan Darah TDS</FormLabel>
                 <FormControl>
-                  <Input placeholder="0" {...field} />
+                  <Input placeholder="0" {...field} type="number" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -75,7 +73,7 @@ const PemeriksaanForm = ({
               <FormItem>
                 <FormLabel>Tekanan Darah TTD</FormLabel>
                 <FormControl>
-                  <Input placeholder="0" {...field} />
+                  <Input placeholder="0" {...field} type="number" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -90,7 +88,37 @@ const PemeriksaanForm = ({
               <FormItem>
                 <FormLabel>Trombosit</FormLabel>
                 <FormControl>
-                  <Input placeholder="0" {...field} />
+                  <Input placeholder="0" {...field} type="number" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+        <FormField
+          control={form.control}
+          name="suhu"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>Suhu</FormLabel>
+                <FormControl>
+                  <Input placeholder="0" {...field} type="number" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+        <FormField
+          control={form.control}
+          name="tinggiBadan"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>Tinggi Badan</FormLabel>
+                <FormControl>
+                  <Input placeholder="0" {...field} type="number" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -105,7 +133,7 @@ const PemeriksaanForm = ({
               <FormItem>
                 <FormLabel>Biaya Pemeriksaan</FormLabel>
                 <FormControl>
-                  <Input placeholder="0" {...field} />
+                  <Input placeholder="0" {...field} type="number" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

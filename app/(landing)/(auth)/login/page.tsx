@@ -1,12 +1,10 @@
 "use client";
 import { login } from "@/actions/login";
-import { signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -22,10 +20,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { loginSchema } from "@/lib/definitions/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AuthError } from "next-auth";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useActionState, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 const LoginPage = () => {

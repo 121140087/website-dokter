@@ -1,12 +1,12 @@
 "use client";
+import { getCurrentUser } from "@/actions/getCurrentUser";
 import { getPemeriksaanById } from "@/app/(protected)/dashboard/pemeriksaan/_actions/getPemeriksaanById";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Obat, Pasien, Pemeriksaan, ResepObat } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Skeleton } from "@/components/ui/skeleton";
-import { getCurrentUser } from "@/actions/getCurrentUser";
 
 const PemeriksaanDetailPage = ({
   params,

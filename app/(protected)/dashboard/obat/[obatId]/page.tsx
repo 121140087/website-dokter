@@ -19,13 +19,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GolonganObat } from "@prisma/client";
 import { SelectValue } from "@radix-ui/react-select";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { createObat } from "../_actions/createObat";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { getObat } from "../_actions/getObat";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
+import { getObat } from "../_actions/getObat";
 import { updateObat } from "../_actions/updateObat";
 
 const EditObat = ({ params }: { params: Promise<{ obatId: string }> }) => {

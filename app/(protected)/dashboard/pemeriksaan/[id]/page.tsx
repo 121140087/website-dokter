@@ -1,19 +1,17 @@
 "use client";
-import PemeriksaanForm from "./_components/PemeriksaanForm";
 import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+import { pemeriksaanFormSchema } from "@/lib/definitions/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Obat, Pemeriksaan } from "@prisma/client";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { createPemeriksaan } from "../_actions/createPemeriksaan";
-import { pemeriksaanFormSchema } from "@/lib/definitions/schemas";
-import { z } from "zod";
-import ResepForm from "./_components/ResepForm";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form } from "@/components/ui/form";
-import { redirect } from "next/navigation";
+import { toast } from "sonner";
+import { z } from "zod";
 import { getPemeriksaanById } from "../_actions/getPemeriksaanById";
 import { updatePemeriksaan } from "../_actions/updatePemeriksaan";
+import PemeriksaanForm from "./_components/PemeriksaanForm";
+import ResepForm from "./_components/ResepForm";
 
 const PemeriksaanDetailPage = ({
   params,
@@ -37,6 +35,8 @@ const PemeriksaanDetailPage = ({
       tekananDarahTTD: 0,
       trombosit: 0,
       hargaPemeriksaan: 0,
+      suhu: 0,
+      tinggiBadan: 0,
     },
   });
   const updateData = async () => {
@@ -51,6 +51,8 @@ const PemeriksaanDetailPage = ({
       form.setValue("tekananDarahTTD", pemeriksaan.tekananDarahTTD);
       form.setValue("hargaPemeriksaan", pemeriksaan.hargaPemeriksaan);
       form.setValue("trombosit", pemeriksaan.trombosit);
+      form.setValue("suhu", pemeriksaan.suhu);
+      form.setValue("tinggiBadan", pemeriksaan.tinggiBadan);
     }
     const tempResep: { obat: Obat; jumlah: number }[] = [];
     pemeriksaan?.resepObat.forEach((r) => {

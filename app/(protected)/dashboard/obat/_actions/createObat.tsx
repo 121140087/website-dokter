@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/prisma";
-import { GolonganObat, Obat } from "@prisma/client";
+import { GolonganObat } from "@prisma/client";
 interface CreateObatProps {
   nama: string;
   golongan: GolonganObat;

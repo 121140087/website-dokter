@@ -4,9 +4,7 @@ import { setConfig } from "@/actions/setConfig";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
 
 const SettingsPage = () => {
   const [biayaPemeriksaan, setBiayaPemeriksaan] = useState("");
@@ -31,6 +29,7 @@ const SettingsPage = () => {
         <h2 className="text-xl font-bold">Biaya Pemeriksaan</h2>
         <Input
           placeholder="0"
+          type="number"
           value={biayaPemeriksaan}
           className="max-w-2xl"
           onChange={(e) => {
@@ -38,12 +37,11 @@ const SettingsPage = () => {
             setBiayaPemeriksaan(e.currentTarget.value);
           }}
         />
-        
+
         <Button className="w-fit" onClick={onUpdateBiayaPemeriksaan}>
           Update
         </Button>
       </div>
-      
     </div>
   );
 };

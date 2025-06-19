@@ -1,22 +1,22 @@
-import { toast } from "sonner";
+import { updatePaymentStatus } from "@/actions/updatePaymentStatus";
 import {
   AlertDialog,
-  AlertDialogTrigger,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
-import { deletePemeriksaan } from "../_actions/deletePemeriksaan";
-import { updatePaymentStatus } from "@/actions/updatePaymentStatus";
-import { getPemeriksaanById } from "../_actions/getPemeriksaanById";
-import { useEffect, useState } from "react";
 import { Pemeriksaan } from "@prisma/client";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { deletePemeriksaan } from "../_actions/deletePemeriksaan";
+import { getPemeriksaanById } from "../_actions/getPemeriksaanById";
 
 const PemeriksaanTableAction = ({ id }: { id: string }) => {
   const [pemeriksaan, setPemeriksaan] = useState<Pemeriksaan>();

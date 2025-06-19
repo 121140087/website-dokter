@@ -1,19 +1,18 @@
-import { useRouter } from "next/navigation";
-import { deleteObat } from "../_actions/deleteObat";
-import { toast } from "sonner";
 import {
   AlertDialog,
-  AlertDialogTrigger,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
+import { toast } from "sonner";
+import { deleteObat } from "../_actions/deleteObat";
 
 const ObatTableAction = ({ id }: { id: string }) => {
   const deleteObatAction = async () => {

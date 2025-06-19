@@ -1,4 +1,6 @@
 "use client";
+import { getCurrentUser } from "@/actions/getCurrentUser";
+import { updatePasien } from "@/actions/updatePasien";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -22,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { pasienFormSchema } from "@/lib/definitions/schemas";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -31,19 +34,13 @@ import {
   StatusPasien,
 } from "@prisma/client";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { pasienFormSchema } from "@/lib/definitions/schemas";
-import { toast } from "sonner";
 import { CalendarIcon } from "lucide-react";
 import { redirect, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 import { getPasienByNIK } from "../../../../../actions/getPasienByNIK";
-import { getCurrentAntrian } from "@/actions/getCurrentAntrian";
-import Link from "next/link";
-import { auth } from "@/auth";
-import { getCurrentUser } from "@/actions/getCurrentUser";
-import { updatePasien } from "@/actions/updatePasien";
 
 const PasienForm = ({ onUpdate }: { onUpdate: () => void }) => {
   const [pasien, setPasien] = useState<Pasien | null>();
@@ -151,6 +148,7 @@ const PasienForm = ({ onUpdate }: { onUpdate: () => void }) => {
                       <FormControl>
                         <Input
                           placeholder="NIK"
+                          type="number"
                           disabled={!pasien}
                           {...field}
                         />

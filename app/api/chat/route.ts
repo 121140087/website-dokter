@@ -1,7 +1,5 @@
-import { saveChat } from "@/lib/actions";
 import { google } from "@ai-sdk/google";
-import { ChatRole } from "@prisma/client";
-import { Message, streamText } from "ai";
+import { streamText } from "ai";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;

@@ -1,11 +1,11 @@
+import { checkOnlineStatus } from "@/actions/checkOnlineStatus";
+import { ChatPage } from "@/lib/definitions/enum";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, MessageCircle, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import ChatList from "./ChatList";
 import ChatBot from "./ChatBot";
 import ChatDokter from "./ChatDokter";
-import { ChatPage } from "@/lib/definitions/enum";
-import { checkOnlineStatus } from "@/actions/checkOnlineStatus";
+import ChatList from "./ChatList";
 
 const getTitle = (chatPage: ChatPage) => {
   switch (chatPage) {

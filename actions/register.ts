@@ -1,16 +1,15 @@
 "use server";
-import { getUserByEmail } from "@/lib/actions";
 import { registerSchema } from "@/lib/definitions/schemas";
 import { prisma } from "@/prisma";
 import { z } from "zod";
 /* eslint-disable */
 // @ts-ignore
 
-import { hashSync } from "bcryptjs";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { hashSync } from "bcryptjs";
 import { generateVerificationToken } from "./generateVerificationToken";
-import { sendVerificationEmail } from "./sendVerificationEmail";
 import { getPasienByNIK } from "./getPasienByNIK";
+import { sendVerificationEmail } from "./sendVerificationEmail";
 
 export async function register(form: z.infer<typeof registerSchema>) {
   const { email, nama, nik, password } = form;

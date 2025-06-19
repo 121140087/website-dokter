@@ -1,31 +1,16 @@
 "use client";
-import Navbar from "@/components/Navbar";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import {
   CalendarDays,
   Facebook,
-  Headphones,
   Instagram,
-  MessageCircle,
-  PersonStanding,
-  Pill,
-  Send,
   Star,
   Twitter,
   UserIcon,
-  X,
   Youtube,
 } from "lucide-react";
-import { useChat } from "ai/react";
-import Markdown from "react-markdown";
 
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { format } from "date-fns";
-import ChatBot from "./_components/chatbot/ChatBot";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import Link from "next/link";
 import ChatBox from "./_components/chatbot/ChatBox";
 import JamPraktik from "./_components/JamPraktik";

@@ -11,17 +11,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,10 +21,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import React from "react";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { ChevronDown } from "lucide-react";
+import React, { useState } from "react";
 import * as XLSX from "xlsx";
-import { custom } from "zod";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData & { createdAt: Date }, TValue>[];
@@ -42,7 +40,10 @@ interface DataTableProps<TData, TValue> {
   title: string;
   searchKey?: string;
   defaultFilter?: string;
-  onFilterChange?: (value: string, data: (TData & { createdAt: Date })[]) => void;
+  onFilterChange?: (
+    value: string,
+    data: (TData & { createdAt: Date })[]
+  ) => void;
   customFilter?: (value: string) =>
     | (TData & {
         createdAt: Date;
@@ -61,7 +62,7 @@ export function DataTable<TData, TValue>({
   const [rangeFilter, setRangeFilter] = React.useState(defaultFilter);
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const filteredData  = React.useMemo(() => {
+  const filteredData = React.useMemo(() => {
     const today = new Date();
     if (customFilter) {
       return customFilter(rangeFilter);
@@ -149,7 +150,7 @@ export function DataTable<TData, TValue>({
                 value={rangeFilter}
                 onValueChange={(value) => {
                   setRangeFilter(value);
-                  if (onFilterChange) onFilterChange(value,filteredData);
+                  if (onFilterChange) onFilterChange(value, filteredData);
                 }}
               >
                 <DropdownMenuRadioItem value="harian">
