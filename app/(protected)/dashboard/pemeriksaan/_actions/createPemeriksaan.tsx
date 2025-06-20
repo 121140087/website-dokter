@@ -37,7 +37,7 @@ export const createPemeriksaan = async ({
         },
       });
     });
-    const response = await prisma.pemeriksaan.create({
+    await prisma.pemeriksaan.create({
       data: {
         detakJantung: pemeriksaan.detakJantung,
         diagnosis: pemeriksaan.diagnosis,
@@ -49,6 +49,9 @@ export const createPemeriksaan = async ({
         totalHarga: pemeriksaan.hargaPemeriksaan + totalHarga,
         hargaPemeriksaan: pemeriksaan.hargaPemeriksaan,
         hargaResep: totalHarga,
+        beratBadan: pemeriksaan.beratBadan,
+        tinggiBadan: pemeriksaan.tinggiBadan,
+        suhu: pemeriksaan.suhu,
         dibayar: false,
         resepObat: {
           createMany: {

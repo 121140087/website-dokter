@@ -54,6 +54,7 @@ const PemeriksaanDetailPage = ({
       hargaPemeriksaan: 0,
       suhu: 0,
       tinggiBadan: 0,
+      beratBadan: 0,
     },
   });
 

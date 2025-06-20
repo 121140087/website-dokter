@@ -37,6 +37,7 @@ const PemeriksaanDetailPage = ({
       hargaPemeriksaan: 0,
       suhu: 0,
       tinggiBadan: 0,
+      beratBadan: 0,
     },
   });
   const updateData = async () => {
@@ -53,6 +54,7 @@ const PemeriksaanDetailPage = ({
       form.setValue("trombosit", pemeriksaan.trombosit);
       form.setValue("suhu", pemeriksaan.suhu);
       form.setValue("tinggiBadan", pemeriksaan.tinggiBadan);
+      form.setValue("beratBadan", pemeriksaan.beratBadan);
     }
     const tempResep: { obat: Obat; jumlah: number }[] = [];
     pemeriksaan?.resepObat.forEach((r) => {

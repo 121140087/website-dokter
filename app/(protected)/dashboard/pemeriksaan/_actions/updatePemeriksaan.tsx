@@ -32,6 +32,12 @@ export const updatePemeriksaan = async ({
         tekananDarahTDS: pemeriksaan.tekananDarahTDS,
         tekananDarahTTD: pemeriksaan.tekananDarahTTD,
         hargaPemeriksaan: pemeriksaan.hargaPemeriksaan,
+        beratBadan: pemeriksaan.beratBadan,
+        suhu: pemeriksaan.suhu,
+        trombosit: pemeriksaan.trombosit,
+        tinggiBadan: pemeriksaan.tinggiBadan,
+        hargaResep: totalHargaResep,
+
         totalHarga: pemeriksaan.hargaPemeriksaan + totalHargaResep,
       },
     });

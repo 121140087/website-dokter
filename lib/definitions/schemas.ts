@@ -51,4 +51,5 @@ export const pemeriksaanFormSchema = z.object({
   hargaPemeriksaan: z.coerce.number(),
   suhu: z.coerce.number(),
   tinggiBadan: z.coerce.number(),
+  beratBadan: z.coerce.number(),
 });

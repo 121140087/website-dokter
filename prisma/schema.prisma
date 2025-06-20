@@ -180,6 +180,7 @@ model Pemeriksaan {
   hargaPemeriksaan Int @default(0)
   suhu Int @default(0)
   tinggiBadan Int @default(0)
+  beratBadan Int @default(0)
 }
 model ResepObat {
   id String @id @default(cuid())

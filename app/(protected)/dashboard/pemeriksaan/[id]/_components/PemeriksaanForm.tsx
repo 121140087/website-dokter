@@ -82,6 +82,21 @@ const PemeriksaanForm = ({
         />
         <FormField
           control={form.control}
+          name="trombosit"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>Trombosit</FormLabel>
+                <FormControl>
+                  <Input placeholder="0" {...field} type="number" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+        <FormField
+          control={form.control}
           name="suhu"
           render={({ field }) => {
             return (
@@ -112,11 +127,11 @@ const PemeriksaanForm = ({
         />
         <FormField
           control={form.control}
-          name="trombosit"
+          name="beratBadan"
           render={({ field }) => {
             return (
               <FormItem>
-                <FormLabel>Trombosit</FormLabel>
+                <FormLabel>Berat Badan</FormLabel>
                 <FormControl>
                   <Input placeholder="0" {...field} type="number" />
                 </FormControl>
@@ -125,6 +140,7 @@ const PemeriksaanForm = ({
             );
           }}
         />
+
         <FormField
           control={form.control}
           name="hargaPemeriksaan"

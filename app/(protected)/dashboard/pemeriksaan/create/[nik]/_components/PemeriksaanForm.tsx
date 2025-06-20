@@ -127,6 +127,21 @@ const PemeriksaanForm = ({
         />
         <FormField
           control={form.control}
+          name="beratBadan"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>Berat Badan</FormLabel>
+                <FormControl>
+                  <Input placeholder="0" {...field} type="number" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+        <FormField
+          control={form.control}
           name="hargaPemeriksaan"
           render={({ field }) => {
             return (
