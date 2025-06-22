@@ -50,6 +50,7 @@ model User {
   accounts  Account[]
   sessions  Session[]
   isOnline  Boolean  @default(false) 
+  enableMessage Boolean @default(true)
   Dokter    Dokter?   @relation(fields: [dokterId], references: [id], onDelete: Cascade)
   pasien    Pasien?   @relation(fields: [nik], references: [nik], onDelete: Cascade)
 

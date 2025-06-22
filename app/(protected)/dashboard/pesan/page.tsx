@@ -3,28 +3,35 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { File, Send } from "lucide-react";
+import { saveChat } from "@/lib/actions";
+import { supabase } from "@/lib/supabaseClient";
+import { cn } from "@/lib/utils";
+import { Chat, ChatRole, ChatRoom } from "@prisma/client";
+import { ChevronsUpDownIcon, Send } from "lucide-react";
+import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { getChatRooms } from "./_actions/getChatList";
-import { Chat, ChatRole, ChatRoom } from "@prisma/client";
-import moment from "moment";
 import { getChats } from "./_actions/getChats";
-import { saveChat } from "@/lib/actions";
-import { cn } from "@/lib/utils";
-import { supabase } from "@/lib/supabaseClient";
 
 import Linkify from "linkify-react";
 
-import LastPemeriksaan from "./_components/LastPemeriksaan";
-import { setOnlineStatus } from "@/actions/setOnlineStatus";
 import { checkOnlineStatus } from "@/actions/checkOnlineStatus";
+import { setDokterStatusMessage } from "@/actions/setDokterMessageStatus";
+import { setOnlineStatus } from "@/actions/setOnlineStatus";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
-import { env } from "process";
+import LastPemeriksaan from "./_components/LastPemeriksaan";
 const PesanPage = () => {
   const [chatRooms, setChatRooms] = useState<ChatRoom[] | undefined>();
   const [chats, setChats] = useState<Chat[] | undefined>();
   const [input, setInput] = useState("");
   const [selectedUserId, setSelectedUserId] = useState("");
+  const [messageStatus, setMessageStatus] = useState(true);
   const [search, setSearch] = useState<string>("");
   const [isOnline, setIsOnline] = useState(false);
   const messageScrollRef = useRef<null | HTMLDivElement>(null);
@@ -125,34 +132,57 @@ const PesanPage = () => {
   return (
     <div className="grid grid-cols-4 w-full h-[calc(100vh-72px)]">
       <div className="overflow-y-scroll relative top-0 left-0 h-[calc(100vh-72px)] border-r-2 w-full">
-        {isOnline ? (
-          <Button
-            variant={"destructive"}
-            className="w-full my-4"
-            onClick={async () => {
-              toast("Mengupdate status");
-
-              await setOnlineStatus(false);
-
-              setIsOnline(false);
-              toast("Status terupdate");
-            }}
-          >
-            Offline
-          </Button>
-        ) : (
-          <Button
-            className="w-full my-4"
-            onClick={async () => {
-              toast("Mengupdate status");
-              await setOnlineStatus(true);
-              setIsOnline(true);
-              toast("Status terupdate");
-            }}
-          >
-            Online
-          </Button>
-        )}
+        <div className="w-full flex gap-x-2 items-center justify-between p-4">
+          Status
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant={"outline"} className="w-full justify-between">
+                {messageStatus
+                  ? isOnline
+                    ? "Online"
+                    : "Offline"
+                  : "Tidak Menerima Pesan"}
+                <ChevronsUpDownIcon />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem
+                onClick={async () => {
+                  toast("Mengupdate status");
+                  await setDokterStatusMessage(false);
+                  setMessageStatus(false);
+                  toast("Status terupdate");
+                }}
+              >
+                Tidak Menerima Pesan
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={async () => {
+                  toast("Mengupdate status");
+                  await setOnlineStatus(true);
+                  await setDokterStatusMessage(true);
+                  setMessageStatus(true);
+                  setIsOnline(true);
+                  toast("Status terupdate");
+                }}
+              >
+                Online
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={async () => {
+                  toast("Mengupdate status");
+                  await setOnlineStatus(false);
+                  await setDokterStatusMessage(true);
+                  setMessageStatus(true);
+                  setIsOnline(false);
+                  toast("Status terupdate");
+                }}
+              >
+                Offline
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
         <Input
           className="w-full my-2"
           placeholder="Cari..."
@@ -162,7 +192,6 @@ const PesanPage = () => {
             setSearch(e.currentTarget.value);
           }}
         />
-
         {chatRooms ? (
           chatRooms
             .filter((v) =>
@@ -173,7 +202,10 @@ const PesanPage = () => {
                 <div
                   onClick={() => updateChat({ userId: c.id })}
                   key={c.id}
-                  className="cursor-pointer flex items-center p-4 border-b-2 justify-between"
+                  className={cn(
+                    "cursor-pointer flex items-center p-4 border-b-2 justify-between",
+                    selectedUserId === c.id && "bg-slate-200"
+                  )}
                 >
                   <div className="flex gap-x-4 items-center">
                     <Avatar>
