@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabaseClient";
 
+import { getCurrentUser } from "@/actions/getCurrentUser";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -15,13 +16,18 @@ const ChatDokter = () => {
   const [messages, setMessages] = useState<Chat[]>([]);
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
+  const [userId, setUserId] = useState<string | undefined>();
   const updateMessage = async () => {
     const response = await getChats();
     setMessages(response);
   };
+  const updateUserId = async () => {
+    const user = await getCurrentUser();
+    if (user) setUserId(user.id);
+  };
   useEffect(() => {
-    updateMessage(); // initial fetch
-
+    updateUserId();
+    updateMessage();
     const channel = supabase
       .channel("chat-room")
       .on(
@@ -30,10 +36,25 @@ const ChatDokter = () => {
           event: "INSERT",
           schema: "public",
           table: "Chat",
+          filter: `userId=eq.${userId}`,
         },
         (payload) => {
           const newMessage = payload.new as Chat;
           setMessages((prev) => [...prev, newMessage]);
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "DELETE",
+          schema: "public",
+          table: "Chat",
+        },
+        (payload) => {
+          const deletedId = payload.old.id;
+          setMessages(
+            (prev) => prev?.filter((chat) => chat.id !== deletedId) ?? []
+          );
         }
       )
       .subscribe();
