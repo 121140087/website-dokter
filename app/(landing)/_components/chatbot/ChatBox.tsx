@@ -1,4 +1,3 @@
-import { checkMessageStatus } from "@/actions/checkMessageStatus";
 import { checkOnlineStatus } from "@/actions/checkOnlineStatus";
 import { ChatPage } from "@/lib/definitions/enum";
 import { cn } from "@/lib/utils";
@@ -23,14 +22,10 @@ const ChatBox = () => {
   const [chatPage, setChatPage] = useState<ChatPage>(ChatPage.CHATLIST);
   const [openChat, setOpenChat] = useState(false);
   const [isOnline, setIsOnline] = useState(false);
-  const [messageStatus, setMessageStatus] = useState(false);
   const toggleChat = () => {
     setOpenChat(!openChat);
   };
   const updateStatus = async () => {
-    const msgStatus = await checkMessageStatus();
-    setMessageStatus(msgStatus);
-
     const onlineStatus = await checkOnlineStatus();
     setIsOnline(onlineStatus);
   };
