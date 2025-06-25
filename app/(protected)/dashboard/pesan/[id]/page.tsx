@@ -63,7 +63,7 @@ const ChatDetail = () => {
     }
 
     const channel = supabase.channel(`realtime-chat-${userId}`);
-
+    console.log(userId);
     channel
       .on(
         "postgres_changes",
@@ -92,7 +92,6 @@ const ChatDetail = () => {
           );
         }
       );
-
     channel.subscribe();
     chatChannelRef.current = channel;
   }
@@ -101,6 +100,9 @@ const ChatDetail = () => {
     if (!id) return;
     updateChat({ userId: id as string });
     connectToChannel(id as string);
+    return () => {
+      chatChannelRef.current?.unsubscribe();
+    };
   }, []);
   useEffect(() => {
     if (messageScrollRef.current) {

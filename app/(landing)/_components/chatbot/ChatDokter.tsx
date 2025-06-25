@@ -27,7 +27,12 @@ const ChatDokter = () => {
   };
   useEffect(() => {
     updateUserId();
+  }, []);
+  useEffect(() => {
+    if (!userId) return;
+
     updateMessage();
+
     const channel = supabase
       .channel("chat-room")
       .on(
@@ -62,7 +67,7 @@ const ChatDokter = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [userId]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -73,6 +78,18 @@ const ChatDokter = () => {
       chatRole: ChatRole.user,
       text: input,
     });
+    // setMessages((prev) => [
+    //   ...prev,
+    //   {
+    //     id: Date.now().toLocaleString(),
+    //     role: ChatRole.user,
+    //     userId: userId as string,
+    //     message: input,
+    //     createdAt: new Date(),
+    //     updatedAt: new Date(),
+    //   },
+    // ]);
+
     setInput("");
   };
   const messageScrollRef = useRef<null | HTMLDivElement>(null);

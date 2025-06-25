@@ -15,6 +15,7 @@ const PemeriksaanPage = () => {
       setPemeriksaan(response);
     }
   };
+  // jadi kalau mau lihat itu apa, tinggal ctrl terus klik yang mau diliat, nanti batal diarahin langsung ke kode dan filenya
   useEffect(() => {
     updatePemeriksaan();
   }, []);
@@ -22,10 +23,10 @@ const PemeriksaanPage = () => {
     <div className="p-4 flex flex-col gap-y-8">
       <PasienForm />
       <DataTable
-        columns={pemeriksaanColumn}
-        data={pemeriksaan}
-        title="Hasil Pemeriksaan"
-        searchKey="pasienNik"
+        columns={pemeriksaanColumn} // kalau mau lihat isinya, tinggal ctrl terus klik fungsi / variabelnya
+        data={pemeriksaan} // ini data pemeriksaannya
+        title="Hasil Pemeriksaan" // ini judulnya
+        searchKey="pasienNik" // ini untuk pencarian, mau berdasarkan apa
       />
     </div>
   );
