@@ -44,10 +44,9 @@ interface DataTableProps<TData, TValue> {
     value: string,
     data: (TData & { createdAt: Date })[]
   ) => void;
-  customFilter?: (value: string) =>
-    | (TData & {
-        createdAt: Date;
-      })[];
+  customFilter?: (value: string) => (TData & {
+    createdAt: Date;
+  })[];
 }
 export function DataTable<TData, TValue>({
   columns,
@@ -114,7 +113,27 @@ export function DataTable<TData, TValue>({
     },
   });
   const handleExport = () => {
-    const worksheet = XLSX.utils.json_to_sheet(filteredData);
+    const formattedData = filteredData.map((item) => {
+      const newItem = {
+        ...item,
+        tanggal: new Intl.DateTimeFormat("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        }).format(new Date(item.createdAt)),
+      };
+
+      if ("updatedAt" in newItem) {
+        delete (newItem as any).updatedAt;
+      }
+      if ("createdAt" in newItem) {
+        delete (newItem as any).createdAt;
+      }
+
+      return newItem;
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(formattedData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
     XLSX.writeFile(workbook, `${title}.xlsx`);

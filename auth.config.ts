@@ -1,7 +1,5 @@
 import { Role } from "@prisma/client";
 import type { NextAuthConfig } from "next-auth";
-import { PrismaClient } from "@prisma/client/edge";
-import { getUserByEmail } from "./lib/actions";
 
 export const authConfig = {
   pages: {

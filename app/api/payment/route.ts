@@ -6,8 +6,8 @@ import Midtrans from "midtrans-client";
 import { NextResponse } from "next/server";
 
 let snap = new Midtrans.Snap({
-  isProduction: false,
-  serverKey: process.env.SECRET,
+  isProduction: process.env.IS_PRODUCTION ?? false,
+  serverKey: process.env.NEXT_PUBLIC_SERVER_KEY,
   clientKey: process.env.NEXT_PUBLIC_CLIENT,
 });
 
@@ -40,7 +40,8 @@ export async function POST(req: Request) {
   try {
     // Get token to midtrans via snap
     const token = await snap.createTransactionToken(parameter);
-
+    const ts = await snap.createTransaction(parameter);
+    console.log(ts);
     // return token
     return NextResponse.json({ token });
   } catch (error) {
