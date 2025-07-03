@@ -39,11 +39,10 @@ export async function POST(req: Request) {
 
   try {
     // Get token to midtrans via snap
-    const token = await snap.createTransactionToken(parameter);
     const ts = await snap.createTransaction(parameter);
     console.log(ts);
     // return token
-    return NextResponse.json({ token });
+    return NextResponse.json({ token: ts.token });
   } catch (error) {
     console.error("Error creating transaction token:", error);
     return NextResponse.json("Failed to create transaction token", {

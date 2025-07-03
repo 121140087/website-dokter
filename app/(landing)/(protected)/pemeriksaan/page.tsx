@@ -8,9 +8,18 @@ import { format } from "date-fns";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+  }).format(amount);
+};
+
 const PemeriksaanPage = () => {
   const [pemeriksaan, setPemeriksaan] = useState<Pemeriksaan[]>([]);
   const [loading, setLoading] = useState(true);
+
   const updateData = async () => {
     setLoading(true);
     const response = await getPasienPemeriksaan();
@@ -19,63 +28,68 @@ const PemeriksaanPage = () => {
     }
     setLoading(false);
   };
+
   useEffect(() => {
     updateData();
   }, []);
+
   return (
-    <div className="px-8 md:px-16 lg:px-36 xl:px-52 2xl:px-96 mt-24">
-      <h1 className="font-bold text-4xl text-center my-6">
-        Daftar Pemeriksaan
+    <div className="px-6 md:px-12 lg:px-24 xl:px-40 2xl:px-64 mt-24">
+      <h1 className="font-extrabold text-4xl text-center mb-10 text-primary">
+        Riwayat Pemeriksaan
       </h1>
+
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {Array.from({ length: 4 }).map((_, i) => (
             <div
               key={i}
-              className="w-full rounded border p-4 flex flex-col gap-y-3"
+              className="rounded-xl border p-5 shadow-sm bg-white space-y-3"
             >
               <Skeleton className="h-4 w-1/3" />
               <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-8 w-1/2 mt-2" />
+              <Skeleton className="h-4 w-2/3" />
+              <Skeleton className="h-8 w-1/2 mt-3" />
             </div>
           ))}
         </div>
+      ) : pemeriksaan.length === 0 ? (
+        <div className="text-center mt-20">
+          <p className="text-lg text-muted-foreground mb-4">
+            Belum ada pemeriksaan yang tercatat.
+          </p>
+          <Link href="/">
+            <Button>Ke Beranda</Button>
+          </Link>
+        </div>
       ) : (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {pemeriksaan.length === 0 ? (
-              <div className="flex flex-col items-center col-span-full mt-8">
-                <p className="text-lg text-center mb-4">
-                  Belum ada pemeriksaan yang tercatat.
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {pemeriksaan.map((p) => (
+            <div
+              key={p.id}
+              className="rounded-xl border p-6 shadow-sm hover:shadow-md transition-all bg-white flex flex-col justify-between"
+            >
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">
+                  {format(p.createdAt, "EEEE, dd MMMM yyyy")}
                 </p>
-                <Link href="/">
-                  <Button>Ke Beranda</Button>
-                </Link>
+                <p className="font-semibold text-lg text-primary">Diagnosis</p>
+                <p className="text-gray-700">{p.diagnosis}</p>
+                <p className="text-sm text-muted-foreground mt-2">
+                  Biaya Pemeriksaan
+                </p>
+                <p className="font-medium">{formatCurrency(p.totalHarga)}</p>
               </div>
-            ) : (
-              pemeriksaan.map((p) => (
-                <div
-                  key={p.id}
-                  className="w-full rounded border p-4 flex flex-col gap-y-3"
-                >
-                  <p>
-                    <b>Tanggal</b> : {format(p.createdAt, "dd MMM yyyy")}
-                  </p>
-                  <p className="font-bold">Diagnosis</p>
-                  <p>{p.diagnosis}</p>
-                  <p>Biaya Pemeriksaan : Rp. {p.totalHarga}</p>
-                  <Link
-                    className={cn("w-full", buttonVariants())}
-                    href={`/pemeriksaan/${p.id}`}
-                  >
-                    Lihat Detail Pemeriksaan
-                  </Link>
-                </div>
-              ))
-            )}{" "}
-          </div>
-        </>
+
+              <Link
+                href={`/pemeriksaan/${p.id}`}
+                className={cn("mt-6", buttonVariants({ variant: "default" }))}
+              >
+                Lihat Detail Pemeriksaan
+              </Link>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

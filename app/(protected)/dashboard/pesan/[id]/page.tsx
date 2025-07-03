@@ -109,6 +109,7 @@ const ChatDetail = () => {
       messageScrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [chats]);
+  
 
   return (
     <div className="h-[calc(100vh-72px)] col-span-3 p-4 flex flex-col justify-end">

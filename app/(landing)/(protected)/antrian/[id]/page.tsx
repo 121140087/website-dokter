@@ -1,4 +1,5 @@
 "use client";
+
 import { getAntrianById } from "@/actions/getAntrianById";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -19,7 +20,6 @@ const DetailAntrian = ({ params }: { params: Promise<{ id: string }> }) => {
       getCurrentUser(),
     ]);
 
-    // Jika tidak ditemukan atau bukan milik user
     if (!response || response.pasienNIK !== user?.nik) {
       window.location.replace("/daftar-janji");
       return;
@@ -34,36 +34,51 @@ const DetailAntrian = ({ params }: { params: Promise<{ id: string }> }) => {
   }, []);
 
   return (
-    <div className="max-w-md mx-auto mt-20 rounded-xl overflow-hidden shadow-lg border">
-      <div className="bg-primary text-white py-4 px-6 text-center">
-        <h2 className="text-xl font-bold">Klinik Dr. Hema Malini</h2>
-        <p className="text-sm">Nomor Antrian Anda</p>
+    <div className="relative max-w-md mx-auto mt-20 rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-white">
+      {/* Loading Overlay */}
+      {loading && (
+        <div className="absolute inset-0 z-20 bg-white/70 backdrop-blur-sm flex flex-col items-center justify-center">
+          <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+          <p className="mt-4 text-sm text-muted-foreground">Memuat data...</p>
+        </div>
+      )}
+
+      {/* Header */}
+      <div className="bg-gradient-to-r from-primary to-blue-600 text-white py-5 px-6 text-center">
+        <h2 className="text-2xl font-bold">Klinik Dr. Hema Malini</h2>
+        <p className="text-sm mt-1">Nomor Antrian Anda</p>
       </div>
 
-      <div className="bg-slate-900 text-white flex justify-center items-center h-48">
+      {/* Antrian Number */}
+      <div className="bg-slate-900 text-white flex justify-center items-center h-52 relative">
         {loading ? (
-          <Skeleton className="h-12 w-24" />
+          <Skeleton className="h-16 w-32 rounded-lg" />
         ) : (
-          <p className="text-6xl font-extrabold tracking-widest">
+          <p className="text-7xl font-extrabold tracking-wider drop-shadow-lg">
             {antrian?.noAntrian}
           </p>
         )}
       </div>
 
-      <div className="p-6 text-center">
+      {/* Jadwal Info */}
+      <div className="p-6 text-center space-y-2">
         {loading ? (
-          <Skeleton className="h-4 w-2/3 mx-auto" />
+          <>
+            <Skeleton className="h-5 w-2/3 mx-auto" />
+            <Skeleton className="h-4 w-1/3 mx-auto" />
+          </>
         ) : (
-          <div>
-            <p className="text-lg font-semibold">
-              {format(antrian!.jadwal.tanggal, "dd MMM yyyy")}
+          <>
+            <p className="text-lg font-semibold text-slate-800">
+              {format(antrian!.jadwal.tanggal, "dd MMMM yyyy")}
             </p>
-            <p className="text-md text-muted-foreground mt-1">{antrian!.jam}</p>
-          </div>
+            <p className="text-sm text-muted-foreground">Jam {antrian!.jam}</p>
+          </>
         )}
       </div>
 
-      <div className="bg-slate-100 text-center text-sm text-muted-foreground py-3 px-6 border-t">
+      {/* Footer Note */}
+      <div className="bg-slate-100 text-center text-sm text-muted-foreground py-4 px-6 border-t">
         Tunjukkan kartu ini saat pemeriksaan
       </div>
     </div>

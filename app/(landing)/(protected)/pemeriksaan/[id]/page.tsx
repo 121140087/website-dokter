@@ -3,7 +3,7 @@ import { getCurrentUser } from "@/actions/getCurrentUser";
 import { getPemeriksaanById } from "@/app/(protected)/dashboard/pemeriksaan/_actions/getPemeriksaanById";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Obat, Pasien, Pemeriksaan, ResepObat } from "@prisma/client";
+import { Dokter, Obat, Pasien, Pemeriksaan, ResepObat } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -16,6 +16,7 @@ const PemeriksaanDetailPage = ({
   const [pemeriksaan, setPemeriksaan] = useState<
     | ({
         pasien: Pasien;
+        dokter: Dokter;
         resepObat: (ResepObat & { obat: Obat | undefined })[];
       } & Pemeriksaan)
     | null
@@ -28,11 +29,11 @@ const PemeriksaanDetailPage = ({
       getCurrentUser(),
     ]);
 
-    // Jika tidak ditemukan atau bukan milik user
     if (!pem || pem.pasienNik !== user?.nik) {
       window.location.replace("/pemeriksaan");
       return;
     }
+
     setPemeriksaan(pem);
   };
 
@@ -42,60 +43,104 @@ const PemeriksaanDetailPage = ({
 
   if (!pemeriksaan) {
     return (
-      <div className="max-w-xl mx-auto mt-32 px-4">
-        <Skeleton className="h-8 w-1/2 mb-6" />
-        <Skeleton className="h-4 w-full mb-2" />
-        <Skeleton className="h-4 w-full mb-2" />
-        <Skeleton className="h-4 w-full mb-2" />
-        <Skeleton className="h-8 w-1/2 mt-6" />
+      <div className="max-w-xl mx-auto mt-32 px-4 animate-pulse space-y-4">
+        <Skeleton className="h-8 w-1/2" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-8 w-1/2 mt-4" />
       </div>
     );
   }
 
+  const biayaSection = (
+    <div className="grid grid-cols-2 gap-4 mt-6 text-sm text-center border-t pt-4">
+      <InfoItem
+        label="Biaya Pemeriksaan"
+        value={`Rp. ${pemeriksaan.hargaPemeriksaan}`}
+      />
+      <InfoItem label="Biaya Obat" value={`Rp. ${pemeriksaan.hargaResep}`} />
+      <div className="col-span-2 border-t pt-4 font-bold text-primary text-lg">
+        Total: Rp. {pemeriksaan.totalHarga}
+      </div>
+    </div>
+  );
+
   if (pemeriksaan.dibayar) {
     return (
-      <div className="max-w-2xl mx-auto mt-24 p-6 bg-white border rounded-xl shadow-sm space-y-6">
-        <div>
-          <h2 className="text-2xl font-bold text-center mb-4">
-            Hasil Pemeriksaan
-          </h2>
-          <div className="grid grid-cols-2 gap-4 text-sm border-t pt-4">
-            <p className="font-medium">ID Pemeriksaan</p>
-            <p>{pemeriksaan.id}</p>
-            <p className="font-medium">NIK Pasien</p>
-            <p>{pemeriksaan.pasienNik}</p>
-            <p className="font-medium">Detak Jantung</p>
-            <p>{pemeriksaan.detakJantung} bpm</p>
-            <p className="font-medium">Gula Darah</p>
-            <p>{pemeriksaan.gulaDarah} mg/dL</p>
-            <p className="font-medium">Trombosit</p>
-            <p>{pemeriksaan.trombosit} 10^3/µL</p>
-            <p className="font-medium">Tekanan Darah</p>
-            <p>
-              {pemeriksaan.tekananDarahTDS}/{pemeriksaan.tekananDarahTTD} mmHg
-            </p>
-            <p className="font-medium">Diagnosis</p>
-            <p>{pemeriksaan.diagnosis}</p>
-          </div>
+      <div className="max-w-4xl mx-auto mt-20 p-6 bg-white border rounded-2xl shadow-md space-y-8 animate-fade-in">
+        <h2 className="text-3xl font-bold text-center text-primary mb-6">
+          Hasil Pemeriksaan
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+          <InfoItem label="ID Pemeriksaan" value={pemeriksaan.id} />
+          <InfoItem
+            label="Tanggal"
+            value={new Date(pemeriksaan.createdAt).toLocaleString()}
+          />
+          <InfoItem label="Dokter" value={pemeriksaan.dokter.nama} />
+          <InfoItem label="NIK Pasien" value={pemeriksaan.pasienNik} />
+          <InfoItem
+            label="Tinggi Badan"
+            value={`${pemeriksaan.tinggiBadan} cm`}
+          />
+          <InfoItem
+            label="Berat Badan"
+            value={`${pemeriksaan.beratBadan} kg`}
+          />
+          <InfoItem label="Suhu Tubuh" value={`${pemeriksaan.suhu} °C`} />
+          <InfoItem
+            label="Detak Jantung"
+            value={`${pemeriksaan.detakJantung} bpm`}
+          />
+          <InfoItem
+            label="Gula Darah"
+            value={`${pemeriksaan.gulaDarah} mg/dL`}
+          />
+          <InfoItem
+            label="Trombosit"
+            value={`${pemeriksaan.trombosit} 10^3/µL`}
+          />
+          <InfoItem
+            label="Tekanan Darah"
+            value={`${pemeriksaan.tekananDarahTDS}/${pemeriksaan.tekananDarahTTD} mmHg`}
+          />
+          <InfoItem label="Diagnosis" value={pemeriksaan.diagnosis} />
         </div>
 
-        <div className="pt-4 border-t">
-          <h3 className="text-xl font-semibold text-center mb-4">Resep Obat</h3>
-          <div className="grid grid-cols-3 font-bold text-sm text-center border-b pb-2">
-            <p>Nama Obat</p>
-            <p>Jumlah</p>
-            <p>Harga</p>
+        {biayaSection}
+
+        <div>
+          <h3 className="text-xl font-semibold text-center text-muted-foreground mb-4">
+            Resep Obat
+          </h3>
+          <div className="overflow-x-auto border rounded-lg">
+            <table className="min-w-full text-sm text-center">
+              <thead className="bg-muted/40 text-muted-foreground">
+                <tr>
+                  <th className="py-2 px-4">Nama Obat</th>
+                  <th className="py-2 px-4">Jumlah</th>
+                  <th className="py-2 px-4">Harga</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pemeriksaan.resepObat.map((r) => (
+                  <tr
+                    key={r.id}
+                    className="border-t hover:bg-muted/20 transition-colors"
+                  >
+                    <td className="py-2 px-4">{r.obat?.nama ?? "-"}</td>
+                    <td className="py-2 px-4">{r.jumlah}</td>
+                    <td className="py-2 px-4">
+                      Rp. {r.jumlah * (r.obat?.harga ?? 0)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          <div className="space-y-2 mt-2">
-            {pemeriksaan.resepObat.map((r) => (
-              <div className="grid grid-cols-3 text-center text-sm" key={r.id}>
-                <p>{r.obat?.nama || "-"}</p>
-                <p>{r.jumlah}</p>
-                <p>Rp. {r.jumlah * (r.obat?.harga ?? 0)}</p>
-              </div>
-            ))}
-          </div>
-          <p className="text-xs mt-6 italic text-center text-muted-foreground">
+          <p className="text-xs mt-4 italic text-center text-muted-foreground">
             * Tunjukkan pada kasir untuk mengambil obat
           </p>
         </div>
@@ -121,16 +166,14 @@ const PemeriksaanDetailPage = ({
 
     const result = await response.json();
     if (result.token) {
-      redirect(
-        `https://app.sandbox.midtrans.com/snap/v2/vtweb/${result.token}`
-      );
+      redirect(`https://app.midtrans.com/snap/v2/vtweb/${result.token}`);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-40 bg-white border rounded-xl shadow-sm p-6 space-y-6 text-center">
+    <div className="max-w-md mx-auto mt-40 bg-white border rounded-2xl shadow-md p-6 space-y-6 text-center animate-fade-in">
       <p className="text-lg font-medium">
-        Untuk melihat hasil pemeriksaan, silakan selesaikan pembayaran sebesar:
+        Untuk melihat hasil pemeriksaan, silakan selesaikan pembayaran:
       </p>
       <p className="text-3xl font-bold text-primary">
         Rp. {pemeriksaan.totalHarga}
@@ -141,5 +184,12 @@ const PemeriksaanDetailPage = ({
     </div>
   );
 };
+
+const InfoItem = ({ label, value }: { label: string; value: string }) => (
+  <div className="flex flex-col">
+    <span className="font-medium text-muted-foreground">{label}</span>
+    <span className="text-foreground">{value}</span>
+  </div>
+);
 
 export default PemeriksaanDetailPage;
