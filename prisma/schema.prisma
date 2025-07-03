@@ -76,6 +76,7 @@ model ResetToken {
 }
 
 model Pasien {
+  id           String          @default(cuid())
   nik           String         @id
   nama          String
   golonganDarah GolonganDarah?
